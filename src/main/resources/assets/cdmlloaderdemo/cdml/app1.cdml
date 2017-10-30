@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE application [
+        <!ELEMENT application (layouts)>
+        <!ATTLIST application
+                main    CDATA       #REQUIRED
+                >
+
+        <!ELEMENT layouts (layout)*>
+
+        <!ELEMENT layout (elements?, listeners?, background?)>
+        <!ATTLIST layout
+                name    ID          #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                posX    CDATA       #IMPLIED
+                posY    CDATA       #IMPLIED
+                >
+
+
+
+        <!ELEMENT background ANY>
+
+
+        <!-- UI Elements -->
+
+        <!ELEMENT elements (Button | Image | ItemList | Label)*>
+
+        <!ELEMENT Button (listeners?)>
+        <!ATTLIST Button
+                id      ID          #REQUIRED
+                posX    CDATA       #REQUIRED
+                posY    CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                text    CDATA       #IMPLIED
+                icon    CDATA       #IMPLIED
+                >
+
+        <!ELEMENT Image EMPTY>
+        <!ATTLIST Image
+                id      ID          #REQUIRED
+                posX    CDATA       #REQUIRED
+                posY    CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                url     CDATA       #IMPLIED
+                >
+
+        <!ELEMENT Label (listeners?)>
+        <!ATTLIST Label
+                id      ID          #REQUIRED
+                posX    CDATA       #REQUIRED
+                posY    CDATA       #REQUIRED
+                text    CDATA       #IMPLIED
+                placeholder CDATA   #IMPLIED
+                >
+
+        <!ELEMENT ItemList (items, listeners?)>
+        <!ATTLIST ItemList
+                id      ID          #REQUIRED
+                posX    CDATA       #REQUIRED
+                posY    CDATA       #REQUIRED
+                >
+        <!ELEMENT items (item)*>
+        <!ELEMENT item (#PCDATA)>
+
+
+
+        <!-- Other... Actions -->
+
+        <!ELEMENT listeners (listener+)>
+        <!ELEMENT listener (actions*)>
+        <!ATTLIST listener
+                event           CDATA   #REQUIRED
+                targetMethod    CDATA   #IMPLIED
+                >
+        <!ELEMENT actions (SetCurrentLayout)*>
+
+        <!ELEMENT SetCurrentLayout EMPTY>
+        <!ATTLIST SetCurrentLayout
+                layoutName      CDATA   #REQUIRED
+                >
+
+        ]>
+<application main="layout1">
+    <layouts>
+        <layout name="layout1">
+            <elements>
+                <Button id="btnLeft" posX="5" posY="5" icon="PREVIOUS">
+                    <listeners>
+                        <listener event="click" targetMethod="btnLeftClicked"/>
+                    </listeners>
+                </Button>
+                <Button id="btnRight" posX="175" posY="5" icon="NEXT">
+                    <listeners>
+                        <listener event="click" targetMethod="btnRightClicked"/>
+                        <!--
+                        <listener event="click">
+                            <actions>
+                                <SetCurrentLayout layoutName="layout2"/>
+                            </actions>
+                        </listener>
+                        -->
+                    </listeners>
+                </Button>
+
+                <Image id="imageDisplay" posX="30" posY="5" width="140" height="90"/>
+            </elements>
+            
+            <listeners>
+                <listener event="init" targetMethod="layout1init"/>
+            </listeners>
+        </layout>
+    </layouts>
+</application>

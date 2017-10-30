@@ -1,0 +1,17 @@
+[
+    {
+        "modid": "cdmlloader",
+        "name": "CDMLLoader",
+        "description": "CDML Loading utilities.",
+        "version": "0.0.1",
+        "mcversion": "1.11.2",
+        "url": "",
+        "updateUrl": "",
+        "authorList": ["Jochem Broekhoff"],
+        "credits": "",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": [],
+        "parent": "cdm"
+    }
+]
