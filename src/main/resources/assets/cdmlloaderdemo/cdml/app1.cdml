@@ -10,10 +10,11 @@
         <!ELEMENT layout (elements?, listeners?, background?)>
         <!ATTLIST layout
                 name    ID          #REQUIRED
+                title   CDATA       #IMPLIED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
-                posX    CDATA       #IMPLIED
-                posY    CDATA       #IMPLIED
+                left    CDATA       #IMPLIED
+                top    CDATA       #IMPLIED
                 >
 
 
@@ -27,20 +28,25 @@
 
         <!ELEMENT Button (listeners?)>
         <!ATTLIST Button
-                id      ID          #REQUIRED
-                posX    CDATA       #REQUIRED
-                posY    CDATA       #REQUIRED
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
                 text    CDATA       #IMPLIED
                 icon    CDATA       #IMPLIED
+                iconResource CDATA  #IMPLIED
+                iconU   CDATA       #IMPLIED
+                iconV   CDATA       #IMPLIED
+                iconWidth CDATA     #IMPLIED
+                iconHeight CDATA    #IMPLIED
                 >
 
         <!ELEMENT Image EMPTY>
         <!ATTLIST Image
-                id      ID          #REQUIRED
-                posX    CDATA       #REQUIRED
-                posY    CDATA       #REQUIRED
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
                 url     CDATA       #IMPLIED
@@ -48,18 +54,17 @@
 
         <!ELEMENT Label (listeners?)>
         <!ATTLIST Label
-                id      ID          #REQUIRED
-                posX    CDATA       #REQUIRED
-                posY    CDATA       #REQUIRED
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
                 text    CDATA       #IMPLIED
-                placeholder CDATA   #IMPLIED
                 >
 
         <!ELEMENT ItemList (items, listeners?)>
         <!ATTLIST ItemList
-                id      ID          #REQUIRED
-                posX    CDATA       #REQUIRED
-                posY    CDATA       #REQUIRED
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
                 >
         <!ELEMENT items (item)*>
         <!ELEMENT item (#PCDATA)>
@@ -84,27 +89,29 @@
         ]>
 <application main="layout1">
     <layouts>
-        <layout name="layout1">
+        <layout name="layout1" title="First Layout" width="150" height="80">
             <elements>
-                <Button id="btnLeft" posX="5" posY="5" icon="PREVIOUS">
+                <Button id="btnLeft" left="5" top="5" icon="PREVIOUS">
+                    <!--
                     <listeners>
                         <listener event="click" targetMethod="btnLeftClicked"/>
                     </listeners>
+                    -->
                 </Button>
-                <Button id="btnRight" posX="175" posY="5" icon="NEXT">
+                <Button id="btnRight" left="125" top="5" icon="NEXT">
+                    <!--
                     <listeners>
                         <listener event="click" targetMethod="btnRightClicked"/>
-                        <!--
                         <listener event="click">
                             <actions>
                                 <SetCurrentLayout layoutName="layout2"/>
                             </actions>
                         </listener>
-                        -->
                     </listeners>
+                    -->
                 </Button>
 
-                <Image id="imageDisplay" posX="30" posY="5" width="140" height="90"/>
+                <Label left="5" top="40" text="My first label!"/>
             </elements>
             
             <listeners>

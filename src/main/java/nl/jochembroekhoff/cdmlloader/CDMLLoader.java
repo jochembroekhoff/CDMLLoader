@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class CDMLLoader {
 
@@ -47,8 +46,8 @@ public class CDMLLoader {
     /**
      * Load a CDML document and inject the constructed values in this class (controller class).
      *
-     * @param app application class instance
-     * @param loadStart consumer which is called with the ResourceLocation of the CDML file
+     * @param app          application class instance
+     * @param loadStart    consumer which is called with the ResourceLocation of the CDML file
      * @param loadComplete consumer which is called wether the loading succeeded or not
      * @throws NoCdmlAppException
      * @throws ApplicationNotFoundException
@@ -91,14 +90,16 @@ public class CDMLLoader {
         //Load fields
         Field[] cdmlFields = Arrays.stream(app.getClass().getDeclaredFields())
                 .filter(a -> a.isAnnotationPresent(Cdml.class))
-                .filter(a -> a.getType().isAssignableFrom(Component.class))
+                .filter(a -> Component.class.isAssignableFrom(a.getType()))
                 .toArray(Field[]::new);
+
 
         //Remap fields
         Map<String, Field> fieldRemapping = new HashMap<>();
         Arrays.stream(cdmlFields).forEach(field -> fieldRemapping.put(field.getName(), field));
+        fieldRemapping.values().stream().forEach(f -> f.setAccessible(true));
 
-        SAXParserFactory.newInstance().newSAXParser().parse(cdml, new CDMLHandler(LOGGER, cdmlFields, fieldRemapping, loadStart, loadComplete));
+        SAXParserFactory.newInstance().newSAXParser().parse(cdml, new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, loadStart, loadComplete));
 
         /*
         //app.getClass().getField("btnRightClicked")
