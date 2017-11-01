@@ -8,12 +8,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlApp;
-import nl.jochembroekhoff.cdmlloaderdemo.Reference;
 
 /**
  * Author: Jochem Broekhoff
  */
-@CdmlApp(modId = Reference.MOD_ID, applicationId = "app1")
+@CdmlApp
 public class DemoApplication extends Application {
     @Cdml
     private Button btnLeft;
@@ -23,8 +22,6 @@ public class DemoApplication extends Application {
     private Image imageDisplay;
     @Cdml
     private Layout layout1;
-
-    private int currentIndex = 0;
 
     @Override
     public void init() {

@@ -9,14 +9,13 @@
 
         <!ELEMENT layout (elements?, listeners?, background?)>
         <!ATTLIST layout
-                name    ID          #REQUIRED
+                id      ID          #REQUIRED
                 title   CDATA       #IMPLIED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
                 left    CDATA       #IMPLIED
-                top    CDATA       #IMPLIED
+                top     CDATA       #IMPLIED
                 >
-
 
 
         <!ELEMENT background ANY>
@@ -24,7 +23,7 @@
 
         <!-- UI Elements -->
 
-        <!ELEMENT elements (Button | Image | ItemList | Label)*>
+        <!ELEMENT elements (Button | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider)*>
 
         <!ELEMENT Button (listeners?)>
         <!ATTLIST Button
@@ -33,13 +32,31 @@
                 top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
+
                 text    CDATA       #IMPLIED
+
                 icon    CDATA       #IMPLIED
+
                 iconResource CDATA  #IMPLIED
                 iconU   CDATA       #IMPLIED
                 iconV   CDATA       #IMPLIED
                 iconWidth CDATA     #IMPLIED
                 iconHeight CDATA    #IMPLIED
+
+                radioGroup CDATA    #IMPLIED
+                >
+
+        <!ELEMENT CheckBox (listeners?)>
+        <!ATTLIST CheckBox
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+
+                name    CDATA       #IMPLIED
+
+                selected CDATA      #IMPLIED
                 >
 
         <!ELEMENT Image EMPTY>
@@ -52,14 +69,6 @@
                 url     CDATA       #IMPLIED
                 >
 
-        <!ELEMENT Label (listeners?)>
-        <!ATTLIST Label
-                id      ID          #IMPLIED
-                left    CDATA       #REQUIRED
-                top     CDATA       #REQUIRED
-                text    CDATA       #IMPLIED
-                >
-
         <!ELEMENT ItemList (items, listeners?)>
         <!ATTLIST ItemList
                 id      ID          #IMPLIED
@@ -69,7 +78,48 @@
         <!ELEMENT items (item)*>
         <!ELEMENT item (#PCDATA)>
 
+        <!ELEMENT Label (listeners?)>
+        <!ATTLIST Label
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                text    CDATA       #IMPLIED
+                >
 
+        <!ELEMENT NumberSelector (listeners?)>
+        <!-- Note: Cannot set height to NumberSelector -->
+        <!ATTLIST NumberSelector
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+
+                min     CDATA       #IMPLIED
+                max     CDATA       #IMPLIED
+                number  CDATA       #IMPLIED
+                format  CDATA       #IMPLIED
+                >
+        <!ELEMENT ProgressBar (listeners?)>
+        <!ATTLIST ProgressBar
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                height  CDATA       #REQUIRED
+
+                max     CDATA       #IMPLIED
+                progress CDATA      #IMPLIED
+                >
+
+        <!ELEMENT Slider (listeners?)>
+        <!ATTLIST Slider
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+
+                percentage CDATA    #IMPLIED
+                >
 
         <!-- Other... Actions -->
 
@@ -89,31 +139,29 @@
         ]>
 <application main="layout1">
     <layouts>
-        <layout name="layout1" title="First Layout" width="150" height="80">
+        <layout id="layout1" title="CDML Components" width="270" height="140">
             <elements>
-                <Button id="btnLeft" left="5" top="5" icon="PREVIOUS">
-                    <!--
-                    <listeners>
-                        <listener event="click" targetMethod="btnLeftClicked"/>
-                    </listeners>
-                    -->
-                </Button>
-                <Button id="btnRight" left="125" top="5" icon="NEXT">
-                    <!--
-                    <listeners>
-                        <listener event="click" targetMethod="btnRightClicked"/>
-                        <listener event="click">
-                            <actions>
-                                <SetCurrentLayout layoutName="layout2"/>
-                            </actions>
-                        </listener>
-                    </listeners>
-                    -->
-                </Button>
+                <Label left="5" top="5" text="Label"/>
 
-                <Label left="5" top="40" text="My first label!"/>
+                <Button left="5" top="18" text="Button" width="63" height="20"/>
+
+                <Button left="5" top="43" icon="ARROW_LEFT"/>
+                <Button left="22" top="43" icon="ARROW_UP"/>
+                <Button left="39" top="43" icon="ARROW_RIGHT"/>
+                <Button left="56" top="43" icon="ARROW_DOWN"/>
+
+                <!-- Item List -->
+
+                <CheckBox left="5" top="122" name="Off"/>
+                <CheckBox left="42" top="122" name="On" selected="true"/>
+
+                <!-- Text Field -->
+
+                <!-- Text Area -->
+
+                <ProgressBar left="88" top="90" width="80" height="16" progress="75"/>
             </elements>
-            
+
             <listeners>
                 <listener event="init" targetMethod="layout1init"/>
             </listeners>

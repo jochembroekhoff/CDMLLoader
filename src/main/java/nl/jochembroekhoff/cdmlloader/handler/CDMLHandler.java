@@ -4,9 +4,7 @@ import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.Icon;
 import com.mrcrayfish.device.api.app.Layout;
-import com.mrcrayfish.device.api.app.component.Button;
-import com.mrcrayfish.device.api.app.component.Label;
-import com.mrcrayfish.device.api.app.component.RadioGroup;
+import com.mrcrayfish.device.api.app.component.*;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.exception.FieldNotFoundException;
@@ -18,6 +16,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -33,12 +32,14 @@ public class CDMLHandler extends DefaultHandler {
     final Runnable loadStart;
     final Consumer<Boolean> loadComplete;
 
+    final Map<String, Component> components = new HashMap<>();
+
     boolean inApplication = false;
 
     boolean inLayouts = false;
 
     boolean inLayout = false;
-    String layoutName = "";
+    String layoutId = "";
     Layout layout = null;
     Map<String, Layout> layoutMap = new HashMap<>();
 
@@ -56,7 +57,7 @@ public class CDMLHandler extends DefaultHandler {
 
                 applicationMeta = new ApplicationMeta(attributes.getValue("main"));
 
-                LOGGER.info("Main layoutId: {}", applicationMeta.getMainLayoutId());
+                LOGGER.info("--> Found Main Layout ID: {}", applicationMeta.getMainLayoutId());
             }
             if (!inApplication)
                 return;
@@ -74,7 +75,7 @@ public class CDMLHandler extends DefaultHandler {
             if (qName.equals("layout")) {
                 inLayout = true;
 
-                layoutName = attributes.getValue("name");
+                layoutId = attributes.getValue("id");
                 String layoutTitle = attributes.getValue("title");
                 String layoutWidth = attributes.getValue("width");
                 String layoutHeight = attributes.getValue("height");
@@ -105,11 +106,11 @@ public class CDMLHandler extends DefaultHandler {
                 if (layoutTitle != null)
                     layout.setTitle(layoutTitle);
 
-                layoutMap.put(layoutName, layout);
+                layoutMap.put(layoutId, layout);
 
-                LOGGER.info("--> Created Layout: {}", layoutName);
+                LOGGER.info("--> Created Layout: {}", layoutId);
 
-                setToId(layoutName, layout);
+                setToId(layoutId, layout);
             }
             if (!inLayout)
                 return;
@@ -138,10 +139,8 @@ public class CDMLHandler extends DefaultHandler {
                 boolean hasWH = width != null && height != null;
 
                 switch (qName) {
-                    case "Button":
+                    case "Button": {
                         if (!hasLT) break;
-
-                        RadioGroup rg = new RadioGroup();
 
                         /*x, y, txt(null)*/
                         Button btn = new Button(Integer.parseInt(left), Integer.parseInt(top), attributes.getValue("text"));
@@ -170,7 +169,21 @@ public class CDMLHandler extends DefaultHandler {
 
                         component = btn;
                         break;
-                    case "Label":
+                    }
+                    case "CheckBox": {
+                        if (!hasLT) break;
+
+                        /*txt(null), x, y*/
+                        CheckBox cb = new CheckBox(attributes.getValue("name"), Integer.parseInt(left), Integer.parseInt(top));
+
+                        String selected = attributes.getValue("selected");
+                        if (selected != null)
+                            cb.setSelected(Boolean.parseBoolean(selected));
+
+                        component = cb;
+                        break;
+                    }
+                    case "Label": {
                         if (!hasLT) break;
 
                         /*txt(null), x, y*/
@@ -178,9 +191,59 @@ public class CDMLHandler extends DefaultHandler {
 
                         component = lbl;
                         break;
-                    case "listeners":
+                    }
+                    case "NumberSelector": {
+                        if (!hasLT || width == null) break;
+
+                        NumberSelector ns = new NumberSelector(Integer.parseInt(left), Integer.parseInt(top), Integer.parseInt(width));
+
+                        String min = attributes.getValue("min");
+                        if (min != null)
+                            ns.setMin(Integer.parseInt(min));
+                        String max = attributes.getValue("max");
+                        if (max != null)
+                            ns.setMax(Integer.parseInt(max));
+                        String number = attributes.getValue("number");
+                        if (number != null)
+                            ns.setNumber(Integer.parseInt(number));
+                        String format = attributes.getValue("format");
+                        if (format != null)
+                            ns.setFormat(new DecimalFormat(format));
+
+                        component = ns;
+                        break;
+                    }
+                    case "ProgressBar": {
+                        if (!hasLT || !hasWH) break;
+
+                        ProgressBar pb = new ProgressBar(Integer.parseInt(left), Integer.parseInt(top), Integer.parseInt(width), Integer.parseInt(height));
+
+                        String max = attributes.getValue("max");
+                        if (max != null)
+                            pb.setMax(Integer.parseInt(max));
+                        String progress = attributes.getValue("progress");
+                        if (progress != null)
+                            pb.setProgress(Integer.parseInt(progress));
+
+                        component = pb;
+                        break;
+                    }
+                    case "Slider": {
+                        if (!hasLT || width == null) break;
+
+                        Slider sld = new Slider(Integer.parseInt(left), Integer.parseInt(top), Integer.parseInt(width));
+
+                        String percentage = attributes.getValue("percentage");
+                        if (percentage != null)
+                            sld.setPercentage(Float.parseFloat(percentage));
+
+                        component = sld;
+                        break;
+                    }
+                    case "listeners": {
                         //TODO: Process sub listener + action
                         break;
+                    }
                 }
 
                 if (hasId)
@@ -245,8 +308,12 @@ public class CDMLHandler extends DefaultHandler {
     }
 
     private void setToId(String id, Component component) throws IllegalAccessException, FieldNotFoundException {
-        if (!fieldRemapping.containsKey(id))
-            throw new FieldNotFoundException();
+        components.put(id, component);
+
+        if (!fieldRemapping.containsKey(id)) {
+            LOGGER.warn("==> Couldn't find declared field {} in application. No field has been set.", id);
+            return;
+        }
         fieldRemapping.get(id).set(app, component);
     }
 }

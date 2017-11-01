@@ -61,8 +61,8 @@ public class CDMLLoader {
         if (!app.getClass().isAnnotationPresent(CdmlApp.class))
             throw new NoCdmlAppException();
 
-        String modId = app.getClass().getAnnotation(CdmlApp.class).modId();
-        String appId = app.getClass().getAnnotation(CdmlApp.class).applicationId();
+        String modId = app.getInfo().getId().getResourceDomain();
+        String appId = app.getInfo().getId().getResourcePath();
 
         /*
         //TODO: Get AppInfo
@@ -99,7 +99,8 @@ public class CDMLLoader {
         Arrays.stream(cdmlFields).forEach(field -> fieldRemapping.put(field.getName(), field));
         fieldRemapping.values().stream().forEach(f -> f.setAccessible(true));
 
-        SAXParserFactory.newInstance().newSAXParser().parse(cdml, new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, loadStart, loadComplete));
+        SAXParserFactory.newInstance().newSAXParser().parse(cdml,
+                new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, loadStart, loadComplete));
 
         /*
         //app.getClass().getField("btnRightClicked")
