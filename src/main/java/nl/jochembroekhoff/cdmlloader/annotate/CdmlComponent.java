@@ -6,9 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A CDML-enabled application
+ * A CDML component. Used to apply metadata to a CdmlComponentHandler.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CdmlApp {
+public @interface CdmlComponent {
+    /**
+     * Component type. Usually so
+     * @return
+     */
+    String value();
 }

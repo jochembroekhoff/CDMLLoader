@@ -6,9 +6,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlApp;
+import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.exception.ApplicationNotFoundException;
 import nl.jochembroekhoff.cdmlloader.exception.NoCdmlAppException;
 import nl.jochembroekhoff.cdmlloader.handler.CDMLHandler;
+import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -24,6 +26,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class CDMLLoader {
+
+    final static Map<String, CdmlComponentHandler> componentHandlers = new HashMap<>();
 
     public static final Logger LOGGER = CDMLDemoMod.getLogger();
 
@@ -64,24 +68,6 @@ public class CDMLLoader {
         String modId = app.getInfo().getId().getResourceDomain();
         String appId = app.getInfo().getId().getResourcePath();
 
-        /*
-        //TODO: Get AppInfo
-        MrCrayfishDeviceMod.proxy.getAllowedApplications().stream()
-                .forEach(applic -> {
-                    LOGGER.debug("--app:--");
-                    LOGGER.debug(applic.getId().getResourceDomain());
-                    LOGGER.debug(applic.getId().getResourcePath());
-                });
-
-        Optional<AppInfo> optAppInfo = MrCrayfishDeviceMod.proxy.getAllowedApplications().stream()
-                .filter(a -> a.getId().getResourceDomain().equals(modId))
-                .filter(a -> a.getId().getResourcePath().equals(appId))
-                .findFirst();
-        if(!optAppInfo.isPresent())
-            throw new ApplicationNotFoundException();
-        AppInfo appInfo = optAppInfo.get();
-        */
-
         LOGGER.info("--CdmlApp-- ModID: {}, AppID: {}", modId, appId);
 
         ResourceLocation cdmlLocation = new ResourceLocation(modId, "cdml/" + appId + ".cdml");
@@ -108,5 +94,34 @@ public class CDMLLoader {
         Button btn = new Button(5, 5, "");
         btn.setClickListener(listener);
         */
+    }
+
+    /**
+     * Register a new component handler.
+     * @param handler a instance of the CdmlComponentHandler class
+     * @return true if the component handler was registered successfully
+     */
+    public static boolean registerComponentHandler(CdmlComponentHandler handler) {
+        if(!handler.getClass().isAnnotationPresent(CdmlComponent.class))
+            throw new IllegalArgumentException("Couldn't find @CdmlComponent in handler class.");
+
+        String componentType = handler.getClass().getAnnotation(CdmlComponent.class).value();
+        if(!componentType.matches("^[A-Z].*$"))
+            throw new IllegalArgumentException("Component type must start with uppercase letter.");
+
+        if (hasComponentHandler(componentType))
+            throw new IllegalArgumentException("A component handler for component type "
+                    + componentType + " has been registered already.");
+
+        componentHandlers.put(componentType, handler);
+        return true;
+    }
+
+    public static boolean hasComponentHandler(String componentType){
+        return componentHandlers.containsKey(componentType);
+    }
+
+    public static CdmlComponentHandler getComponentHandler(String componentType) {
+        return componentHandlers.getOrDefault(componentType, null);
     }
 }

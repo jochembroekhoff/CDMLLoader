@@ -6,6 +6,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import nl.jochembroekhoff.cdmlloader.CDMLLoader;
+import nl.jochembroekhoff.cdmlloader.defaultcomponent.HandlerButton;
+import nl.jochembroekhoff.cdmlloader.defaultcomponent.HandlerLabel;
 import nl.jochembroekhoff.cdmlloaderdemo.app.DemoApplication;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +26,11 @@ public class CDMLDemoMod {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        //Register CDML Component Handlers
+        CDMLLoader.registerComponentHandler(new HandlerButton());
+        CDMLLoader.registerComponentHandler(new HandlerLabel());
+
+        //Register CDM applications
         ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "app1"), DemoApplication.class);
     }
 
