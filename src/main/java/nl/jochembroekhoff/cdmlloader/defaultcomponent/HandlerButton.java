@@ -12,7 +12,7 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 public class HandlerButton implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
-        if (!meta.hasTopAndLeft() || !meta.hasWidthAndHeight())
+        if (!meta.hasTopAndLeft())
             return null;
 
         Button btn = new Button(meta.getLeft(), meta.getTop(), meta.getText());

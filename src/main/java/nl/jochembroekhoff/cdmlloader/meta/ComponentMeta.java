@@ -2,6 +2,7 @@ package nl.jochembroekhoff.cdmlloader.meta;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.xml.sax.Attributes;
 
 @AllArgsConstructor
@@ -56,8 +57,10 @@ public class ComponentMeta {
     /* WIDTH & HEIGHT */
 
     @Getter
+    @Setter
     String attrWidth;
     @Getter
+    @Setter
     String attrHeight;
 
     public boolean hasWidthAndHeight() {
@@ -97,11 +100,11 @@ public class ComponentMeta {
     }
 
     /* TEXT */
-    public boolean hasText(){
+    public boolean hasText() {
         return getText() != null;
     }
 
-    public String getText(){
+    public String getText() {
         return getAttributes().getValue("text");
     }
 }

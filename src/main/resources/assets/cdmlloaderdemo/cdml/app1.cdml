@@ -23,7 +23,7 @@
 
         <!-- UI components -->
 
-        <!ELEMENT components (Button | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text)*>
+        <!ELEMENT components (Button | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
 
         <!ELEMENT Button (listeners?)>
         <!ATTLIST Button
@@ -32,6 +32,8 @@
                 top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
 
@@ -53,6 +55,8 @@
                 top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
 
                 name    CDATA       #IMPLIED
 
@@ -66,7 +70,20 @@
                 top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
                 url     CDATA       #IMPLIED
+                alpha   CDATA       #IMPLIED
+                borderVisible CDATA #IMPLIED
+                borderColor CDATA   #IMPLIED
+                borderThickness CDATA #IMPLIED
+
+                imageResource CDATA #IMPLIED
+                imageU  CDATA       #IMPLIED
+                imageV  CDATA       #IMPLIED
+                imageWidth CDATA    #IMPLIED
+                imageHeight CDATA   #IMPLIED
                 >
 
         <!ELEMENT ItemList (items, listeners?)>
@@ -74,6 +91,8 @@
                 id      ID          #IMPLIED
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
                 >
         <!ELEMENT items (item)*>
         <!ELEMENT item (#PCDATA)>
@@ -83,6 +102,9 @@
                 id      ID          #IMPLIED
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
                 text    CDATA       #IMPLIED
                 >
 
@@ -93,6 +115,8 @@
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
                 width   CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
 
                 min     CDATA       #IMPLIED
                 max     CDATA       #IMPLIED
@@ -106,6 +130,8 @@
                 top     CDATA       #REQUIRED
                 width   CDATA       #REQUIRED
                 height  CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
 
                 max     CDATA       #IMPLIED
                 progress CDATA      #IMPLIED
@@ -117,6 +143,8 @@
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
                 width   CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
 
                 percentage CDATA    #IMPLIED
                 >
@@ -126,6 +154,8 @@
                 id      ID          #IMPLIED
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
                 >
 
         <!ELEMENT Text (listeners?)>
@@ -134,9 +164,45 @@
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
                 width   CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
                 >
+
+        <!ELEMENT TextArea (listeners?)>
+        <!ATTLIST TextArea
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                height  CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+                focused CDATA       #IMPLIED
+                placeholder CDATA   #IMPLIED
+                padding CDATA       #IMPLIED
+                editable CDATA      #IMPLIED
+                >
+
+        <!ELEMENT TextField (listeners?)>
+        <!ATTLIST TextField
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+                focused CDATA       #IMPLIED
+                placeholder CDATA   #IMPLIED
+                padding CDATA       #IMPLIED
+                editable CDATA      #IMPLIED
+                >
+
 
         <!-- Other... Actions -->
 
@@ -172,9 +238,9 @@
                 <CheckBox left="5" top="122" name="Off"/>
                 <CheckBox left="42" top="122" name="On" selected="true"/>
 
-                <!-- Text Field -->
+                <TextField left="88" top="5" width="80" text="Text Field"/>
 
-                <!-- Text Area -->
+                <TextArea left="88" top="25" width="80" height="60" text="Text Area" placeholder="Placeholder"/>
 
                 <ProgressBar left="88" top="90" width="80" height="16" progress="75"/>
 
@@ -182,7 +248,8 @@
 
                 <Spinner left="56" top="3"/>
 
-                <Text left="180" top="5" width="90" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+                <Text left="180" top="5" width="90"
+                      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
 
                 <!-- Image -->
 

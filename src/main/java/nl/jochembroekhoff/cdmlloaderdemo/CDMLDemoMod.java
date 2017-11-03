@@ -7,8 +7,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
-import nl.jochembroekhoff.cdmlloader.defaultcomponent.HandlerButton;
-import nl.jochembroekhoff.cdmlloader.defaultcomponent.HandlerLabel;
+import nl.jochembroekhoff.cdmlloader.defaultcomponent.*;
 import nl.jochembroekhoff.cdmlloaderdemo.app.DemoApplication;
 import org.apache.logging.log4j.Logger;
 
@@ -26,9 +25,18 @@ public class CDMLDemoMod {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        //Register CDML Component Handlers
+        //Register default CDML Component Handlers
         CDMLLoader.registerComponentHandler(new HandlerButton());
+        CDMLLoader.registerComponentHandler(new HandlerCheckBox());
+        CDMLLoader.registerComponentHandler(new HandlerImage());
         CDMLLoader.registerComponentHandler(new HandlerLabel());
+        CDMLLoader.registerComponentHandler(new HandlerNumberSelector());
+        CDMLLoader.registerComponentHandler(new HandlerProgressBar());
+        CDMLLoader.registerComponentHandler(new HandlerSlider());
+        CDMLLoader.registerComponentHandler(new HandlerSpinner());
+        CDMLLoader.registerComponentHandler(new HandlerText());
+        CDMLLoader.registerComponentHandler(new HandlerTextArea());
+        CDMLLoader.registerComponentHandler(new HandlerTextField());
 
         //Register CDM applications
         ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "app1"), DemoApplication.class);
