@@ -6,6 +6,8 @@ import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 
+import java.awt.*;
+
 @CdmlComponent("TextArea")
 public class HandlerTextArea implements CdmlComponentHandler {
     @Override
@@ -34,9 +36,17 @@ public class HandlerTextArea implements CdmlComponentHandler {
         if (editable != null)
             txt.setEditable(Boolean.parseBoolean(editable));
 
-        //TODO: Text color
-        //TODO: Background color
-        //TODO: Border color
+        String textColour = meta.getAttributes().getValue("textColour");
+        if (textColour != null)
+            txt.setTextColour(Color.decode(textColour));
+
+        String backgroundColour = meta.getAttributes().getValue("backgroundColour");
+        if (backgroundColour != null)
+            txt.setBackgroundColour(Color.decode(backgroundColour));
+
+        String borderColour = meta.getAttributes().getValue("borderColour");
+        if (borderColour != null)
+            txt.setBorderColour(Color.decode(borderColour));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, txt);
     }

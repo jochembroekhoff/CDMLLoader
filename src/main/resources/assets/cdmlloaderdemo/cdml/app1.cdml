@@ -76,7 +76,7 @@
                 url     CDATA       #IMPLIED
                 alpha   CDATA       #IMPLIED
                 borderVisible CDATA #IMPLIED
-                borderColor CDATA   #IMPLIED
+                borderColour CDATA  #IMPLIED
                 borderThickness CDATA #IMPLIED
 
                 imageResource CDATA #IMPLIED
@@ -185,6 +185,9 @@
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
                 editable CDATA      #IMPLIED
+                textColour CDATA    #IMPLIED
+                backgroundColour CDATA #IMPLIED
+                borderColour CDATA  #IMPLIED
                 >
 
         <!ELEMENT TextField (listeners?)>
@@ -201,6 +204,9 @@
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
                 editable CDATA      #IMPLIED
+                textColour CDATA    #IMPLIED
+                backgroundColour CDATA #IMPLIED
+                borderColour CDATA  #IMPLIED
                 >
 
 

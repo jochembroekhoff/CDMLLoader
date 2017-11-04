@@ -6,6 +6,10 @@ import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
+
+import java.awt.*;
+import java.lang.reflect.Method;
 
 @CdmlComponent("Image")
 public class HandlerImage implements CdmlComponentHandler {
@@ -51,7 +55,17 @@ public class HandlerImage implements CdmlComponentHandler {
         if (borderVisible != null)
             img.setBorderVisible(Boolean.parseBoolean(borderVisible));
 
-        //TODO: Border color
+        String borderColour = meta.getAttributes().getValue("borderColour");
+        if (borderColour != null)
+            try {
+                //FIXME: Do not use reflection. Awaits fixing from MrCrayfish/MrCrayfishDeviceMod#24
+                Method m = img.getClass().getDeclaredMethod("setBorderColor", Color.class);
+                m.setAccessible(true);
+                m.invoke(img, Color.decode(borderColour));
+            } catch (Exception e) {
+                CDMLDemoMod.getLogger().error("==> Couldn't set border color: {}", e.getMessage());
+            }
+
 
         String borderThickness = meta.getAttributes().getValue("borderThickness");
         if (borderThickness != null)
