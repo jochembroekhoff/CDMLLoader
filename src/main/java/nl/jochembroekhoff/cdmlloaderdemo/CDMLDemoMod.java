@@ -12,7 +12,7 @@ import nl.jochembroekhoff.cdmlloaderdemo.app.DemoApplication;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Author: Jochem Broekhoff
+ * @author Jochem Broekhoff
  */
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions = Reference.MC_VERSION, dependencies = Reference.DEPENDS)
 public class CDMLDemoMod {
@@ -38,8 +38,8 @@ public class CDMLDemoMod {
         CDMLLoader.registerComponentHandler(new HandlerTextArea());
         CDMLLoader.registerComponentHandler(new HandlerTextField());
 
-        //Register CDM applications
-        ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "app1"), DemoApplication.class);
+        //Register demo CDM application
+        ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "demo_app"), DemoApplication.class);
     }
 
     public static Logger getLogger() {

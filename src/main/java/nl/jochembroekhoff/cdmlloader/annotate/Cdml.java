@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * A CDML-enabled field
+ *
+ * @author Jochem Broekhoff
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

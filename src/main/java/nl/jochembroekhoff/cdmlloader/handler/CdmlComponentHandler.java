@@ -3,6 +3,9 @@ package nl.jochembroekhoff.cdmlloader.handler;
 import com.mrcrayfish.device.api.app.Component;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 
+/**
+ * @author Jochem Broekhoff
+ */
 public interface CdmlComponentHandler {
 
     Component createComponent(ComponentMeta meta);

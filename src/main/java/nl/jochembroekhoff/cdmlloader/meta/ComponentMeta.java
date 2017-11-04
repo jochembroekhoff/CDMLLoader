@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.xml.sax.Attributes;
 
+/**
+ * @author Jochem Broekhoff
+ */
 @AllArgsConstructor
 public class ComponentMeta {
 

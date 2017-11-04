@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * @author Jochem Broekhoff
+ */
 public class CDMLLoader {
 
     final static Map<String, CdmlComponentHandler> componentHandlers = new HashMap<>();

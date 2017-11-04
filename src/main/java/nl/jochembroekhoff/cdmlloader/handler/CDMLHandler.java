@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * @author Jochem Broekhoff
+ */
 @RequiredArgsConstructor
 public class CDMLHandler extends DefaultHandler {
 

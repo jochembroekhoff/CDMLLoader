@@ -8,6 +8,9 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 
 import java.text.DecimalFormat;
 
+/**
+ * @author Jochem Broekhoff
+ */
 @CdmlComponent("NumberSelector")
 public class HandlerNumberSelector implements CdmlComponentHandler {
     @Override

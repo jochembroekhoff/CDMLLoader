@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+This is the CDML notation for the demo application.
+The layout is based on the 'UI Components' system application.
+
+
+TODO: Sort out DTD
+
+-->
+<!DOCTYPE application [
+        <!ELEMENT application (layouts)>
+        <!ATTLIST application
+                main    CDATA       #REQUIRED
+                >
+
+        <!ELEMENT layouts (layout)*>
+
+        <!ELEMENT layout (components?, listeners?, background?)>
+        <!ATTLIST layout
+                id      ID          #REQUIRED
+                title   CDATA       #IMPLIED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                left    CDATA       #IMPLIED
+                top     CDATA       #IMPLIED
+                >
+
+
+        <!ELEMENT background ANY>
+
+
+        <!-- UI components -->
+
+        <!ELEMENT components (Button | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
+
+        <!ELEMENT Button (listeners?)>
+        <!ATTLIST Button
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+
+                icon    CDATA       #IMPLIED
+
+                iconResource CDATA  #IMPLIED
+                iconU   CDATA       #IMPLIED
+                iconV   CDATA       #IMPLIED
+                iconWidth CDATA     #IMPLIED
+                iconHeight CDATA    #IMPLIED
+
+                radioGroup CDATA    #IMPLIED
+                >
+
+        <!ELEMENT CheckBox (listeners?)>
+        <!ATTLIST CheckBox
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                name    CDATA       #IMPLIED
+
+                selected CDATA      #IMPLIED
+                >
+
+        <!ELEMENT Image EMPTY>
+        <!ATTLIST Image
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                url     CDATA       #IMPLIED
+                alpha   CDATA       #IMPLIED
+                borderVisible CDATA #IMPLIED
+                borderColour CDATA  #IMPLIED
+                borderThickness CDATA #IMPLIED
+
+                imageResource CDATA #IMPLIED
+                imageU  CDATA       #IMPLIED
+                imageV  CDATA       #IMPLIED
+                imageWidth CDATA    #IMPLIED
+                imageHeight CDATA   #IMPLIED
+                >
+
+        <!ELEMENT ItemList (items, listeners?)>
+        <!ATTLIST ItemList
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+                >
+        <!ELEMENT items (item)*>
+        <!ELEMENT item (#PCDATA)>
+
+        <!ELEMENT Label (listeners?)>
+        <!ATTLIST Label
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+                >
+
+        <!ELEMENT NumberSelector (listeners?)>
+        <!-- Note: Cannot set height to NumberSelector -->
+        <!ATTLIST NumberSelector
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                min     CDATA       #IMPLIED
+                max     CDATA       #IMPLIED
+                number  CDATA       #IMPLIED
+                format  CDATA       #IMPLIED
+                >
+        <!ELEMENT ProgressBar (listeners?)>
+        <!ATTLIST ProgressBar
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                height  CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                max     CDATA       #IMPLIED
+                progress CDATA      #IMPLIED
+                >
+
+        <!ELEMENT Slider (listeners?)>
+        <!ATTLIST Slider
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                percentage CDATA    #IMPLIED
+                >
+
+        <!ELEMENT Spinner (listeners?)>
+        <!ATTLIST Spinner
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+                >
+
+        <!ELEMENT Text (listeners?)>
+        <!ATTLIST Text
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+                >
+
+        <!ELEMENT TextArea (listeners?)>
+        <!ATTLIST TextArea
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                height  CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+                focused CDATA       #IMPLIED
+                placeholder CDATA   #IMPLIED
+                padding CDATA       #IMPLIED
+                editable CDATA      #IMPLIED
+                textColour CDATA    #IMPLIED
+                backgroundColour CDATA #IMPLIED
+                borderColour CDATA  #IMPLIED
+                >
+
+        <!ELEMENT TextField (listeners?)>
+        <!ATTLIST TextField
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+                focused CDATA       #IMPLIED
+                placeholder CDATA   #IMPLIED
+                padding CDATA       #IMPLIED
+                editable CDATA      #IMPLIED
+                textColour CDATA    #IMPLIED
+                backgroundColour CDATA #IMPLIED
+                borderColour CDATA  #IMPLIED
+                >
+
+
+        <!-- Other... Actions -->
+
+        <!ELEMENT listeners (listener+)>
+        <!ELEMENT listener (actions*)>
+        <!ATTLIST listener
+                event           CDATA   #REQUIRED
+                targetMethod    CDATA   #IMPLIED
+                >
+        <!ELEMENT actions (SetCurrentLayout)*>
+
+        <!ELEMENT SetCurrentLayout EMPTY>
+        <!ATTLIST SetCurrentLayout
+                layoutName      CDATA   #REQUIRED
+                >
+
+        ]>
+
+<application main="layout1">
+    <layouts>
+        <layout id="layout1" title="CDML Components" width="270" height="140">
+            <components>
+                <Label left="5" top="5" text="Label"/>
+
+                <Button left="5" top="18" text="Button" width="63" height="20"/>
+
+                <Button left="5" top="43" icon="ARROW_LEFT"/>
+                <Button left="22" top="43" icon="ARROW_UP"/>
+                <Button left="39" top="43" icon="ARROW_RIGHT"/>
+                <Button left="56" top="43" icon="ARROW_DOWN"/>
+
+                <!-- Item List -->
+
+                <CheckBox left="5" top="122" name="Off"/>
+                <CheckBox left="42" top="122" name="On" selected="true"/>
+
+                <TextField left="88" top="5" width="80" text="Text Field"/>
+
+                <TextArea left="88" top="25" width="80" height="60" text="Text Area" placeholder="Placeholder"/>
+
+                <ProgressBar left="88" top="90" width="80" height="16" progress="75"/>
+
+                <Slider left="88" top="111" width="80"/>
+
+                <Spinner left="56" top="3"/>
+
+                <Text left="180" top="5" width="90"
+                      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+
+                <Image left="180" top="100" width="85" height="35" alpha="0.8" url="https://minecraft.net/static/pages/img/minecraft-hero-og.c5517b7973e1.jpg"/>
+
+                <!-- Other: ComboBox -->
+            </components>
+
+            <listeners>
+                <listener event="init" targetMethod="layout1init"/>
+            </listeners>
+        </layout>
+    </layouts>
+</application>

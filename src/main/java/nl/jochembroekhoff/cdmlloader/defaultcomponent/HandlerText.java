@@ -6,6 +6,9 @@ import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 
+/**
+ * @author Jochem Broekhoff
+ */
 @CdmlComponent("Text")
 public class HandlerText implements CdmlComponentHandler {
     @Override

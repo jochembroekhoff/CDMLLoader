@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * A CDML component. Used to apply metadata to a CdmlComponentHandler.
+ *
+ * @author Jochem Broekhoff
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

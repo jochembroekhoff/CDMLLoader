@@ -8,6 +8,9 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 
 import java.awt.*;
 
+/**
+ * @author Jochem Broekhoff
+ */
 @CdmlComponent("TextArea")
 public class HandlerTextArea implements CdmlComponentHandler {
     @Override

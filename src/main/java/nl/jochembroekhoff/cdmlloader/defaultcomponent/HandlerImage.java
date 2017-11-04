@@ -11,6 +11,9 @@ import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
 import java.awt.*;
 import java.lang.reflect.Method;
 
+/**
+ * @author Jochem Broekhoff
+ */
 @CdmlComponent("Image")
 public class HandlerImage implements CdmlComponentHandler {
     @Override

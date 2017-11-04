@@ -10,7 +10,7 @@ import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlApp;
 
 /**
- * Author: Jochem Broekhoff
+ * @author Jochem Broekhoff
  */
 @CdmlApp
 public class DemoApplication extends Application {

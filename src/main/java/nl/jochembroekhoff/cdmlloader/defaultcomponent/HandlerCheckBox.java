@@ -6,6 +6,9 @@ import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 
+/**
+ * @author Jochem Broekhoff
+ */
 @CdmlComponent("CheckBox")
 public class HandlerCheckBox implements CdmlComponentHandler {
     @Override
