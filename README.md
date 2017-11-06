@@ -47,7 +47,37 @@ class MyApplication extends Application {
 ``` 
 
 ### Step 3 - Designing the Application in CDML
-_To do._
+Create a new folder in the `resources` folder of your mod called `cdml`. The structure will look something like this:
+```
+assets/
+    mymod/
+        cdml/
+            ...
+        lang/
+            ...
+        testures/
+            ...
+        ...
+``` 
+Let's suppose the ID of your application is `myapp` and your mod id is `mymod`.
+Then you will need to create the a file called `myapp.cdml` in the folder `assets/mymod/cdml/`.
+
+Every CDML document begins with this basic layout:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<application main="mainLayout">
+    <layouts>
+        <layout id="mainLayout" title="Main Layout" width="200" height="100">
+            <components>
+                ...
+            </components>
+        </layout>
+        ...
+    </layouts>
+</application>
+```
+
+_To be continued._
 
 ### Step 4 - Writing the Controller
 _To do._
@@ -64,7 +94,9 @@ _To do._
     - (Upcoming colour picker)
 - Implement...
     - Listeners
+    - Color schemes
     - More advanced structures (e.g. for ComboBox and ItemList)
+    - Language-based property values (like translated values for text)
 - Sort out DTD
 - UI Designer
 
