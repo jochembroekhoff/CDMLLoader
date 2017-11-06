@@ -23,6 +23,11 @@ public class HandlerButton implements CdmlComponentHandler {
         if (meta.hasWidthAndHeight())
             btn.setSize(meta.getWidth(), meta.getHeight());
 
+        String toolTipTitle = meta.getAttributes().getValue("toolTipTitle");
+        String toolTipText = meta.getAttributes().getValue("toolTipText");
+        if (toolTipTitle != null && toolTipText != null)
+            btn.setToolTip(toolTipTitle, toolTipText);
+
         String icon = meta.getAttributes().getValue("icon");
         if (icon != null)
             btn.setIcon(Icon.valueOf(icon));

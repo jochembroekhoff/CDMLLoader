@@ -45,6 +45,8 @@ TODO: Sort out DTD
                 visible CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
+                toolTipTitle CDATA  #IMPLIED
+                toolTipText CDATA   #IMPLIED
 
                 icon    CDATA       #IMPLIED
 
@@ -242,7 +244,8 @@ TODO: Sort out DTD
             <components>
                 <Label left="5" top="5" text="Label"/>
 
-                <Button left="5" top="18" text="Button" width="63" height="20"/>
+                <Button left="5" top="18" text="Button" width="63" height="20"
+                        toolTipTitle="Tool Tip Title" toolTipText="Tool Tip Text"/>
 
                 <Button left="5" top="43" icon="ARROW_LEFT"/>
                 <Button left="22" top="43" icon="ARROW_UP"/>

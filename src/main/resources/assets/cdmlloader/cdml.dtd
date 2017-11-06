@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE application [
         <!ELEMENT application (layouts)>
         <!ATTLIST application
@@ -36,6 +35,8 @@
                 visible CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
+                toolTipTitle CDATA  #IMPLIED
+                toolTipText CDATA   #IMPLIED
 
                 icon    CDATA       #IMPLIED
 
