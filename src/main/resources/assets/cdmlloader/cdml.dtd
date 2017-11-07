@@ -22,7 +22,7 @@
 
         <!-- UI components -->
 
-        <!ELEMENT components (Button | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
+        <!ELEMENT components (Button | ButtonToggle | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
 
         <!ELEMENT Button (listeners?)>
         <!ATTLIST Button
@@ -47,6 +47,33 @@
                 iconHeight CDATA    #IMPLIED
 
                 radioGroup CDATA    #IMPLIED
+                >
+
+        <!ELEMENT ButtonToggle (listeners?)>
+        <!ATTLIST ButtonToggle
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+                toolTipTitle CDATA  #IMPLIED
+                toolTipText CDATA   #IMPLIED
+
+                icon    CDATA       #IMPLIED
+
+                iconResource CDATA  #IMPLIED
+                iconU   CDATA       #IMPLIED
+                iconV   CDATA       #IMPLIED
+                iconWidth CDATA     #IMPLIED
+                iconHeight CDATA    #IMPLIED
+
+                radioGroup CDATA    #IMPLIED
+
+                selected CDATA      #IMPLIED
                 >
 
         <!ELEMENT CheckBox (listeners?)>

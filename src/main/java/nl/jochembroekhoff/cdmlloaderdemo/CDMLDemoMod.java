@@ -27,6 +27,7 @@ public class CDMLDemoMod {
     public void init(FMLInitializationEvent event) {
         //Register default CDML Component Handlers
         CDMLLoader.registerComponentHandler(new HandlerButton());
+        CDMLLoader.registerComponentHandler(new HandlerButtonToggle());
         CDMLLoader.registerComponentHandler(new HandlerCheckBox());
         CDMLLoader.registerComponentHandler(new HandlerImage());
         CDMLLoader.registerComponentHandler(new HandlerLabel());

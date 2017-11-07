@@ -32,7 +32,7 @@ TODO: Sort out DTD
 
         <!-- UI components -->
 
-        <!ELEMENT components (Button | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
+        <!ELEMENT components (Button | ButtonToggle | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
 
         <!ELEMENT Button (listeners?)>
         <!ATTLIST Button
@@ -57,6 +57,33 @@ TODO: Sort out DTD
                 iconHeight CDATA    #IMPLIED
 
                 radioGroup CDATA    #IMPLIED
+                >
+
+        <!ELEMENT ButtonToggle (listeners?)>
+        <!ATTLIST ButtonToggle
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                height  CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                text    CDATA       #IMPLIED
+                toolTipTitle CDATA  #IMPLIED
+                toolTipText CDATA   #IMPLIED
+
+                icon    CDATA       #IMPLIED
+
+                iconResource CDATA  #IMPLIED
+                iconU   CDATA       #IMPLIED
+                iconV   CDATA       #IMPLIED
+                iconWidth CDATA     #IMPLIED
+                iconHeight CDATA    #IMPLIED
+
+                radioGroup CDATA    #IMPLIED
+
+                selected CDATA      #IMPLIED
                 >
 
         <!ELEMENT CheckBox (listeners?)>
@@ -244,8 +271,8 @@ TODO: Sort out DTD
             <components>
                 <Label left="5" top="5" text="Label"/>
 
-                <Button left="5" top="18" text="Button" width="63" height="20"
-                        toolTipTitle="Tool Tip Title" toolTipText="Tool Tip Text"/>
+                <ButtonToggle left="5" top="18" text="Toggle" width="63" height="20" selected="true"
+                              toolTipTitle="Tool Tip Title" toolTipText="Tool Tip Text"/>
 
                 <Button left="5" top="43" icon="ARROW_LEFT"/>
                 <Button left="22" top="43" icon="ARROW_UP"/>

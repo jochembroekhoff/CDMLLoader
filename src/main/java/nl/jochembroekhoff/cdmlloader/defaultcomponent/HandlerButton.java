@@ -20,6 +20,13 @@ public class HandlerButton implements CdmlComponentHandler {
 
         Button btn = new Button(meta.getLeft(), meta.getTop(), meta.getText());
 
+        processButton(meta, btn);
+
+        return CdmlComponentHandler.doDefaultProcessing(meta, btn);
+    }
+
+    public static void processButton(ComponentMeta meta, Button btn) {
+
         if (meta.hasWidthAndHeight())
             btn.setSize(meta.getWidth(), meta.getHeight());
 
@@ -46,7 +53,5 @@ public class HandlerButton implements CdmlComponentHandler {
                 res = new ResourceLocation(iconResource);
             btn.setIcon(res, Integer.parseInt(iconU), Integer.parseInt(iconV), Integer.parseInt(iconWidth), Integer.parseInt(iconHeight));
         }
-
-        return CdmlComponentHandler.doDefaultProcessing(meta, btn);
     }
 }

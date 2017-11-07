@@ -87,8 +87,6 @@ _To do._
 
 ## To Do List
 - Add Component Handlers for...
-    - ButtonArrow
-    - ButtonToggle
     - ComboBox
     - ItemList
     - (Upcoming colour picker)
