@@ -11,6 +11,7 @@ import nl.jochembroekhoff.cdmlloader.exception.ApplicationNotFoundException;
 import nl.jochembroekhoff.cdmlloader.exception.NoCdmlAppException;
 import nl.jochembroekhoff.cdmlloader.handler.CDMLHandler;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
+import nl.jochembroekhoff.cdmlloader.meta.ListenerDefinition;
 import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
@@ -20,6 +21,7 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,7 @@ import java.util.function.Consumer;
 public class CDMLLoader {
 
     final static Map<String, CdmlComponentHandler> componentHandlers = new HashMap<>();
+    final static Map<String, ListenerDefinition> listeners = new HashMap<>();
 
     public static final Logger LOGGER = CDMLDemoMod.getLogger();
 
@@ -79,17 +82,24 @@ public class CDMLLoader {
         //Load fields
         Field[] cdmlFields = Arrays.stream(app.getClass().getDeclaredFields())
                 .filter(a -> a.isAnnotationPresent(Cdml.class))
-                .filter(a -> Component.class.isAssignableFrom(a.getType()))
+                //.filter(a -> Component.class.isAssignableFrom(a.getType())) //TODO: Awaits fixing of MrCrayfish/MrCrayfishDeviceMod#22
                 .toArray(Field[]::new);
-
+        //Load methods
+        Method[] cdmlMethods = Arrays.stream(app.getClass().getDeclaredMethods())
+                .filter(a -> a.isAnnotationPresent(Cdml.class))
+                .toArray(Method[]::new);
 
         //Remap fields
         Map<String, Field> fieldRemapping = new HashMap<>();
         Arrays.stream(cdmlFields).forEach(field -> fieldRemapping.put(field.getName(), field));
         fieldRemapping.values().stream().forEach(f -> f.setAccessible(true));
+        //Remap methods
+        Map<String, Method> methodRemapping = new HashMap<>();
+        Arrays.stream(cdmlMethods).forEach(method -> methodRemapping.put(method.getName(), method));
+        methodRemapping.values().stream().forEach(m -> m.setAccessible(true));
 
         SAXParserFactory.newInstance().newSAXParser().parse(cdml,
-                new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, loadStart, loadComplete));
+                new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, methodRemapping, loadStart, loadComplete));
 
         /*
         //app.getClass().getField("btnRightClicked")
@@ -126,5 +136,21 @@ public class CDMLLoader {
 
     public static CdmlComponentHandler getComponentHandler(String componentType) {
         return componentHandlers.getOrDefault(componentType, null);
+    }
+
+    public static boolean registerListener(String eventName, String methodName, Class<?>... parameters){
+        if(hasListener(eventName))
+            throw  new IllegalArgumentException("A listener for event " + eventName + " has been registered already.");
+
+        listeners.put(eventName, new ListenerDefinition(eventName, methodName, parameters));
+        return true;
+    }
+
+    public static boolean hasListener(String eventName){
+        return listeners.containsKey(eventName);
+    }
+
+    public static ListenerDefinition getListener(String eventName){
+        return listeners.getOrDefault(eventName, null);
     }
 }

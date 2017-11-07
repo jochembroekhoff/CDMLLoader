@@ -253,8 +253,8 @@ TODO: Sort out DTD
         <!ELEMENT listeners (listener+)>
         <!ELEMENT listener (actions*)>
         <!ATTLIST listener
+                id              ID      #IMPLIED
                 event           CDATA   #REQUIRED
-                targetMethod    CDATA   #IMPLIED
                 >
         <!ELEMENT actions (SetCurrentLayout)*>
 
@@ -271,10 +271,14 @@ TODO: Sort out DTD
             <components>
                 <Label left="5" top="5" text="Label"/>
 
-                <ButtonToggle left="5" top="18" text="Toggle" width="63" height="20" selected="true"
+                <ButtonToggle left="5" top="18" text="Toggle" width="63" height="20" selected="false"
                               toolTipTitle="Tool Tip Title" toolTipText="Tool Tip Text"/>
 
-                <Button left="5" top="43" icon="ARROW_LEFT"/>
+                <Button left="5" top="43" icon="ARROW_LEFT">
+                    <listeners>
+                        <listener event="click" id="clickHandler"/>
+                    </listeners>
+                </Button>
                 <Button left="22" top="43" icon="ARROW_UP"/>
                 <Button left="39" top="43" icon="ARROW_RIGHT"/>
                 <Button left="56" top="43" icon="ARROW_DOWN"/>
@@ -303,7 +307,7 @@ TODO: Sort out DTD
             </components>
 
             <listeners>
-                <listener event="init" targetMethod="layout1init"/>
+                <listener event="init" id="layout1init"/>
             </listeners>
         </layout>
     </layouts>

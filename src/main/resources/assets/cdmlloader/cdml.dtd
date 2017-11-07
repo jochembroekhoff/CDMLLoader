@@ -243,8 +243,8 @@
         <!ELEMENT listeners (listener+)>
         <!ELEMENT listener (actions*)>
         <!ATTLIST listener
+                id              ID      #IMPLIED
                 event           CDATA   #REQUIRED
-                targetMethod    CDATA   #IMPLIED
                 >
         <!ELEMENT actions (SetCurrentLayout)*>
 

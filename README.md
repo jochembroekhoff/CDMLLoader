@@ -91,7 +91,7 @@ _To do._
     - ItemList
     - (Upcoming colour picker)
 - Implement...
-    - Listeners
+    - Listeners (nearly done)
     - Color schemes
     - More advanced structures (e.g. for ComboBox and ItemList)
     - Language-based property values (like translated values for text)

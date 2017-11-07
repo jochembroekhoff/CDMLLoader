@@ -4,10 +4,12 @@ import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Layout;
 import com.mrcrayfish.device.api.app.component.Button;
 import com.mrcrayfish.device.api.app.component.Image;
+import com.mrcrayfish.device.api.app.listener.ClickListener;
 import net.minecraft.nbt.NBTTagCompound;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlApp;
+import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
 
 /**
  * @author Jochem Broekhoff
@@ -38,6 +40,11 @@ public class DemoApplication extends Application {
             e.printStackTrace();
         }
     }
+
+    @Cdml
+    ClickListener clickHandler = (component, mousebtn) -> {
+        CDMLDemoMod.getLogger().info("Clicked with mouse button {}", mousebtn);
+    };
 
     @Override
     public void load(NBTTagCompound nbtTagCompound) {

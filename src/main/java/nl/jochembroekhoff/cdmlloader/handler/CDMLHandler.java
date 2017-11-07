@@ -8,12 +8,14 @@ import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.exception.FieldNotFoundException;
 import nl.jochembroekhoff.cdmlloader.meta.ApplicationMeta;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import nl.jochembroekhoff.cdmlloader.meta.ListenerDefinition;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,7 @@ public class CDMLHandler extends DefaultHandler {
     final Application app;
     final Field[] fields;
     final Map<String, Field> fieldRemapping;
+    final Map<String, Method> methodRemapping;
     final Runnable loadStart;
     final Consumer<Boolean> loadComplete;
 
@@ -47,8 +50,11 @@ public class CDMLHandler extends DefaultHandler {
     boolean inLayoutComponents = false;
     boolean processingComponent = false;
     boolean skipComponent = false;
+    Component processingComponentInstance = null;
     String processingComponentType = "";
     CdmlComponentHandler processingComponentHandler = null;
+
+    boolean inListeners = false;
 
     ApplicationMeta applicationMeta;
 
@@ -137,7 +143,7 @@ public class CDMLHandler extends DefaultHandler {
                     Process new component
                      */
 
-                    Component component;
+                    processingComponentInstance = null;
                     processingComponent = true;
                     processingComponentType = qName;
                     if (!CDMLLoader.hasComponentHandler(processingComponentType)) {
@@ -159,21 +165,53 @@ public class CDMLHandler extends DefaultHandler {
                             attributes.getValue("visible")
                     );
 
-                    component = processingComponentHandler.createComponent(componentMeta);
+                    processingComponentInstance = processingComponentHandler.createComponent(componentMeta);
 
-                    if (component == null) {
+                    if (processingComponentInstance == null) {
                         skipComponent = true;
                         return;
                     }
 
                     if (componentMeta.hasId())
-                        setToId(componentMeta.getId(), component);
-                    if (component != null)
-                        layout.addComponent(component);
+                        setToId(componentMeta.getId(), processingComponentInstance);
+                    if (processingComponentInstance != null)
+                        layout.addComponent(processingComponentInstance);
                 } else {
                     /*
-                    TODO: Process active component
+                    Process active component
+                    - Listeners
+                    - ...
                      */
+                    if (qName.equals("listeners")) {
+                        inListeners = true;
+                    }
+
+                    if (inListeners && qName.equals("listener")) {
+                        String event = attributes.getValue("event");
+                        String id = attributes.getValue("id");
+
+                        if (event == null || id == null || processingComponentInstance == null || !CDMLLoader.hasListener(event))
+                            return;
+
+                        if(!fieldRemapping.containsKey(id)) {
+                            //TODO: Skip listener processing like skipComponent?
+
+                            LOGGER.error("==> No listener found for event {}: no field found for {}", event, id);
+                            return;
+                        }
+
+                        Field listenerInstance = fieldRemapping.get(id);
+                        ListenerDefinition ld = CDMLLoader.getListener(event);
+
+                        try {
+                            Method m = processingComponentInstance.getClass().getDeclaredMethod(ld.getMethodName(), ld.getParameters());
+                            m.setAccessible(true);
+                            m.invoke(processingComponentInstance, listenerInstance.get(app));
+                        } catch (NoSuchMethodException nsme) {
+                            nsme.printStackTrace();
+                            LOGGER.warn("==> Couldn't set listener for event {}: {}", event, nsme.getMessage());
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
@@ -200,7 +238,8 @@ public class CDMLHandler extends DefaultHandler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+        } else if (qName.equals("listeners")) {
+            inListeners = false;
         } else if (qName.equals("components")) {
             inLayoutComponents = false;
         } else if (qName.equals(processingComponentType)) {

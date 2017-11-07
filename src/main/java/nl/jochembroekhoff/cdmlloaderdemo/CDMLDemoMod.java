@@ -1,6 +1,7 @@
 package nl.jochembroekhoff.cdmlloaderdemo;
 
 import com.mrcrayfish.device.api.ApplicationManager;
+import com.mrcrayfish.device.api.app.listener.ClickListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -25,6 +26,9 @@ public class CDMLDemoMod {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        //Register default listeners
+        CDMLLoader.registerListener("click", "setClickListener", ClickListener.class);
+
         //Register default CDML Component Handlers
         CDMLLoader.registerComponentHandler(new HandlerButton());
         CDMLLoader.registerComponentHandler(new HandlerButtonToggle());
