@@ -17,6 +17,6 @@ public class HandlerLabel implements CdmlComponentHandler {
             return null;
 
         return CdmlComponentHandler.doDefaultProcessing(meta,
-                new Label(meta.getAttributes().getValue("text"), meta.getLeft(), meta.getTop()));
+                new Label(meta.getText(), meta.getLeft(), meta.getTop()));
     }
 }

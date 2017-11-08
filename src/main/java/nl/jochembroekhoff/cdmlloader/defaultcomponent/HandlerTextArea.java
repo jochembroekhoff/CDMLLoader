@@ -23,7 +23,7 @@ public class HandlerTextArea implements CdmlComponentHandler {
         if (meta.hasText())
             txt.setText(meta.getText());
 
-        String placeholder = meta.getAttributes().getValue("placeholder");
+        String placeholder = meta.getCdmlHandler().getI18nValue(meta.getAttributes(), "placeholder");
         if (placeholder != null)
             txt.setPlaceholder(placeholder);
 

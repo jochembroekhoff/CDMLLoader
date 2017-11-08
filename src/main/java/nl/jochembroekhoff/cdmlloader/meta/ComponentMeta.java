@@ -3,6 +3,7 @@ package nl.jochembroekhoff.cdmlloader.meta;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import nl.jochembroekhoff.cdmlloader.handler.CDMLHandler;
 import org.xml.sax.Attributes;
 
 /**
@@ -10,6 +11,9 @@ import org.xml.sax.Attributes;
  */
 @AllArgsConstructor
 public class ComponentMeta {
+
+    @Getter
+    CDMLHandler cdmlHandler;
 
     @Getter
     String modId;
@@ -103,11 +107,12 @@ public class ComponentMeta {
     }
 
     /* TEXT */
+
+    @Getter
+    String text;
+
     public boolean hasText() {
         return getText() != null;
     }
 
-    public String getText() {
-        return getAttributes().getValue("text");
-    }
 }

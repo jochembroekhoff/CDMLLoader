@@ -16,7 +16,7 @@ public class HandlerCheckBox implements CdmlComponentHandler {
         if (!meta.hasTopAndLeft())
             return null;
 
-        CheckBox cb = new CheckBox(meta.getAttributes().getValue("name"), meta.getLeft(), meta.getTop());
+        CheckBox cb = new CheckBox(meta.getCdmlHandler().getI18nValue(meta.getAttributes(), "name"), meta.getLeft(), meta.getTop());
 
         String selected = meta.getAttributes().getValue("selected");
         if (selected != null)

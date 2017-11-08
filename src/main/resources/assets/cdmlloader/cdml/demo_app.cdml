@@ -267,12 +267,12 @@ TODO: Sort out DTD
 
 <application main="layout1">
     <layouts>
-        <layout id="layout1" title="CDML Components" width="270" height="140">
+        <layout id="layout1" title=":example_title" width="270" height="140">
             <components>
                 <Label left="5" top="5" text="Label"/>
 
                 <ButtonToggle left="5" top="18" text="Toggle" width="63" height="20" selected="false"
-                              toolTipTitle="Tool Tip Title" toolTipText="Tool Tip Text"/>
+                              toolTipTitle=":tool_tip_title" toolTipText=":tool_tip_text"/>
 
                 <Button left="5" top="43" icon="ARROW_LEFT">
                     <listeners>
@@ -285,8 +285,8 @@ TODO: Sort out DTD
 
                 <!-- Item List -->
 
-                <CheckBox left="5" top="122" name="Off"/>
-                <CheckBox left="42" top="122" name="On" selected="true"/>
+                <CheckBox left="5" top="122" name=":off"/>
+                <CheckBox left="42" top="122" name=":on" selected="true"/>
 
                 <TextField left="88" top="5" width="80" text="Text Field"/>
 
@@ -298,8 +298,7 @@ TODO: Sort out DTD
 
                 <Spinner left="56" top="3"/>
 
-                <Text left="180" top="5" width="90"
-                      text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."/>
+                <Text left="180" top="5" width="90" text=":lorem"/>
 
                 <Image left="180" top="100" width="85" height="35" alpha="0.8" url="https://minecraft.net/static/pages/img/minecraft-hero-og.c5517b7973e1.jpg"/>
 

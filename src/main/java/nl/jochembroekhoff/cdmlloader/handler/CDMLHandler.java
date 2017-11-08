@@ -4,6 +4,7 @@ import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.Layout;
 import lombok.RequiredArgsConstructor;
+import net.minecraft.client.resources.I18n;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.exception.FieldNotFoundException;
 import nl.jochembroekhoff.cdmlloader.meta.ApplicationMeta;
@@ -15,7 +16,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,7 +87,7 @@ public class CDMLHandler extends DefaultHandler {
                 inLayout = true;
 
                 layoutId = attributes.getValue("id");
-                String layoutTitle = attributes.getValue("title");
+                String layoutTitle = getI18nValue(attributes, "title");
                 String layoutWidth = attributes.getValue("width");
                 String layoutHeight = attributes.getValue("height");
                 String layoutLeft = attributes.getValue("left");
@@ -154,6 +154,7 @@ public class CDMLHandler extends DefaultHandler {
                     processingComponentHandler = CDMLLoader.getComponentHandler(qName);
 
                     ComponentMeta componentMeta = new ComponentMeta(
+                            this,
                             modId,
                             attributes,
                             attributes.getValue("id"),
@@ -162,7 +163,8 @@ public class CDMLHandler extends DefaultHandler {
                             attributes.getValue("width"),
                             attributes.getValue("height"),
                             attributes.getValue("enabled"),
-                            attributes.getValue("visible")
+                            attributes.getValue("visible"),
+                            getI18nValue(attributes, "text")
                     );
 
                     processingComponentInstance = processingComponentHandler.createComponent(componentMeta);
@@ -193,7 +195,7 @@ public class CDMLHandler extends DefaultHandler {
                         if (event == null || id == null || processingComponentInstance == null || !CDMLLoader.hasListener(event))
                             return;
 
-                        if(!fieldRemapping.containsKey(id)) {
+                        if (!fieldRemapping.containsKey(id)) {
                             //TODO: Skip listener processing like skipComponent?
 
                             LOGGER.error("==> No listener found for event {}: no field found for {}", event, id);
@@ -283,5 +285,21 @@ public class CDMLHandler extends DefaultHandler {
             return;
         }
         fieldRemapping.get(id).set(app, component);
+    }
+
+    public String getI18nValue(Attributes attributes, String key) {
+        String rawValue = attributes.getValue(key);
+        if (rawValue == null)
+            return null;
+
+        if (!rawValue.startsWith(":") || rawValue.length() <= 1)
+            return rawValue;
+
+        String i18nKey = "app." + app.getInfo().getFormattedId() + ".value." + rawValue.substring(1);
+
+        if (!I18n.hasKey(i18nKey))
+            return rawValue;
+
+        return I18n.format(i18nKey);
     }
 }

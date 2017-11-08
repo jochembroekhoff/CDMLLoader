@@ -94,7 +94,6 @@ _To do._
     - Listeners (nearly done)
     - Color schemes
     - More advanced structures (e.g. for ComboBox and ItemList)
-    - Language-based property values (like translated values for text)
 - Sort out DTD
 - UI Designer
 

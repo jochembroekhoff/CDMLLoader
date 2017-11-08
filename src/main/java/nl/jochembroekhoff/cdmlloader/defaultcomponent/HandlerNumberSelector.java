@@ -29,7 +29,7 @@ public class HandlerNumberSelector implements CdmlComponentHandler {
         String number = meta.getAttributes().getValue("number");
         if (number != null)
             ns.setNumber(Integer.parseInt(number));
-        String format = meta.getAttributes().getValue("format");
+        String format = meta.getCdmlHandler().getI18nValue(meta.getAttributes(), "format");
         if (format != null)
             ns.setFormat(new DecimalFormat(format));
 
