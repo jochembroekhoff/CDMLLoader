@@ -22,7 +22,7 @@
 
         <!-- UI components -->
 
-        <!ELEMENT components (Button | ButtonToggle | CheckBox | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
+        <!ELEMENT components (Button | ButtonToggle | CheckBox | ComboBox-List | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
 
         <!ELEMENT Button (listeners?)>
         <!ATTLIST Button
@@ -91,6 +91,19 @@
                 selected CDATA      #IMPLIED
                 >
 
+        <!ELEMENT ComboBox-List (listeners?)>
+        <!ATTLIST ComboBox-List
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+                width   CDATA       #IMPLIED
+                enabled CDATA       #IMPLIED
+                visible CDATA       #IMPLIED
+
+                listWidth CDATA     #IMPLIED
+                selectedIndex CDATA #IMPLIED
+                >
+
         <!ELEMENT Image EMPTY>
         <!ATTLIST Image
                 id      ID          #IMPLIED
@@ -114,13 +127,22 @@
                 imageHeight CDATA   #IMPLIED
                 >
 
-        <!ELEMENT ItemList (items, listeners?)>
+        <!ELEMENT ItemList (items?, listeners?)>
         <!ATTLIST ItemList
                 id      ID          #IMPLIED
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
+                width   CDATA       #REQUIRED
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
+
+                visibleItems  CDATA  #REQUIRED
+                showAll       CDATA  #IMPLIED
+                selectedIndex CDATA  #IMPLIED
+
+                backgroundColour CDATA #IMPLIED
+                borderColour     CDATA #IMPLIED
+                textColour       CDATA #IMPLIED
                 >
         <!ELEMENT items (item)*>
         <!ELEMENT item (#PCDATA)>
@@ -137,7 +159,6 @@
                 >
 
         <!ELEMENT NumberSelector (listeners?)>
-        <!-- Note: Cannot set height to NumberSelector -->
         <!ATTLIST NumberSelector
                 id      ID          #IMPLIED
                 left    CDATA       #REQUIRED
@@ -151,6 +172,7 @@
                 number  CDATA       #IMPLIED
                 format  CDATA       #IMPLIED
                 >
+
         <!ELEMENT ProgressBar (listeners?)>
         <!ATTLIST ProgressBar
                 id      ID          #IMPLIED

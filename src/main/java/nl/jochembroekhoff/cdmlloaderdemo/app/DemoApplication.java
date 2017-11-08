@@ -2,8 +2,8 @@ package nl.jochembroekhoff.cdmlloaderdemo.app;
 
 import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Layout;
-import com.mrcrayfish.device.api.app.component.Button;
-import com.mrcrayfish.device.api.app.component.Image;
+import com.mrcrayfish.device.api.app.component.ComboBox;
+import com.mrcrayfish.device.api.app.component.ItemList;
 import com.mrcrayfish.device.api.app.listener.ClickListener;
 import net.minecraft.nbt.NBTTagCompound;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
@@ -17,11 +17,10 @@ import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
 @CdmlApp
 public class DemoApplication extends Application {
     @Cdml
-    private Button btnLeft;
+    private ComboBox.List<String> cblExample;
     @Cdml
-    private Button btnRight;
-    @Cdml
-    private Image imageDisplay;
+    private ItemList<String> itemList;
+
     @Cdml
     private Layout layout1;
 
@@ -35,6 +34,11 @@ public class DemoApplication extends Application {
                     },
                     (success) -> {
                         //done loading CDML file
+                        itemList.addItem("Item #1");
+                        itemList.addItem("Item #2");
+                        itemList.addItem("Item #3");
+
+                        cblExample.setItems(new String[]{"First", "Second"});
                     });
         } catch (Exception e) {
             e.printStackTrace();

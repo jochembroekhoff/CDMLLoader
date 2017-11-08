@@ -87,11 +87,13 @@ _To do._
 
 ## To Do List
 - Add Component Handlers for...
-    - ComboBox
-    - ItemList
+    - ComboBox.Custom
     - (Upcoming colour picker)
 - Implement...
     - Listeners (nearly done)
+    - Renderers
+    - Items for ComboBox and ItemList
+    - Radio groups
     - Color schemes
     - More advanced structures (e.g. for ComboBox and ItemList)
 - Sort out DTD
