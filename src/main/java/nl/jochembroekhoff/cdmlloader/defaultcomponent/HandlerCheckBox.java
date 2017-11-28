@@ -23,6 +23,10 @@ public class HandlerCheckBox implements CdmlComponentHandler {
         if (selected != null)
             cb.setSelected(Boolean.parseBoolean(selected));
 
+        String radioGroup = meta.getAttributes().getValue("radioGroup");
+        if (radioGroup != null)
+            cb.setRadioGroup(meta.getCdmlHandler().getRadioGroup(radioGroup));
+
         return CdmlComponentHandler.doDefaultProcessing(meta, cb);
     }
 

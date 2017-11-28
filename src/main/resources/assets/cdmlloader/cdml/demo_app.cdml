@@ -98,6 +98,8 @@ TODO: Sort out DTD
 
                 name    CDATA       #IMPLIED
 
+                radioGroup CDATA    #IMPLIED
+
                 selected CDATA      #IMPLIED
                 >
 
@@ -316,8 +318,8 @@ TODO: Sort out DTD
                     </items>
                 </ItemList>
 
-                <CheckBox left="5" top="122" name=":off"/>
-                <CheckBox left="42" top="122" name=":on" selected="true"/>
+                <CheckBox left="5" top="122" name=":off" radioGroup="rg1"/>
+                <CheckBox left="42" top="122" name=":on" selected="true" radioGroup="rg1"/>
 
                 <TextField left="88" top="5" width="80" text="Text Field"/>
 

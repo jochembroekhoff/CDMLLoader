@@ -3,6 +3,7 @@ package nl.jochembroekhoff.cdmlloader.handler;
 import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.Layout;
+import com.mrcrayfish.device.api.app.component.RadioGroup;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.client.resources.I18n;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
@@ -33,6 +34,7 @@ public class CDMLHandler extends DefaultHandler {
     final Field[] fields;
     final Map<String, Field> fieldRemapping;
     final Map<String, Method> methodRemapping;
+    final Map<String, RadioGroup> radioGroups;
     final Runnable loadStart;
     final Consumer<Boolean> loadComplete;
 
@@ -157,7 +159,7 @@ public class CDMLHandler extends DefaultHandler {
                     }
                     processingComponentHandler = CDMLLoader.getComponentHandler(qName);
 
-                    processingComponentMeta  = new ComponentMeta(
+                    processingComponentMeta = new ComponentMeta(
                             this,
                             modId,
                             attributes,
@@ -317,5 +319,23 @@ public class CDMLHandler extends DefaultHandler {
             return rawValue;
 
         return I18n.format(i18nKey);
+    }
+
+    /**
+     * Get the instance of a RadioGroup by its identifier.
+     * If no instance is found, a new one is created.
+     *
+     * @param identifier RadioGroup identifier
+     * @return RadioGroup instance
+     */
+    public RadioGroup getRadioGroup(String identifier) {
+        if (radioGroups.containsKey(identifier)) {
+            return radioGroups.get(identifier);
+        } else {
+            //Create new instance if no exisiting one is found
+            RadioGroup newRg = new RadioGroup();
+            radioGroups.put(identifier, newRg);
+            return newRg;
+        }
     }
 }

@@ -88,6 +88,8 @@
 
                 name    CDATA       #IMPLIED
 
+                radioGroup CDATA    #IMPLIED
+
                 selected CDATA      #IMPLIED
                 >
 

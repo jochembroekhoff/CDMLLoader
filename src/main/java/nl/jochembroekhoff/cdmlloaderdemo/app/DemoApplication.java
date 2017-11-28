@@ -5,6 +5,7 @@ import com.mrcrayfish.device.api.app.Layout;
 import com.mrcrayfish.device.api.app.component.ComboBox;
 import com.mrcrayfish.device.api.app.component.ItemList;
 import com.mrcrayfish.device.api.app.component.ProgressBar;
+import com.mrcrayfish.device.api.app.component.RadioGroup;
 import com.mrcrayfish.device.api.app.listener.ClickListener;
 import com.mrcrayfish.device.api.app.listener.SlideListener;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,8 @@ public class DemoApplication extends Application {
     private ItemList<String> itemList;
     @Cdml
     private ProgressBar progressBar;
+    @Cdml
+    private RadioGroup rg1;
 
     @Cdml
     private Layout layout1;
@@ -39,6 +42,7 @@ public class DemoApplication extends Application {
                     (success) -> {
                         //done loading CDML file
                         //cblExample.setItems(new String[]{"First", "Second"});
+                        rg1.deselect();
                     });
         } catch (Exception e) {
             e.printStackTrace();

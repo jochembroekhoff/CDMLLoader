@@ -25,6 +25,10 @@ public class HandlerButtonToggle implements CdmlComponentHandler {
         if (selected != null)
             btnt.setSelected(Boolean.parseBoolean(selected));
 
+        String radioGroup = meta.getAttributes().getValue("radioGroup");
+        if (radioGroup != null)
+            btnt.setRadioGroup(meta.getCdmlHandler().getRadioGroup(radioGroup));
+
         return CdmlComponentHandler.doDefaultProcessing(meta, btnt);
     }
 

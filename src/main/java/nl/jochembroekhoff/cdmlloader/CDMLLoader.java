@@ -1,7 +1,7 @@
 package nl.jochembroekhoff.cdmlloader;
 
 import com.mrcrayfish.device.api.app.Application;
-import com.mrcrayfish.device.api.app.Component;
+import com.mrcrayfish.device.api.app.component.RadioGroup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
@@ -98,8 +98,29 @@ public class CDMLLoader {
         Arrays.stream(cdmlMethods).forEach(method -> methodRemapping.put(method.getName(), method));
         methodRemapping.values().stream().forEach(m -> m.setAccessible(true));
 
+        //Map radiogroups
+        Map<String, RadioGroup> radioGroups = new HashMap<>();
+        fieldRemapping.values().stream().filter(f -> RadioGroup.class.isAssignableFrom(f.getType()))
+                .forEach(rg -> {
+                    try {
+                        radioGroups.put(rg.getName(), (RadioGroup) rg.get(app));
+                        LOGGER.info("--> Registered RadioGroup {}", rg.getName());
+                    } catch (Exception e) {
+                        /* //This can probably be removed
+                        try {
+                            RadioGroup newRg = new RadioGroup();
+                            radioGroups.put(rg.getName(), newRg);
+                            rg.set(app, newRg);
+                            LOGGER.info("--> Registered RadioGroup(2) {}", rg.getName());
+                        } catch (Exception ex) {
+                        */
+                        e.printStackTrace();
+                        //}
+                    }
+                });
+
         SAXParserFactory.newInstance().newSAXParser().parse(cdml,
-                new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, methodRemapping, loadStart, loadComplete));
+                new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, methodRemapping, radioGroups, loadStart, loadComplete));
 
         /*
         //app.getClass().getField("btnRightClicked")
@@ -111,15 +132,17 @@ public class CDMLLoader {
 
     /**
      * Register a new component handler.
+     *
      * @param handler a instance of the CdmlComponentHandler class
      * @return true if the component handler was registered successfully
      */
+
     public static boolean registerComponentHandler(CdmlComponentHandler handler) {
-        if(!handler.getClass().isAnnotationPresent(CdmlComponent.class))
+        if (!handler.getClass().isAnnotationPresent(CdmlComponent.class))
             throw new IllegalArgumentException("Couldn't find @CdmlComponent in handler class.");
 
         String componentType = handler.getClass().getAnnotation(CdmlComponent.class).value();
-        if(!componentType.matches("^[A-Z].*$"))
+        if (!componentType.matches("^[A-Z].*$"))
             throw new IllegalArgumentException("Component type must start with uppercase letter.");
 
         if (hasComponentHandler(componentType))
@@ -130,7 +153,7 @@ public class CDMLLoader {
         return true;
     }
 
-    public static boolean hasComponentHandler(String componentType){
+    public static boolean hasComponentHandler(String componentType) {
         return componentHandlers.containsKey(componentType);
     }
 
@@ -138,19 +161,19 @@ public class CDMLLoader {
         return componentHandlers.getOrDefault(componentType, null);
     }
 
-    public static boolean registerListener(String eventName, String methodName, Class<?>... parameters){
-        if(hasListener(eventName))
-            throw  new IllegalArgumentException("A listener for event " + eventName + " has been registered already.");
+    public static boolean registerListener(String eventName, String methodName, Class<?>... parameters) {
+        if (hasListener(eventName))
+            throw new IllegalArgumentException("A listener for event " + eventName + " has been registered already.");
 
         listeners.put(eventName, new ListenerDefinition(eventName, methodName, parameters));
         return true;
     }
 
-    public static boolean hasListener(String eventName){
+    public static boolean hasListener(String eventName) {
         return listeners.containsKey(eventName);
     }
 
-    public static ListenerDefinition getListener(String eventName){
+    public static ListenerDefinition getListener(String eventName) {
         return listeners.getOrDefault(eventName, null);
     }
 }

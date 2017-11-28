@@ -1,12 +1,12 @@
 package nl.jochembroekhoff.cdmlloader.meta;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author Jochem Broekhoff
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ApplicationMeta {
     @Getter
     private final String mainLayoutId;
