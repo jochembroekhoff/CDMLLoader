@@ -101,7 +101,7 @@ TODO: Sort out DTD
                 selected CDATA      #IMPLIED
                 >
 
-        <!ELEMENT ComboBox-List (listeners?)>
+        <!ELEMENT ComboBox-List (items?, listeners?)>
         <!ATTLIST ComboBox-List
                 id      ID          #IMPLIED
                 left    CDATA       #REQUIRED
@@ -154,8 +154,6 @@ TODO: Sort out DTD
                 borderColour     CDATA #IMPLIED
                 textColour       CDATA #IMPLIED
                 >
-        <!ELEMENT items (item)*>
-        <!ELEMENT item (#PCDATA)>
 
         <!ELEMENT Label (listeners?)>
         <!ATTLIST Label
@@ -273,12 +271,17 @@ TODO: Sort out DTD
         <!-- Other... Actions -->
 
         <!ELEMENT listeners (listener+)>
+
         <!ELEMENT listener (actions*)>
         <!ATTLIST listener
                 id              ID      #IMPLIED
                 event           CDATA   #REQUIRED
                 >
+
         <!ELEMENT actions (SetCurrentLayout)*>
+
+        <!ELEMENT items (item)*>
+        <!ELEMENT item (#PCDATA)>
 
         <!ELEMENT SetCurrentLayout EMPTY>
         <!ATTLIST SetCurrentLayout
@@ -305,7 +308,13 @@ TODO: Sort out DTD
                 <Button left="39" top="43" width="12" height="12" icon="CHEVRON_RIGHT"/>
                 <Button left="56" top="43" width="12" height="12" icon="CHEVRON_DOWN"/>
 
-                <ItemList id="itemList" left="5" top="60" width="63" visibleItems="4"/>
+                <ItemList id="itemList" left="5" top="60" width="63" visibleItems="4">
+                    <items>
+                        <item>Item #1</item>
+                        <item>Item #2</item>
+                        <item>Item #3</item>
+                    </items>
+                </ItemList>
 
                 <CheckBox left="5" top="122" name=":off"/>
                 <CheckBox left="42" top="122" name=":on" selected="true"/>
@@ -314,11 +323,20 @@ TODO: Sort out DTD
 
                 <TextArea left="88" top="25" width="80" height="40" text="Text Area" placeholder="Placeholder"/>
 
-                <ProgressBar left="88" top="70" width="80" height="16" progress="75"/>
+                <ProgressBar left="88" top="70" width="80" height="16" progress="75" id="progressBar"/>
 
-                <Slider left="88" top="91" width="80"/>
+                <Slider left="88" top="91" width="80">
+                    <listeners>
+                        <listener event="slide" id="slideHandler"/>
+                    </listeners>
+                </Slider>
 
-                <ComboBox-List id="cblExample" left="88" top="108" selectedIndex="1"/>
+                <ComboBox-List id="cblExample" left="88" top="108" selectedIndex="1">
+                    <items>
+                        <item>First</item>
+                        <item>Second</item>
+                    </items>
+                </ComboBox-List>
 
                 <Spinner left="56" top="3"/>
 

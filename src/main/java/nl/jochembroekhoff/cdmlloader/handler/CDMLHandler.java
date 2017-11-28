@@ -53,8 +53,12 @@ public class CDMLHandler extends DefaultHandler {
     Component processingComponentInstance = null;
     String processingComponentType = "";
     CdmlComponentHandler processingComponentHandler = null;
+    ComponentMeta processingComponentMeta = null;
 
     boolean inListeners = false;
+
+    boolean otherProcessing = false;
+    String otherQName = "";
 
     ApplicationMeta applicationMeta;
 
@@ -153,7 +157,7 @@ public class CDMLHandler extends DefaultHandler {
                     }
                     processingComponentHandler = CDMLLoader.getComponentHandler(qName);
 
-                    ComponentMeta componentMeta = new ComponentMeta(
+                    processingComponentMeta  = new ComponentMeta(
                             this,
                             modId,
                             attributes,
@@ -164,28 +168,32 @@ public class CDMLHandler extends DefaultHandler {
                             attributes.getValue("height"),
                             attributes.getValue("enabled"),
                             attributes.getValue("visible"),
-                            getI18nValue(attributes, "text")
+                            getI18nValue(attributes, "text"),
+                            new HashMap<>()
                     );
 
-                    processingComponentInstance = processingComponentHandler.createComponent(componentMeta);
+                    processingComponentInstance = processingComponentHandler.createComponent(processingComponentMeta);
 
                     if (processingComponentInstance == null) {
                         skipComponent = true;
                         return;
                     }
 
-                    if (componentMeta.hasId())
-                        setToId(componentMeta.getId(), processingComponentInstance);
+                    if (processingComponentMeta.hasId())
+                        setToId(processingComponentMeta.getId(), processingComponentInstance);
                     if (processingComponentInstance != null)
                         layout.addComponent(processingComponentInstance);
                 } else {
                     /*
                     Process active component
                     - Listeners
-                    - ...
+                    - Items
                      */
                     if (qName.equals("listeners")) {
                         inListeners = true;
+                    } else {
+                        otherProcessing = true;
+                        otherQName = qName;
                     }
 
                     if (inListeners && qName.equals("listener")) {
@@ -209,10 +217,13 @@ public class CDMLHandler extends DefaultHandler {
                             Method m = processingComponentInstance.getClass().getDeclaredMethod(ld.getMethodName(), ld.getParameters());
                             m.setAccessible(true);
                             m.invoke(processingComponentInstance, listenerInstance.get(app));
+                            LOGGER.info("--> Attached listener {} to event {}", id, event);
                         } catch (NoSuchMethodException nsme) {
                             nsme.printStackTrace();
                             LOGGER.warn("==> Couldn't set listener for event {}: {}", event, nsme.getMessage());
                         }
+                    } else if (otherProcessing && processingComponentHandler != null) {
+                        processingComponentHandler.startElement(processingComponentInstance, processingComponentMeta, qName, attributes);
                     }
                 }
             }
@@ -247,18 +258,23 @@ public class CDMLHandler extends DefaultHandler {
         } else if (qName.equals(processingComponentType)) {
             //Reset component processing state
             processingComponentHandler = null;
+            processingComponentMeta = null;
             processingComponent = false;
             processingComponentType = "";
             skipComponent = false;
+        } else if (qName.equals(otherQName)) {
+            otherProcessing = true;
+        } else if (otherProcessing && processingComponentHandler != null) {
+            processingComponentHandler.endElement(processingComponentInstance, processingComponentMeta, qName);
         }
 
     }
 
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
-
-        LOGGER.info("Characters: {}", new String(ch, start, length));
-
+        if (otherProcessing && processingComponentHandler != null) {
+            processingComponentHandler.elementContent(processingComponentInstance, processingComponentMeta, new String(ch, start, length));
+        }
     }
 
     @Override

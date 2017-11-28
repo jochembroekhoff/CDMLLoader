@@ -5,6 +5,7 @@ import com.mrcrayfish.device.api.app.component.ItemList;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import org.xml.sax.Attributes;
 
 import java.awt.*;
 
@@ -46,5 +47,24 @@ public class HandlerItemList implements CdmlComponentHandler {
             il.setTextColour(Color.decode(textColour));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, il);
+    }
+
+    @Override
+    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
+        if (qName.equals("items"))
+            meta.getCustomProperties().put("processingItems", true);
+    }
+
+    @Override
+    public void endElement(Component component, ComponentMeta meta, String qName) {
+        if (qName.equals("items"))
+            meta.getCustomProperties().put("processingItems", false);
+    }
+
+    @Override
+    public void elementContent(Component component, ComponentMeta meta, String chars) {
+        if ((boolean) meta.getCustomProperties().getOrDefault("processingItems", false)) {
+            ((ItemList) component).addItem(chars);
+        }
     }
 }

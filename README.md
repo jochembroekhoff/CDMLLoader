@@ -90,9 +90,7 @@ _To do._
     - ComboBox.Custom
     - (Upcoming colour picker)
 - Implement...
-    - Listeners (nearly done)
     - Renderers
-    - Items for ComboBox and ItemList
     - Radio groups
     - Color schemes
     - More advanced structures (e.g. for ComboBox and ItemList)

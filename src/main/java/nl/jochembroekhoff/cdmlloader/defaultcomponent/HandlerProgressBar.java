@@ -5,6 +5,7 @@ import com.mrcrayfish.device.api.app.component.ProgressBar;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
@@ -26,5 +27,20 @@ public class HandlerProgressBar implements CdmlComponentHandler {
             pb.setProgress(Integer.parseInt(progress));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, pb);
+    }
+
+    @Override
+    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
+
+    }
+
+    @Override
+    public void endElement(Component component, ComponentMeta meta, String qName) {
+
+    }
+
+    @Override
+    public void elementContent(Component component, ComponentMeta meta, String chars) {
+
     }
 }

@@ -6,6 +6,9 @@ import lombok.Setter;
 import nl.jochembroekhoff.cdmlloader.handler.CDMLHandler;
 import org.xml.sax.Attributes;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Jochem Broekhoff
  */
@@ -114,5 +117,9 @@ public class ComponentMeta {
     public boolean hasText() {
         return getText() != null;
     }
+
+    /* CUSTOM PROPERTIES */
+    @Getter
+    Map<String, Object> customProperties = new HashMap<>();
 
 }

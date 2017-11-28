@@ -5,6 +5,7 @@ import com.mrcrayfish.device.api.app.component.CheckBox;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
@@ -23,5 +24,20 @@ public class HandlerCheckBox implements CdmlComponentHandler {
             cb.setSelected(Boolean.parseBoolean(selected));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, cb);
+    }
+
+    @Override
+    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
+
+    }
+
+    @Override
+    public void endElement(Component component, ComponentMeta meta, String qName) {
+
+    }
+
+    @Override
+    public void elementContent(Component component, ComponentMeta meta, String chars) {
+
     }
 }

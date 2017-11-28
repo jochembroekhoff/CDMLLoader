@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
@@ -23,6 +24,21 @@ public class HandlerButton implements CdmlComponentHandler {
         processButton(meta, btn);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, btn);
+    }
+
+    @Override
+    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
+
+    }
+
+    @Override
+    public void endElement(Component component, ComponentMeta meta, String qName) {
+
+    }
+
+    @Override
+    public void elementContent(Component component, ComponentMeta meta, String chars) {
+
     }
 
     public static void processButton(ComponentMeta meta, Button btn) {

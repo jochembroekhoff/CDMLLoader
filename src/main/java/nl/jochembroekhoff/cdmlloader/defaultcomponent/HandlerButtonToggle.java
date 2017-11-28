@@ -5,6 +5,7 @@ import com.mrcrayfish.device.api.app.component.ButtonToggle;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
@@ -25,5 +26,20 @@ public class HandlerButtonToggle implements CdmlComponentHandler {
             btnt.setSelected(Boolean.parseBoolean(selected));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, btnt);
+    }
+
+    @Override
+    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
+
+    }
+
+    @Override
+    public void endElement(Component component, ComponentMeta meta, String qName) {
+
+    }
+
+    @Override
+    public void elementContent(Component component, ComponentMeta meta, String chars) {
+
     }
 }

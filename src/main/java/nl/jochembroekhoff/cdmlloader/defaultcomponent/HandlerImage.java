@@ -7,6 +7,7 @@ import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
+import org.xml.sax.Attributes;
 
 import java.awt.*;
 import java.lang.reflect.Method;
@@ -75,5 +76,20 @@ public class HandlerImage implements CdmlComponentHandler {
             img.setBorderThickness(Integer.parseInt(borderThickness));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, img);
+    }
+
+    @Override
+    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
+
+    }
+
+    @Override
+    public void endElement(Component component, ComponentMeta meta, String qName) {
+
+    }
+
+    @Override
+    public void elementContent(Component component, ComponentMeta meta, String chars) {
+
     }
 }

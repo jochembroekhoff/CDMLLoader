@@ -4,7 +4,9 @@ import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Layout;
 import com.mrcrayfish.device.api.app.component.ComboBox;
 import com.mrcrayfish.device.api.app.component.ItemList;
+import com.mrcrayfish.device.api.app.component.ProgressBar;
 import com.mrcrayfish.device.api.app.listener.ClickListener;
+import com.mrcrayfish.device.api.app.listener.SlideListener;
 import net.minecraft.nbt.NBTTagCompound;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
@@ -20,6 +22,8 @@ public class DemoApplication extends Application {
     private ComboBox.List<String> cblExample;
     @Cdml
     private ItemList<String> itemList;
+    @Cdml
+    private ProgressBar progressBar;
 
     @Cdml
     private Layout layout1;
@@ -34,11 +38,7 @@ public class DemoApplication extends Application {
                     },
                     (success) -> {
                         //done loading CDML file
-                        itemList.addItem("Item #1");
-                        itemList.addItem("Item #2");
-                        itemList.addItem("Item #3");
-
-                        cblExample.setItems(new String[]{"First", "Second"});
+                        //cblExample.setItems(new String[]{"First", "Second"});
                     });
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,6 +49,9 @@ public class DemoApplication extends Application {
     ClickListener clickHandler = (component, mousebtn) -> {
         CDMLDemoMod.getLogger().info("Clicked with mouse button {}", mousebtn);
     };
+
+    @Cdml
+    SlideListener slideHandler = (percentage) -> progressBar.setProgress((int) (percentage * 100));
 
     @Override
     public void load(NBTTagCompound nbtTagCompound) {

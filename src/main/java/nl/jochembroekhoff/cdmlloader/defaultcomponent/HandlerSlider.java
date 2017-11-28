@@ -5,6 +5,7 @@ import com.mrcrayfish.device.api.app.component.Slider;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
@@ -23,5 +24,20 @@ public class HandlerSlider implements CdmlComponentHandler {
             sld.setPercentage(Float.parseFloat(percentage));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, sld);
+    }
+
+    @Override
+    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
+
+    }
+
+    @Override
+    public void endElement(Component component, ComponentMeta meta, String qName) {
+
+    }
+
+    @Override
+    public void elementContent(Component component, ComponentMeta meta, String chars) {
+
     }
 }

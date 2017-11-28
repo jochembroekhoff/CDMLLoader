@@ -91,7 +91,7 @@
                 selected CDATA      #IMPLIED
                 >
 
-        <!ELEMENT ComboBox-List (listeners?)>
+        <!ELEMENT ComboBox-List (items?, listeners?)>
         <!ATTLIST ComboBox-List
                 id      ID          #IMPLIED
                 left    CDATA       #REQUIRED
@@ -144,8 +144,6 @@
                 borderColour     CDATA #IMPLIED
                 textColour       CDATA #IMPLIED
                 >
-        <!ELEMENT items (item)*>
-        <!ELEMENT item (#PCDATA)>
 
         <!ELEMENT Label (listeners?)>
         <!ATTLIST Label
@@ -263,12 +261,17 @@
         <!-- Other... Actions -->
 
         <!ELEMENT listeners (listener+)>
+
         <!ELEMENT listener (actions*)>
         <!ATTLIST listener
                 id              ID      #IMPLIED
                 event           CDATA   #REQUIRED
                 >
+
         <!ELEMENT actions (SetCurrentLayout)*>
+
+        <!ELEMENT items (item)*>
+        <!ELEMENT item (#PCDATA)>
 
         <!ELEMENT SetCurrentLayout EMPTY>
         <!ATTLIST SetCurrentLayout

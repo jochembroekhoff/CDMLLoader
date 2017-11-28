@@ -5,6 +5,7 @@ import com.mrcrayfish.device.api.app.component.TextArea;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
+import org.xml.sax.Attributes;
 
 import java.awt.*;
 
@@ -52,5 +53,20 @@ public class HandlerTextArea implements CdmlComponentHandler {
             txt.setBorderColour(Color.decode(borderColour));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, txt);
+    }
+
+    @Override
+    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
+
+    }
+
+    @Override
+    public void endElement(Component component, ComponentMeta meta, String qName) {
+
+    }
+
+    @Override
+    public void elementContent(Component component, ComponentMeta meta, String chars) {
+
     }
 }
