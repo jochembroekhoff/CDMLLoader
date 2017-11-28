@@ -6,6 +6,10 @@ the layout definition, written in a markup language called CDML, an XML document
 
 Requires CDM version `0.2.0-pre3`.
 
+*This documentation is NOT complete and you shouldn't rely on it. This project has not been released as
+any stable release, beta or alpha, so anything might change. The demo application in the source code is a great reference
+when you can't find how to do something in the documentation below. (src/main/java/nl/jochembroekhoff/cdmlloaderdemo/)*  
+
 ## Setup for application developers
 
 ### Step 1 - Libraries
@@ -55,7 +59,7 @@ assets/
             ...
         lang/
             ...
-        testures/
+        textures/
             ...
         ...
 ``` 
@@ -77,13 +81,92 @@ Every CDML document begins with this basic layout:
 </application>
 ```
 
+You can have multiple layouts in the application. Each layout is used to display different information to the user.
+
+At this moment, the following components are supported out of the box:
+- Button
+- ButtonToggle
+- CheckBox
+- ComboBox.List
+- Image
+- ItemList
+- Label
+- NumberSelector
+- ProgressBar
+- slider
+- Spinner
+- Text
+- TextArea
+- TextField
+
+To find out which attributes you can set on each component, checkout the DTD (in src/main/resources/assets/cdmlloader).
+
+> **Using i18n**: All the core components support i18n (internationalisation) on all text attributes.
+> You can mark a text value as i18n by prefixing it with a colon (:).
+> ```xml
+> <Label left="5" top="5" text=":labelText"/>
+> ``` 
+> The key in the lang files is composed like this: `app.MOD_ID.APP_ID.value.RAWVALUE`.
+> So in this case CDMLLoader tries to load the i18n value of `app.mymod.myapp.value.labelText`.
+
 _To be continued._
 
 ### Step 4 - Writing the Controller
+If you want to use all the features of the Device Mod and support user interaction, you need a controller.
+The controller class is simply the application class.
+
+To interact with any component in the application, you need to tell CDMLLoader to link a generated component
+to a field in your controller. This is done by adding the `id` attribute to the component in the XML document.
+
+Your .cdml and controller would look something like this:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<application main="mainLayout">
+    <layouts>
+        <layout id="mainLayout" title="Main Layout" width="200" height="100">
+            <components>
+                <Label id="myLabel" top="5" left="5" text="Example Text"/>
+                ...
+            </components>
+        </layout>
+        ...
+    </layouts>
+</application>
+``` 
+```java
+import com.mrcrayfish.device.api.app.Application;
+import com.mrcrayfish.device.api.app.component.*;
+import nl.jochembroekhoff.cdmlloader.annotate.*;
+import nl.jochembroekhoff.cdmlloader.CDMLLoader;
+
+@CdmlApp
+class MyApplication extends Application {
+    @Cdml
+    Label myLabel;
+    
+    @Override
+    public void init() {
+        CDMLLoader.load(this);
+    }
+    
+    //...
+}
+```
+
+CDMLLoader will search for fields annotated with `@Cdml` to inject the generated values.
+All fields should be instantiated after `CDMLLoader.load(this)` has returned.
+
+_To be continued._
+
+## Writing custom components
 _To do._
 
-## Setup for component developers
-_To do._
+### Step 1 - Creating the component itself
+
+### Step 2 - Creating the component handler
+
+### Step 3 - Registering components and additional listeners
 
 ## To Do List
 - Add Component Handlers for...
@@ -91,9 +174,8 @@ _To do._
     - (Upcoming colour picker)
 - Implement...
     - Renderers
-    - Radio groups
-    - Color schemes
-    - More advanced structures (e.g. for ComboBox and ItemList)
+    - Colour schemes
+- Per-layout controllers
 - Sort out DTD
 - UI Designer
 
