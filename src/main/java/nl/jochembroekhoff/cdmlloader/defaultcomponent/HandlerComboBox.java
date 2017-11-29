@@ -64,7 +64,7 @@ public abstract class HandlerComboBox {
                     ItemList il = (ItemList) field.get(cbl);
                     Object[] items = new Object[il.getItems().size() + 1];
                     il.getItems().toArray(items);
-                    items[items.length - 1] = chars;
+                    items[items.length - 1] = meta.getCdmlHandler().getI18nValue(chars);
                     cbl.setItems(items);
                 } catch (Exception e) {
                     e.printStackTrace();

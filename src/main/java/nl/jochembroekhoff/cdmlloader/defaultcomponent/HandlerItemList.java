@@ -65,7 +65,7 @@ public class HandlerItemList implements CdmlComponentHandler {
     @Override
     public void elementContent(Component component, ComponentMeta meta, String chars) {
         if ((boolean) meta.getCustomProperties().getOrDefault("processingItems", false)) {
-            ((ItemList) component).addItem(chars);
+            ((ItemList) component).addItem(meta.getCdmlHandler().getI18nValue(chars));
         }
     }
 }

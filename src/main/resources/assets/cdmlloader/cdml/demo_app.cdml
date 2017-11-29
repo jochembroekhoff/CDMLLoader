@@ -312,9 +312,9 @@ TODO: Sort out DTD
 
                 <ItemList id="itemList" left="5" top="60" width="63" visibleItems="4">
                     <items>
-                        <item>Item #1</item>
-                        <item>Item #2</item>
-                        <item>Item #3</item>
+                        <item>:item1</item>
+                        <item>:item2</item>
+                        <item>:item3</item>
                     </items>
                 </ItemList>
 
@@ -335,8 +335,8 @@ TODO: Sort out DTD
 
                 <ComboBox-List id="cblExample" left="88" top="108" selectedIndex="1">
                     <items>
-                        <item>First</item>
-                        <item>Second</item>
+                        <item>:first</item>
+                        <item>:second</item>
                     </items>
                 </ComboBox-List>
 
