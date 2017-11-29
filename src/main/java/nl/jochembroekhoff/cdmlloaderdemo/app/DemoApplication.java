@@ -41,8 +41,7 @@ public class DemoApplication extends Application {
                     },
                     (success) -> {
                         //done loading CDML file
-                        //cblExample.setItems(new String[]{"First", "Second"});
-                        rg1.deselect();
+                        //rg1.deselect();
                     });
         } catch (Exception e) {
             e.printStackTrace();

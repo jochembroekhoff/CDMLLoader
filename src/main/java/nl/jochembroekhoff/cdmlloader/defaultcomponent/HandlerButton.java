@@ -1,7 +1,7 @@
 package nl.jochembroekhoff.cdmlloader.defaultcomponent;
 
 import com.mrcrayfish.device.api.app.Component;
-import com.mrcrayfish.device.api.app.Icon;
+import com.mrcrayfish.device.api.app.Icons;
 import com.mrcrayfish.device.api.app.component.Button;
 import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
@@ -53,7 +53,7 @@ public class HandlerButton implements CdmlComponentHandler {
 
         String icon = meta.getAttributes().getValue("icon");
         if (icon != null)
-            btn.setIcon(Icon.valueOf(icon));
+            btn.setIcon(Icons.valueOf(icon));
 
         //TODO: Test how this works
         String iconResource = meta.getAttributes().getValue("iconResource");

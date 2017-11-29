@@ -103,31 +103,25 @@ public class CDMLLoader {
         fieldRemapping.values().stream().filter(f -> RadioGroup.class.isAssignableFrom(f.getType()))
                 .forEach(rg -> {
                     try {
-                        radioGroups.put(rg.getName(), (RadioGroup) rg.get(app));
-                        LOGGER.info("--> Registered RadioGroup {}", rg.getName());
-                    } catch (Exception e) {
-                        /* //This can probably be removed
+                        RadioGroup rgg = (RadioGroup) rg.get(app);
+                        if (rgg == null)
+                            throw new NullPointerException();
+                        radioGroups.put(rg.getName(), rgg);
+                        LOGGER.info("--> Registered RadioGroup(1) {}", rg.getName());
+                    } catch (IllegalAccessException | NullPointerException npe) {
                         try {
                             RadioGroup newRg = new RadioGroup();
                             radioGroups.put(rg.getName(), newRg);
                             rg.set(app, newRg);
                             LOGGER.info("--> Registered RadioGroup(2) {}", rg.getName());
-                        } catch (Exception ex) {
-                        */
-                        e.printStackTrace();
-                        //}
+                        } catch (IllegalAccessException iae) {
+                            iae.printStackTrace();
+                        }
                     }
                 });
 
         SAXParserFactory.newInstance().newSAXParser().parse(cdml,
                 new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, methodRemapping, radioGroups, loadStart, loadComplete));
-
-        /*
-        //app.getClass().getField("btnRightClicked")
-        Method listener = app.getClass().getMethod("btnRightClicked", ClickListener.class);
-        Button btn = new Button(5, 5, "");
-        btn.setClickListener(listener);
-        */
     }
 
     /**
