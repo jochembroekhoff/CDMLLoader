@@ -310,6 +310,13 @@ public class CDMLHandler extends DefaultHandler {
         if (rawValue == null)
             return null;
 
+        return getI18nValue(rawValue);
+    }
+
+    public String getI18nValue(String rawValue) {
+        if (rawValue.startsWith("\\:"))
+            return rawValue.substring(1);
+
         if (!rawValue.startsWith(":") || rawValue.length() <= 1)
             return rawValue;
 
