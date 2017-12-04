@@ -1,15 +1,14 @@
 package nl.jochembroekhoff.cdmlloaderdemo;
 
 import com.mrcrayfish.device.api.ApplicationManager;
-import com.mrcrayfish.device.api.app.listener.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import nl.jochembroekhoff.cdmlloader.CDMLLoader;
-import nl.jochembroekhoff.cdmlloader.defaultcomponent.*;
 import nl.jochembroekhoff.cdmlloaderdemo.app.DemoApplication;
+import nl.jochembroekhoff.cdmlloaderdemo.proxy.CommonProxy;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -19,6 +18,9 @@ import org.apache.logging.log4j.Logger;
 public class CDMLDemoMod {
     private static Logger logger;
 
+    @SidedProxy(clientSide = Reference.Proxy.CLIENT_SIDE, serverSide = Reference.Proxy.SERVER_SIDE)
+    public static CommonProxy proxy;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
@@ -26,29 +28,7 @@ public class CDMLDemoMod {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        //Register default listeners
-        CDMLLoader.registerListener("change", "setChangeListener", ChangeListener.class);
-        CDMLLoader.registerListener("click", "setClickListener", ClickListener.class);
-        CDMLLoader.registerListener("init", "setInitListener", InitListener.class);
-        CDMLLoader.registerListener("itemClick", "setItemClickListener", ItemClickListener.class);
-        CDMLLoader.registerListener("release", "setReleaseListener", ReleaseListener.class);
-        CDMLLoader.registerListener("slide", "setSlideListener", SlideListener.class);
-
-        //Register default CDML Component Handlers
-        CDMLLoader.registerComponentHandler(new HandlerButton());
-        CDMLLoader.registerComponentHandler(new HandlerButtonToggle());
-        CDMLLoader.registerComponentHandler(new HandlerCheckBox());
-        CDMLLoader.registerComponentHandler(new HandlerComboBox.List());
-        CDMLLoader.registerComponentHandler(new HandlerItemList());
-        CDMLLoader.registerComponentHandler(new HandlerImage());
-        CDMLLoader.registerComponentHandler(new HandlerLabel());
-        CDMLLoader.registerComponentHandler(new HandlerNumberSelector());
-        CDMLLoader.registerComponentHandler(new HandlerProgressBar());
-        CDMLLoader.registerComponentHandler(new HandlerSlider());
-        CDMLLoader.registerComponentHandler(new HandlerSpinner());
-        CDMLLoader.registerComponentHandler(new HandlerText());
-        CDMLLoader.registerComponentHandler(new HandlerTextArea());
-        CDMLLoader.registerComponentHandler(new HandlerTextField());
+        proxy.init(event);
 
         //Register demo CDM application
         ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "demo_app"), DemoApplication.class);
