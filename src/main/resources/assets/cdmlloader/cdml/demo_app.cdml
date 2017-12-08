@@ -346,7 +346,7 @@ TODO: Sort out DTD
 
                 <Text left="180" top="5" width="90" text=":lorem"/>
 
-                <Image left="180" top="100" width="85" height="35" alpha="0.8" url="https://minecraft.net/static/pages/img/minecraft-hero-og.c5517b7973e1.jpg"/>
+                <Image left="180" top="103" width="85" height="29" alpha="0.8" url="https://i.imgur.com/hX7VK8G.png"/>
 
                 <!-- Other: ComboBox -->
             </components>
