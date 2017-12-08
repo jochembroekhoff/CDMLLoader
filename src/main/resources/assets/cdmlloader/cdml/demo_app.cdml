@@ -323,13 +323,13 @@ TODO: Sort out DTD
                 <CheckBox left="5" top="122" name=":off" radioGroup="rg1"/>
                 <CheckBox left="42" top="122" name=":on" selected="true" radioGroup="rg1"/>
 
-                <TextField left="88" top="5" width="80" text="Text Field"/>
+                <TextField left="88" top="5" width="80" placeholder="Text Field" icon="USER"/>
 
-                <TextArea left="88" top="25" width="80" height="40" text="Text Area" placeholder="Placeholder"/>
+                <TextArea left="88" top="25" width="80" height="40" placeholder="Text Area"/>
 
                 <ProgressBar left="88" top="70" width="80" height="16" progress="75" id="progressBar"/>
 
-                <Slider left="88" top="91" width="80">
+                <Slider left="88" top="91" width="80" percentage="0.75">
                     <listeners>
                         <listener event="slide" id="slideHandler"/>
                     </listeners>

@@ -257,6 +257,8 @@
                 textColour CDATA    #IMPLIED
                 backgroundColour CDATA #IMPLIED
                 borderColour CDATA  #IMPLIED
+
+                icon    CDATA       #IMPLIED
                 >
 
 
