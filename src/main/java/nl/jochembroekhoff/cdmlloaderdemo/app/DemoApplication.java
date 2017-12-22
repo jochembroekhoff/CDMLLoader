@@ -49,7 +49,7 @@ public class DemoApplication extends Application {
     }
 
     @Cdml
-    ClickListener clickHandler = (component, mousebtn) -> {
+    ClickListener clickHandler = (x, y, mousebtn) -> {
         CDMLDemoMod.getLogger().info("Clicked with mouse button {}", mousebtn);
     };
 
