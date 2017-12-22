@@ -7,6 +7,8 @@ import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import org.xml.sax.Attributes;
 
+import java.awt.*;
+
 /**
  * @author Jochem Broekhoff
  */
@@ -14,11 +16,16 @@ import org.xml.sax.Attributes;
 public class HandlerText implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
-        if(!meta.hasTopAndLeft() || meta.getAttrWidth() == null)
+        if (!meta.hasTopAndLeft() || meta.getAttrWidth() == null)
             return null;
 
-        return CdmlComponentHandler.doDefaultProcessing(meta,
-                new Text(meta.getText(), meta.getLeft(), meta.getTop(), meta.getWidth()));
+        Text txt = new Text(meta.getText(), meta.getLeft(), meta.getTop(), meta.getWidth());
+
+        Color textColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "textColour", "text");
+        if (textColour != null)
+            txt.setTextColour(textColour);
+
+        return CdmlComponentHandler.doDefaultProcessing(meta, txt);
     }
 
     @Override

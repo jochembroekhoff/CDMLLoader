@@ -7,6 +7,8 @@ import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import org.xml.sax.Attributes;
 
+import java.awt.*;
+
 /**
  * @author Jochem Broekhoff
  */
@@ -17,8 +19,13 @@ public class HandlerLabel implements CdmlComponentHandler {
         if (!meta.hasTopAndLeft())
             return null;
 
-        return CdmlComponentHandler.doDefaultProcessing(meta,
-                new Label(meta.getText(), meta.getLeft(), meta.getTop()));
+        Label lbl = new Label(meta.getText(), meta.getLeft(), meta.getTop());
+
+        Color textColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "textColour", "text");
+        if (textColour != null)
+            lbl.setTextColour(textColour);
+
+        return CdmlComponentHandler.doDefaultProcessing(meta, lbl);
     }
 
     @Override

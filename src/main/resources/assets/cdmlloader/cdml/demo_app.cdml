@@ -12,6 +12,7 @@ TODO: Sort out DTD
         <!ELEMENT application (layouts)>
         <!ATTLIST application
                 main    CDATA       #REQUIRED
+                useColourScheme CDATA #IMPLIED
                 >
 
         <!ELEMENT layouts (layout)*>
@@ -166,6 +167,8 @@ TODO: Sort out DTD
                 visible CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
+
+                textColour CDATA    #IMPLIED
                 >
 
         <!ELEMENT NumberSelector (listeners?)>
@@ -207,6 +210,10 @@ TODO: Sort out DTD
                 visible CDATA       #IMPLIED
 
                 percentage CDATA    #IMPLIED
+
+                backgroundColour CDATA #IMPLIED
+                borderColour CDATA  #IMPLIED
+                sliderColour CDATA  #IMPLIED
                 >
 
         <!ELEMENT Spinner (listeners?)>
@@ -294,7 +301,7 @@ TODO: Sort out DTD
 
         ]>
 
-<application main="layout1">
+<application main="layout1" useColourScheme="true">
     <layouts>
         <layout id="layout1" title=":example_title" width="270" height="140">
             <components>

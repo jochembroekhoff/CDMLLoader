@@ -174,7 +174,6 @@ _To do._
     - (Upcoming colour picker)
 - Implement...
     - Renderers
-    - Colour schemes
 - Per-layout controllers
 - Sort out DTD
 - UI Designer

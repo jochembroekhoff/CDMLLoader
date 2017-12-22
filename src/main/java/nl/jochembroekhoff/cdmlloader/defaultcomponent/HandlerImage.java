@@ -59,13 +59,13 @@ public class HandlerImage implements CdmlComponentHandler {
         if (borderVisible != null)
             img.setBorderVisible(Boolean.parseBoolean(borderVisible));
 
-        String borderColour = meta.getAttributes().getValue("borderColour");
+        Color borderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "borderColour", null);
         if (borderColour != null)
             try {
                 //FIXME: Do not use reflection. Awaits fixing from MrCrayfish/MrCrayfishDeviceMod#24
                 Method m = img.getClass().getDeclaredMethod("setBorderColor", Color.class);
                 m.setAccessible(true);
-                m.invoke(img, Color.decode(borderColour));
+                m.invoke(img, borderColour);
             } catch (Exception e) {
                 CDMLDemoMod.getLogger().error("==> Couldn't set border color: {}", e.getMessage());
             }

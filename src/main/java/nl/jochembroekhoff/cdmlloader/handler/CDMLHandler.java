@@ -4,6 +4,9 @@ import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.Layout;
 import com.mrcrayfish.device.api.app.component.RadioGroup;
+import com.mrcrayfish.device.core.Laptop;
+import com.mrcrayfish.device.programs.system.object.ColourScheme;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.client.resources.I18n;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
@@ -11,11 +14,13 @@ import nl.jochembroekhoff.cdmlloader.exception.FieldNotFoundException;
 import nl.jochembroekhoff.cdmlloader.meta.ApplicationMeta;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import nl.jochembroekhoff.cdmlloader.meta.ListenerDefinition;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.awt.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -62,6 +67,7 @@ public class CDMLHandler extends DefaultHandler {
     boolean otherProcessing = false;
     String otherQName = "";
 
+    @Getter
     ApplicationMeta applicationMeta;
 
     @Override
@@ -72,7 +78,15 @@ public class CDMLHandler extends DefaultHandler {
             if (qName.equals("application")) {
                 inApplication = true;
 
-                applicationMeta = new ApplicationMeta(attributes.getValue("main"));
+                //Extract application meta
+                String main = attributes.getValue("main");
+                String useColourScheme_ = attributes.getValue("useColourScheme");
+                boolean useColourScheme = false;
+                if (useColourScheme_ != null)
+                    useColourScheme = Boolean.parseBoolean(useColourScheme_);
+
+                //Construct application meta
+                applicationMeta = new ApplicationMeta(main, useColourScheme);
 
                 LOGGER.info("--> Found Main Layout ID: {}", applicationMeta.getMainLayoutId());
             }
@@ -275,7 +289,9 @@ public class CDMLHandler extends DefaultHandler {
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
         if (otherProcessing && processingComponentHandler != null) {
-            processingComponentHandler.elementContent(processingComponentInstance, processingComponentMeta, new String(ch, start, length));
+            String content = new String(ch, start, length);
+            if (!StringUtils.isBlank(content))
+                processingComponentHandler.elementContent(processingComponentInstance, processingComponentMeta, content);
         }
     }
 
@@ -305,6 +321,13 @@ public class CDMLHandler extends DefaultHandler {
         fieldRemapping.get(id).set(app, component);
     }
 
+    /**
+     * Quick tool call to extract an i18n value if applicable.
+     *
+     * @param attributes sax attributes
+     * @param key        attribute key
+     * @return a processed string
+     */
     public String getI18nValue(Attributes attributes, String key) {
         String rawValue = attributes.getValue(key);
         if (rawValue == null)
@@ -313,6 +336,18 @@ public class CDMLHandler extends DefaultHandler {
         return getI18nValue(rawValue);
     }
 
+    /**
+     * Process the i18n value for a string. An i18n value is searched if the string starts with a colon.
+     * If you want a literal colon, you should prefix it with a backslash to escape the i18n processing.
+     * <br/>
+     * Example 1: <code>:some_key</code> would result in the the translated value of the key with the id
+     * <code>app.&lt;modId&gt;.value.&lt;appId&gt;.some_key</code>.
+     * <br/>
+     * Example 2: <code>\:some_key</code> would result in the following value: <code>:some_key</code>.
+     *
+     * @param rawValue the raw string value
+     * @return a possible i18n-ified string
+     */
     public String getI18nValue(String rawValue) {
         if (rawValue.startsWith("\\:"))
             return rawValue.substring(1);
@@ -339,10 +374,64 @@ public class CDMLHandler extends DefaultHandler {
         if (radioGroups.containsKey(identifier)) {
             return radioGroups.get(identifier);
         } else {
-            //Create new instance if no exisiting one is found
+            //Create new instance if no existing one is found
             RadioGroup newRg = new RadioGroup();
             radioGroups.put(identifier, newRg);
             return newRg;
+        }
+    }
+
+    /**
+     * @param meta
+     * @param key
+     * @return
+     * @see #getColourFromColourScheme(ComponentMeta, String, String)
+     */
+    public Color getColourFromColourScheme(ComponentMeta meta, String key) {
+        return getColourFromColourScheme(meta, key, null);
+    }
+
+    /**
+     * Available colours from the colour scheme:
+     * <ul>
+     * <li>text</li>
+     * <li>textSecondary</li>
+     * <li>header</li>
+     * <li>background</li>
+     * <li>backgroundSecondary</li>
+     * <li>itemBackground</li>
+     * <li>itemHighlight</li>
+     * </ul>
+     *
+     * @param meta                   component meta
+     * @param key                    sax attribute key
+     * @param defaultColourSchemeKey key of the colour scheme colour to look up if needed
+     *                               and not overridden by the attribute value
+     * @return
+     */
+    public Color getColourFromColourScheme(ComponentMeta meta, String key, String defaultColourSchemeKey) {
+        String attrVal = meta.getAttributes().getValue(key);
+        if (attrVal != null && StringUtils.startsWithAny(attrVal, "#", "0x", "0X"))
+            return Color.decode(attrVal);
+        else {
+            if (!getApplicationMeta().isUseColorScheme())
+                return null;
+
+            if (attrVal != null)
+                defaultColourSchemeKey = attrVal;
+
+            LOGGER.info("--> Colour from colour scheme: {}", defaultColourSchemeKey);
+
+            ColourScheme cs = Laptop.getSystem().getSettings().getColourScheme();
+            String methodName = "get" + StringUtils.capitalize(defaultColourSchemeKey) + "Colour";
+            try {
+                Method m = cs.getClass().getDeclaredMethod(methodName);
+                m.setAccessible(true);
+                int color = (int) m.invoke(cs);
+                return new Color(color);
+            } catch (Exception e) {
+                return null;
+            }
         }
     }
 }

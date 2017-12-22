@@ -1,13 +1,14 @@
 package nl.jochembroekhoff.cdmlloader.meta;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
  * @author Jochem Broekhoff
  */
+@Data
 @RequiredArgsConstructor
 public class ApplicationMeta {
-    @Getter
     private final String mainLayoutId;
+    private final boolean useColorScheme;
 }

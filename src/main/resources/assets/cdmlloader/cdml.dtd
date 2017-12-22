@@ -2,6 +2,7 @@
         <!ELEMENT application (layouts)>
         <!ATTLIST application
                 main    CDATA       #REQUIRED
+                useColourScheme CDATA #IMPLIED
                 >
 
         <!ELEMENT layouts (layout)*>
@@ -156,6 +157,8 @@
                 visible CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
+
+                textColour CDATA    #IMPLIED
                 >
 
         <!ELEMENT NumberSelector (listeners?)>
@@ -197,6 +200,10 @@
                 visible CDATA       #IMPLIED
 
                 percentage CDATA    #IMPLIED
+
+                backgroundColour CDATA #IMPLIED
+                borderColour CDATA  #IMPLIED
+                sliderColour CDATA  #IMPLIED
                 >
 
         <!ELEMENT Spinner (listeners?)>

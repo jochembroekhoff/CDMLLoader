@@ -4,7 +4,6 @@ import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.ItemList;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
-import nl.jochembroekhoff.cdmlloader.meta.ApplicationMeta;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import org.xml.sax.Attributes;
 
@@ -37,15 +36,15 @@ public class HandlerItemList implements CdmlComponentHandler {
             il.setSelectedIndex(Integer.parseInt(selectedIndex));
 
         /* Colours */
-        String backgroundColour = meta.getAttributes().getValue("backgroundColour");
-        String borderColour = meta.getAttributes().getValue("borderColour");
-        String textColour = meta.getAttributes().getValue("textColour");
+        Color backgroundColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "backgroundColour", "background");
+        Color borderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "borderColour");
+        Color textColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "textColour", "text");
         if (backgroundColour != null)
-            il.setBackgroundColour(Color.decode(backgroundColour));
+            il.setBackgroundColour(backgroundColour);
         if (borderColour != null)
-            il.setBorderColour(Color.decode(borderColour));
+            il.setBorderColour(borderColour);
         if (textColour != null)
-            il.setTextColour(Color.decode(textColour));
+            il.setTextColour(textColour);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, il);
     }

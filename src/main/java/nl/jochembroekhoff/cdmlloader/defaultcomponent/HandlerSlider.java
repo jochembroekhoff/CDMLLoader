@@ -7,6 +7,8 @@ import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import org.xml.sax.Attributes;
 
+import java.awt.*;
+
 /**
  * @author Jochem Broekhoff
  */
@@ -14,7 +16,7 @@ import org.xml.sax.Attributes;
 public class HandlerSlider implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
-        if(!meta.hasTopAndLeft() || meta.getAttrWidth() == null)
+        if (!meta.hasTopAndLeft() || meta.getAttrWidth() == null)
             return null;
 
         Slider sld = new Slider(meta.getLeft(), meta.getTop(), meta.getWidth());
@@ -22,6 +24,17 @@ public class HandlerSlider implements CdmlComponentHandler {
         String percentage = meta.getAttributes().getValue("percentage");
         if (percentage != null)
             sld.setPercentage(Float.parseFloat(percentage));
+
+        /* Colours */
+        Color backgroundColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "backgroundColour", "background");
+        Color borderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "borderColour");
+        Color sliderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "sliderColour");
+        if (backgroundColour != null)
+            sld.setBackgroundColour(backgroundColour);
+        if (borderColour != null)
+            sld.setBorderColour(borderColour);
+        if (sliderColour != null)
+            sld.setSliderColour(sliderColour);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, sld);
     }

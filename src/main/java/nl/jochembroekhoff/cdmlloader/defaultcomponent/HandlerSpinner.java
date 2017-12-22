@@ -14,7 +14,7 @@ import org.xml.sax.Attributes;
 public class HandlerSpinner implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
-        if(!meta.hasTopAndLeft())
+        if (!meta.hasTopAndLeft())
             return null;
 
         return CdmlComponentHandler.doDefaultProcessing(meta,
