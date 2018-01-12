@@ -12,7 +12,7 @@ TODO: Sort out DTD
         <!ELEMENT application (layouts)>
         <!ATTLIST application
                 main    CDATA       #REQUIRED
-                useColourScheme CDATA #IMPLIED
+                useColorScheme CDATA #IMPLIED
                 >
 
         <!ELEMENT layouts (layout)*>
@@ -42,6 +42,7 @@ TODO: Sort out DTD
                 top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
+                padding CDATA       #IMPLIED
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
 
@@ -49,15 +50,14 @@ TODO: Sort out DTD
                 toolTipTitle CDATA  #IMPLIED
                 toolTipText CDATA   #IMPLIED
 
-                icon    CDATA       #IMPLIED
+                iconName CDATA      #IMPLIED
+                iconSet CDATA       #IMPLIED
 
                 iconResource CDATA  #IMPLIED
                 iconU   CDATA       #IMPLIED
                 iconV   CDATA       #IMPLIED
                 iconWidth CDATA     #IMPLIED
                 iconHeight CDATA    #IMPLIED
-
-                radioGroup CDATA    #IMPLIED
                 >
 
         <!ELEMENT ButtonToggle (listeners?)>
@@ -67,6 +67,7 @@ TODO: Sort out DTD
                 top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
+                padding CDATA       #IMPLIED
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
 
@@ -74,7 +75,8 @@ TODO: Sort out DTD
                 toolTipTitle CDATA  #IMPLIED
                 toolTipText CDATA   #IMPLIED
 
-                icon    CDATA       #IMPLIED
+                iconName CDATA      #IMPLIED
+                iconSet CDATA       #IMPLIED
 
                 iconResource CDATA  #IMPLIED
                 iconU   CDATA       #IMPLIED
@@ -115,6 +117,7 @@ TODO: Sort out DTD
 
                 listWidth CDATA     #IMPLIED
                 selectedIndex CDATA #IMPLIED
+                selectedItem CDATA  #IMPLIED
                 >
 
         <!ELEMENT Image EMPTY>
@@ -130,7 +133,7 @@ TODO: Sort out DTD
                 url     CDATA       #IMPLIED
                 alpha   CDATA       #IMPLIED
                 borderVisible CDATA #IMPLIED
-                borderColour CDATA  #IMPLIED
+                borderColor CDATA   #IMPLIED
                 borderThickness CDATA #IMPLIED
 
                 imageResource CDATA #IMPLIED
@@ -153,9 +156,9 @@ TODO: Sort out DTD
                 showAll       CDATA  #IMPLIED
                 selectedIndex CDATA  #IMPLIED
 
-                backgroundColour CDATA #IMPLIED
-                borderColour     CDATA #IMPLIED
-                textColour       CDATA #IMPLIED
+                backgroundColor CDATA #IMPLIED
+                borderColor     CDATA #IMPLIED
+                textColor       CDATA #IMPLIED
                 >
 
         <!ELEMENT Label (listeners?)>
@@ -168,7 +171,7 @@ TODO: Sort out DTD
 
                 text    CDATA       #IMPLIED
 
-                textColour CDATA    #IMPLIED
+                textColor CDATA     #IMPLIED
                 >
 
         <!ELEMENT NumberSelector (listeners?)>
@@ -211,9 +214,9 @@ TODO: Sort out DTD
 
                 percentage CDATA    #IMPLIED
 
-                backgroundColour CDATA #IMPLIED
-                borderColour CDATA  #IMPLIED
-                sliderColour CDATA  #IMPLIED
+                backgroundColor CDATA #IMPLIED
+                borderColor CDATA   #IMPLIED
+                sliderColor CDATA   #IMPLIED
                 >
 
         <!ELEMENT Spinner (listeners?)>
@@ -252,9 +255,9 @@ TODO: Sort out DTD
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
                 editable CDATA      #IMPLIED
-                textColour CDATA    #IMPLIED
-                backgroundColour CDATA #IMPLIED
-                borderColour CDATA  #IMPLIED
+                textColor CDATA     #IMPLIED
+                backgroundColor CDATA #IMPLIED
+                borderColor CDATA   #IMPLIED
                 >
 
         <!ELEMENT TextField (listeners?)>
@@ -271,11 +274,12 @@ TODO: Sort out DTD
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
                 editable CDATA      #IMPLIED
-                textColour CDATA    #IMPLIED
-                backgroundColour CDATA #IMPLIED
-                borderColour CDATA  #IMPLIED
+                textColor CDATA     #IMPLIED
+                backgroundColor CDATA #IMPLIED
+                borderColor CDATA   #IMPLIED
 
-                icon    CDATA       #IMPLIED
+                iconName CDATA      #IMPLIED
+                iconSet CDATA       #IMPLIED
                 >
 
 
@@ -301,7 +305,7 @@ TODO: Sort out DTD
 
         ]>
 
-<application main="layout1" useColourScheme="true">
+<application main="layout1" useColorScheme="true">
     <layouts>
         <layout id="layout1" title=":example_title" width="270" height="140">
             <components>
@@ -310,14 +314,14 @@ TODO: Sort out DTD
                 <ButtonToggle left="5" top="18" text="Toggle" width="63" height="20" selected="false"
                               toolTipTitle=":tool_tip_title" toolTipText=":tool_tip_text"/>
 
-                <Button left="5" top="43" width="12" height="12" icon="CHEVRON_LEFT">
+                <Button left="5" top="43" width="12" height="12" iconName="CHEVRON_LEFT">
                     <listeners>
                         <listener event="click" id="clickHandler"/>
                     </listeners>
                 </Button>
-                <Button left="22" top="43" width="12" height="12" icon="CHEVRON_UP"/>
-                <Button left="39" top="43" width="12" height="12" icon="CHEVRON_RIGHT"/>
-                <Button left="56" top="43" width="12" height="12" icon="CHEVRON_DOWN"/>
+                <Button left="22" top="43" width="12" height="12" iconName="CHEVRON_UP"/>
+                <Button left="39" top="43" width="12" height="12" iconName="CHEVRON_RIGHT"/>
+                <Button left="56" top="43" width="12" height="12" iconName="CHEVRON_DOWN"/>
 
                 <ItemList id="itemList" left="5" top="60" width="63" visibleItems="4">
                     <items>
@@ -330,9 +334,13 @@ TODO: Sort out DTD
                 <CheckBox left="5" top="122" name=":off" radioGroup="rg1"/>
                 <CheckBox left="42" top="122" name=":on" selected="true" radioGroup="rg1"/>
 
-                <TextField left="88" top="5" width="80" placeholder="Text Field" icon="USER"/>
+                <TextField left="88" top="5" width="80" placeholder="Text Field" iconName="USER"/>
 
-                <TextArea left="88" top="25" width="80" height="40" placeholder="Text Area"/>
+                <TextArea left="88" top="25" width="80" height="40" placeholder="Text Area">
+                    <listeners>
+                        <listener event="key" id="keyPressed"/>
+                    </listeners>
+                </TextArea>
 
                 <ProgressBar left="88" top="70" width="80" height="16" progress="75" id="progressBar"/>
 

@@ -118,6 +118,14 @@ public class ComponentMeta {
         return getText() != null;
     }
 
+    /* ICON */
+
+    @Getter
+    String iconName;
+    @Getter
+    @Setter
+    String iconSet;
+
     /* CUSTOM PROPERTIES */
     @Getter
     Map<String, Object> customProperties = new HashMap<>();

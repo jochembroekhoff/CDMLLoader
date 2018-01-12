@@ -1,7 +1,7 @@
 package nl.jochembroekhoff.cdmlloader.defaultcomponent;
 
 import com.mrcrayfish.device.api.app.Component;
-import com.mrcrayfish.device.api.app.Icons;
+import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.component.TextField;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -41,21 +41,21 @@ public class HandlerTextField implements CdmlComponentHandler {
         if (editable != null)
             txt.setEditable(Boolean.parseBoolean(editable));
 
-        Color textColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "textColour", "text");
-        if (textColour != null)
-            txt.setTextColour(textColour);
+        Color textColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "textColor", "text");
+        if (textColor != null)
+            txt.setTextColor(textColor);
 
-        Color backgroundColor = meta.getCdmlHandler().getColourFromColourScheme(meta, "backgroundColour", "background");
+        Color backgroundColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "backgroundColor", "background");
         if (backgroundColor != null)
-            txt.setBackgroundColour(backgroundColor);
+            txt.setBackgroundColor(backgroundColor);
 
-        Color borderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "borderColour");
-        if (borderColour != null)
-            txt.setBorderColour(borderColour);
+        Color borderColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "borderColor");
+        if (borderColor != null)
+            txt.setBorderColor(borderColor);
 
-        String icon = meta.getAttributes().getValue("icon");
+        IIcon icon = meta.getCdmlHandler().getIcon(meta);
         if (icon != null)
-            txt.setIcon(Icons.valueOf(icon));
+            txt.setIcon(icon);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, txt);
     }

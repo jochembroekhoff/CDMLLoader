@@ -40,17 +40,17 @@ public class HandlerTextArea implements CdmlComponentHandler {
         if (editable != null)
             txt.setEditable(Boolean.parseBoolean(editable));
 
-        Color textColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "textColour", "text");
-        if (textColour != null)
-            txt.setTextColour(textColour);
+        Color textColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "textColor", "text");
+        if (textColor != null)
+            txt.setTextColor(textColor);
 
-        Color backgroundColor = meta.getCdmlHandler().getColourFromColourScheme(meta, "backgroundColour", "background");
+        Color backgroundColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "backgroundColor", "background");
         if (backgroundColor != null)
-            txt.setBackgroundColour(backgroundColor);
+            txt.setBackgroundColor(backgroundColor);
 
-        Color borderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "borderColour");
-        if (borderColour != null)
-            txt.setBorderColour(borderColour);
+        Color borderColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "borderColor");
+        if (borderColor != null)
+            txt.setBorderColor(borderColor);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, txt);
     }

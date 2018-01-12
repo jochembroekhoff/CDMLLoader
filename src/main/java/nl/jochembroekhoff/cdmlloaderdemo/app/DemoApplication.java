@@ -7,6 +7,7 @@ import com.mrcrayfish.device.api.app.component.ItemList;
 import com.mrcrayfish.device.api.app.component.ProgressBar;
 import com.mrcrayfish.device.api.app.component.RadioGroup;
 import com.mrcrayfish.device.api.app.listener.ClickListener;
+import com.mrcrayfish.device.api.app.listener.KeyListener;
 import com.mrcrayfish.device.api.app.listener.SlideListener;
 import net.minecraft.nbt.NBTTagCompound;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
@@ -55,6 +56,12 @@ public class DemoApplication extends Application {
 
     @Cdml
     SlideListener slideHandler = (percentage) -> progressBar.setProgress((int) (percentage * 100));
+
+    @Cdml
+    KeyListener keyPressed = (key) -> {
+        CDMLDemoMod.getLogger().info("Pressed key: {}", key);
+        return true;
+    };
 
     @Override
     public void load(NBTTagCompound nbtTagCompound) {

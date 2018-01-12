@@ -2,7 +2,7 @@
         <!ELEMENT application (layouts)>
         <!ATTLIST application
                 main    CDATA       #REQUIRED
-                useColourScheme CDATA #IMPLIED
+                useColorScheme CDATA #IMPLIED
                 >
 
         <!ELEMENT layouts (layout)*>
@@ -32,6 +32,7 @@
                 top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
+                padding CDATA       #IMPLIED
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
 
@@ -39,15 +40,14 @@
                 toolTipTitle CDATA  #IMPLIED
                 toolTipText CDATA   #IMPLIED
 
-                icon    CDATA       #IMPLIED
+                iconName CDATA      #IMPLIED
+                iconSet CDATA       #IMPLIED
 
                 iconResource CDATA  #IMPLIED
                 iconU   CDATA       #IMPLIED
                 iconV   CDATA       #IMPLIED
                 iconWidth CDATA     #IMPLIED
                 iconHeight CDATA    #IMPLIED
-
-                radioGroup CDATA    #IMPLIED
                 >
 
         <!ELEMENT ButtonToggle (listeners?)>
@@ -57,6 +57,7 @@
                 top     CDATA       #REQUIRED
                 width   CDATA       #IMPLIED
                 height  CDATA       #IMPLIED
+                padding CDATA       #IMPLIED
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
 
@@ -64,7 +65,8 @@
                 toolTipTitle CDATA  #IMPLIED
                 toolTipText CDATA   #IMPLIED
 
-                icon    CDATA       #IMPLIED
+                iconName CDATA      #IMPLIED
+                iconSet CDATA       #IMPLIED
 
                 iconResource CDATA  #IMPLIED
                 iconU   CDATA       #IMPLIED
@@ -105,6 +107,7 @@
 
                 listWidth CDATA     #IMPLIED
                 selectedIndex CDATA #IMPLIED
+                selectedItem CDATA  #IMPLIED
                 >
 
         <!ELEMENT Image EMPTY>
@@ -120,7 +123,7 @@
                 url     CDATA       #IMPLIED
                 alpha   CDATA       #IMPLIED
                 borderVisible CDATA #IMPLIED
-                borderColour CDATA  #IMPLIED
+                borderColor CDATA   #IMPLIED
                 borderThickness CDATA #IMPLIED
 
                 imageResource CDATA #IMPLIED
@@ -143,9 +146,9 @@
                 showAll       CDATA  #IMPLIED
                 selectedIndex CDATA  #IMPLIED
 
-                backgroundColour CDATA #IMPLIED
-                borderColour     CDATA #IMPLIED
-                textColour       CDATA #IMPLIED
+                backgroundColor CDATA #IMPLIED
+                borderColor     CDATA #IMPLIED
+                textColor       CDATA #IMPLIED
                 >
 
         <!ELEMENT Label (listeners?)>
@@ -158,7 +161,7 @@
 
                 text    CDATA       #IMPLIED
 
-                textColour CDATA    #IMPLIED
+                textColor CDATA     #IMPLIED
                 >
 
         <!ELEMENT NumberSelector (listeners?)>
@@ -201,9 +204,9 @@
 
                 percentage CDATA    #IMPLIED
 
-                backgroundColour CDATA #IMPLIED
-                borderColour CDATA  #IMPLIED
-                sliderColour CDATA  #IMPLIED
+                backgroundColor CDATA #IMPLIED
+                borderColor CDATA   #IMPLIED
+                sliderColor CDATA   #IMPLIED
                 >
 
         <!ELEMENT Spinner (listeners?)>
@@ -242,9 +245,9 @@
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
                 editable CDATA      #IMPLIED
-                textColour CDATA    #IMPLIED
-                backgroundColour CDATA #IMPLIED
-                borderColour CDATA  #IMPLIED
+                textColor CDATA     #IMPLIED
+                backgroundColor CDATA #IMPLIED
+                borderColor CDATA   #IMPLIED
                 >
 
         <!ELEMENT TextField (listeners?)>
@@ -261,11 +264,12 @@
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
                 editable CDATA      #IMPLIED
-                textColour CDATA    #IMPLIED
-                backgroundColour CDATA #IMPLIED
-                borderColour CDATA  #IMPLIED
+                textColor CDATA     #IMPLIED
+                backgroundColor CDATA #IMPLIED
+                borderColor CDATA   #IMPLIED
 
-                icon    CDATA       #IMPLIED
+                iconName CDATA      #IMPLIED
+                iconSet CDATA       #IMPLIED
                 >
 
 

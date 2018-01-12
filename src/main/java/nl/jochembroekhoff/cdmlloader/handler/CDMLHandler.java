@@ -2,10 +2,11 @@ package nl.jochembroekhoff.cdmlloader.handler;
 
 import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Component;
+import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.Layout;
 import com.mrcrayfish.device.api.app.component.RadioGroup;
 import com.mrcrayfish.device.core.Laptop;
-import com.mrcrayfish.device.programs.system.object.ColourScheme;
+import com.mrcrayfish.device.programs.system.object.ColorScheme;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minecraft.client.resources.I18n;
@@ -80,13 +81,13 @@ public class CDMLHandler extends DefaultHandler {
 
                 //Extract application meta
                 String main = attributes.getValue("main");
-                String useColourScheme_ = attributes.getValue("useColourScheme");
-                boolean useColourScheme = false;
-                if (useColourScheme_ != null)
-                    useColourScheme = Boolean.parseBoolean(useColourScheme_);
+                String useColorScheme_ = attributes.getValue("useColorScheme");
+                boolean useColorScheme = false;
+                if (useColorScheme_ != null)
+                    useColorScheme = Boolean.parseBoolean(useColorScheme_);
 
                 //Construct application meta
-                applicationMeta = new ApplicationMeta(main, useColourScheme);
+                applicationMeta = new ApplicationMeta(main, useColorScheme);
 
                 LOGGER.info("--> Found Main Layout ID: {}", applicationMeta.getMainLayoutId());
             }
@@ -185,6 +186,8 @@ public class CDMLHandler extends DefaultHandler {
                             attributes.getValue("enabled"),
                             attributes.getValue("visible"),
                             getI18nValue(attributes, "text"),
+                            attributes.getValue("iconName"),
+                            attributes.getValue("iconSet"),
                             new HashMap<>()
                     );
 
@@ -385,14 +388,14 @@ public class CDMLHandler extends DefaultHandler {
      * @param meta
      * @param key
      * @return
-     * @see #getColourFromColourScheme(ComponentMeta, String, String)
+     * @see #getColorFromColorScheme(ComponentMeta, String, String)
      */
-    public Color getColourFromColourScheme(ComponentMeta meta, String key) {
-        return getColourFromColourScheme(meta, key, null);
+    public Color getColorFromColorScheme(ComponentMeta meta, String key) {
+        return getColorFromColorScheme(meta, key, null);
     }
 
     /**
-     * Available colours from the colour scheme:
+     * Available colors from the color scheme:
      * <ul>
      * <li>text</li>
      * <li>textSecondary</li>
@@ -403,13 +406,13 @@ public class CDMLHandler extends DefaultHandler {
      * <li>itemHighlight</li>
      * </ul>
      *
-     * @param meta                   component meta
-     * @param key                    sax attribute key
-     * @param defaultColourSchemeKey key of the colour scheme colour to look up if needed
-     *                               and not overridden by the attribute value
+     * @param meta                  component meta
+     * @param key                   sax attribute key
+     * @param defaultColorSchemeKey key of the color scheme color to look up if needed
+     *                              and not overridden by the attribute value
      * @return
      */
-    public Color getColourFromColourScheme(ComponentMeta meta, String key, String defaultColourSchemeKey) {
+    public Color getColorFromColorScheme(ComponentMeta meta, String key, String defaultColorSchemeKey) {
         String attrVal = meta.getAttributes().getValue(key);
         if (attrVal != null && StringUtils.startsWithAny(attrVal, "#", "0x", "0X"))
             return Color.decode(attrVal);
@@ -418,12 +421,12 @@ public class CDMLHandler extends DefaultHandler {
                 return null;
 
             if (attrVal != null)
-                defaultColourSchemeKey = attrVal;
+                defaultColorSchemeKey = attrVal;
 
-            LOGGER.info("--> Colour from colour scheme: {}", defaultColourSchemeKey);
+            LOGGER.info("--> Color from color scheme: {}", defaultColorSchemeKey);
 
-            ColourScheme cs = Laptop.getSystem().getSettings().getColourScheme();
-            String methodName = "get" + StringUtils.capitalize(defaultColourSchemeKey) + "Colour";
+            ColorScheme cs = Laptop.getSystem().getSettings().getColorScheme();
+            String methodName = "get" + StringUtils.capitalize(defaultColorSchemeKey) + "Color";
             try {
                 Method m = cs.getClass().getDeclaredMethod(methodName);
                 m.setAccessible(true);
@@ -433,5 +436,18 @@ public class CDMLHandler extends DefaultHandler {
                 return null;
             }
         }
+    }
+
+    public IIcon getIcon(ComponentMeta meta) {
+        if (meta.getIconName() != null) {
+            if (meta.getIconSet() == null)
+                meta.setIconSet("Icons");
+
+            if (CDMLLoader.hasIconSet(meta.getIconSet()))
+                return CDMLLoader.getIconSet(meta.getIconSet())
+                        .getOrDefault(meta.getIconName(), null);
+        }
+
+        return null;
     }
 }

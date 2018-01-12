@@ -1,7 +1,10 @@
 package nl.jochembroekhoff.cdmlloader;
 
 import com.mrcrayfish.device.api.app.Application;
+import com.mrcrayfish.device.api.app.IIcon;
+import com.mrcrayfish.device.api.app.Icons;
 import com.mrcrayfish.device.api.app.component.RadioGroup;
+import com.mrcrayfish.device.programs.ApplicationIcons;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
@@ -34,6 +37,7 @@ public class CDMLLoader {
 
     final static Map<String, CdmlComponentHandler> componentHandlers = new HashMap<>();
     final static Map<String, ListenerDefinition> listeners = new HashMap<>();
+    final static Map<String, Map<String, IIcon>> iconSets = new HashMap<>();
 
     public static final Logger LOGGER = CDMLDemoMod.getLogger();
 
@@ -124,6 +128,10 @@ public class CDMLLoader {
                 new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, methodRemapping, radioGroups, loadStart, loadComplete));
     }
 
+    /*
+    COMPONENT HANDLERS
+     */
+
     /**
      * Register a new component handler.
      *
@@ -155,6 +163,10 @@ public class CDMLLoader {
         return componentHandlers.getOrDefault(componentType, null);
     }
 
+    /*
+    LISTENERS
+     */
+
     public static boolean registerListener(String eventName, String methodName, Class<?>... parameters) {
         if (hasListener(eventName))
             throw new IllegalArgumentException("A listener for event " + eventName + " has been registered already.");
@@ -169,5 +181,25 @@ public class CDMLLoader {
 
     public static ListenerDefinition getListener(String eventName) {
         return listeners.getOrDefault(eventName, null);
+    }
+
+    /*
+    ICON SETS
+     */
+
+    public static boolean registerIconSet(String iconSetName, Map<String, IIcon> icons) {
+        if (hasIconSet(iconSetName))
+            throw new IllegalArgumentException("An icon set called " + iconSetName + " has been registered already.");
+
+        iconSets.put(iconSetName, icons);
+        return true;
+    }
+
+    public static boolean hasIconSet(String iconSetName) {
+        return iconSets.containsKey(iconSetName);
+    }
+
+    public static Map<String, IIcon> getIconSet(String iconSetName) {
+        return iconSets.getOrDefault(iconSetName, null);
     }
 }

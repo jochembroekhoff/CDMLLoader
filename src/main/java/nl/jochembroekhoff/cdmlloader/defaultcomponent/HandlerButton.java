@@ -1,7 +1,7 @@
 package nl.jochembroekhoff.cdmlloader.defaultcomponent;
 
 import com.mrcrayfish.device.api.app.Component;
-import com.mrcrayfish.device.api.app.Icons;
+import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.component.Button;
 import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
@@ -51,9 +51,9 @@ public class HandlerButton implements CdmlComponentHandler {
         if (toolTipTitle != null && toolTipText != null)
             btn.setToolTip(toolTipTitle, toolTipText);
 
-        String icon = meta.getAttributes().getValue("icon");
+        IIcon icon = meta.getCdmlHandler().getIcon(meta);
         if (icon != null)
-            btn.setIcon(Icons.valueOf(icon));
+            btn.setIcon(icon);
 
         //TODO: Test how this works
         String iconResource = meta.getAttributes().getValue("iconResource");
@@ -69,5 +69,10 @@ public class HandlerButton implements CdmlComponentHandler {
                 res = new ResourceLocation(iconResource);
             btn.setIcon(res, Integer.parseInt(iconU), Integer.parseInt(iconV), Integer.parseInt(iconWidth), Integer.parseInt(iconHeight));
         }
+
+        //Note that padding only works when the size is non-explicit
+        String padding = meta.getAttributes().getValue("padding");
+        if (padding != null)
+            btn.setPadding(Integer.parseInt(padding));
     }
 }

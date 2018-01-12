@@ -1,18 +1,18 @@
-app.cdmlloader.demo_app.name=CDML Demo Application
+app.cdmlloader.cdml_demo.name=CDML Demo Application
 
-app.cdmlloader.demo_app.value.example_title=CDML Components
+app.cdmlloader.cdml_demo.value.example_title=CDML Components
 
-app.cdmlloader.demo_app.value.lorem=Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+app.cdmlloader.cdml_demo.value.lorem=Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-app.cdmlloader.demo_app.value.tool_tip_title=Tool Tip Title
-app.cdmlloader.demo_app.value.tool_tip_text=Tool Tip Text
+app.cdmlloader.cdml_demo.value.tool_tip_title=Tool Tip Title
+app.cdmlloader.cdml_demo.value.tool_tip_text=Tool Tip Text
 
-app.cdmlloader.demo_app.value.off=Off
-app.cdmlloader.demo_app.value.on=On
+app.cdmlloader.cdml_demo.value.off=Off
+app.cdmlloader.cdml_demo.value.on=On
 
-app.cdmlloader.demo_app.value.item1=Item #1
-app.cdmlloader.demo_app.value.item2=Item #2
-app.cdmlloader.demo_app.value.item3=Item #3
+app.cdmlloader.cdml_demo.value.item1=Item #1
+app.cdmlloader.cdml_demo.value.item2=Item #2
+app.cdmlloader.cdml_demo.value.item3=Item #3
 
-app.cdmlloader.demo_app.value.first=First
-app.cdmlloader.demo_app.value.second=Second
+app.cdmlloader.cdml_demo.value.first=First
+app.cdmlloader.cdml_demo.value.second=Second

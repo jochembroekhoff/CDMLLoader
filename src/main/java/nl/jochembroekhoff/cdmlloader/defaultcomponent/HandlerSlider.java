@@ -25,16 +25,16 @@ public class HandlerSlider implements CdmlComponentHandler {
         if (percentage != null)
             sld.setPercentage(Float.parseFloat(percentage));
 
-        /* Colours */
-        Color backgroundColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "backgroundColour", "background");
-        Color borderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "borderColour");
-        Color sliderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "sliderColour");
-        if (backgroundColour != null)
-            sld.setBackgroundColour(backgroundColour);
-        if (borderColour != null)
-            sld.setBorderColour(borderColour);
-        if (sliderColour != null)
-            sld.setSliderColour(sliderColour);
+        /* Colors */
+        Color backgroundColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "backgroundColor", "background");
+        Color borderColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "borderColor");
+        Color sliderColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "sliderColor");
+        if (backgroundColor != null)
+            sld.setBackgroundColor(backgroundColor);
+        if (borderColor != null)
+            sld.setBorderColor(borderColor);
+        if (sliderColor != null)
+            sld.setSliderColor(sliderColor);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, sld);
     }

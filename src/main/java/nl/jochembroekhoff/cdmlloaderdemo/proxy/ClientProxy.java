@@ -1,9 +1,15 @@
 package nl.jochembroekhoff.cdmlloaderdemo.proxy;
 
+import com.mrcrayfish.device.api.app.Alphabet;
+import com.mrcrayfish.device.api.app.Icons;
 import com.mrcrayfish.device.api.app.listener.*;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.defaultcomponent.*;
+
+import java.util.Arrays;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ClientProxy implements CommonProxy {
     @Override
@@ -13,6 +19,7 @@ public class ClientProxy implements CommonProxy {
         CDMLLoader.registerListener("click", "setClickListener", ClickListener.class);
         CDMLLoader.registerListener("init", "setInitListener", InitListener.class);
         CDMLLoader.registerListener("itemClick", "setItemClickListener", ItemClickListener.class);
+        CDMLLoader.registerListener("key", "setKeyListener", KeyListener.class);
         CDMLLoader.registerListener("release", "setReleaseListener", ReleaseListener.class);
         CDMLLoader.registerListener("slide", "setSlideListener", SlideListener.class);
 
@@ -31,5 +38,12 @@ public class ClientProxy implements CommonProxy {
         CDMLLoader.registerComponentHandler(new HandlerText());
         CDMLLoader.registerComponentHandler(new HandlerTextArea());
         CDMLLoader.registerComponentHandler(new HandlerTextField());
+
+        //Register default icon sets
+        //Helpful article: https://stackoverflow.com/questions/20363719/java-8-listv-into-mapk-v/20363874#20363874
+        CDMLLoader.registerIconSet("Alphabet", Arrays.stream(Alphabet.values())
+                .collect(Collectors.toMap(Enum::name, Function.identity())));
+        CDMLLoader.registerIconSet("Icons", Arrays.stream(Icons.values())
+                .collect(Collectors.toMap(Enum::name, Function.identity())));
     }
 }

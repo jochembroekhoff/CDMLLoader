@@ -1,6 +1,7 @@
 package nl.jochembroekhoff.cdmlloader.defaultcomponent;
 
 import com.mrcrayfish.device.api.app.Component;
+import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.component.Image;
 import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
@@ -29,12 +30,20 @@ public class HandlerImage implements CdmlComponentHandler {
         String imageV = meta.getAttributes().getValue("imageV");
         String imageWidth = meta.getAttributes().getValue("imageWidth");
         String imageHeight = meta.getAttributes().getValue("imageHeight");
-        if (imageResource != null && imageU != null && imageV != null && imageWidth != null && imageHeight != null) {
+        IIcon icon = meta.getCdmlHandler().getIcon(meta);
+        if (icon != null) {
+            if (meta.hasTopAndLeft() && meta.hasWidthAndHeight()) {
+                img = new Image(meta.getLeft(), meta.getTop(), meta.getWidth(), meta.getHeight(), icon);
+            } else if (meta.hasTopAndLeft()) {
+                img = new Image(meta.getLeft(), meta.getTop(), icon);
+            }
+        } else if (imageResource != null && imageU != null && imageV != null && imageWidth != null && imageHeight != null) {
             ResourceLocation res;
             if (!imageResource.contains(":"))
                 res = new ResourceLocation(meta.getModId(), imageResource);
             else
                 res = new ResourceLocation(imageResource);
+
             if (meta.hasWidthAndHeight()) {
                 img = new Image(meta.getLeft(), meta.getTop(), meta.getWidth(), meta.getHeight(),
                         Integer.parseInt(imageU), Integer.parseInt(imageV), Integer.parseInt(imageWidth), Integer.parseInt(imageHeight), res);
@@ -59,13 +68,13 @@ public class HandlerImage implements CdmlComponentHandler {
         if (borderVisible != null)
             img.setBorderVisible(Boolean.parseBoolean(borderVisible));
 
-        Color borderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "borderColour", null);
-        if (borderColour != null)
+        Color borderColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "borderColor", null);
+        if (borderColor != null)
             try {
                 //FIXME: Do not use reflection. Awaits fixing from MrCrayfish/MrCrayfishDeviceMod#24
                 Method m = img.getClass().getDeclaredMethod("setBorderColor", Color.class);
                 m.setAccessible(true);
-                m.invoke(img, borderColour);
+                m.invoke(img, borderColor);
             } catch (Exception e) {
                 CDMLDemoMod.getLogger().error("==> Couldn't set border color: {}", e.getMessage());
             }

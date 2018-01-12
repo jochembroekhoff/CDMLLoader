@@ -37,6 +37,10 @@ public abstract class HandlerComboBox {
             if (selectedIndex != null)
                 cb.setSelectedItem(Integer.parseInt(selectedIndex));
 
+            String selectedItem = meta.getAttributes().getValue("selectedItem");
+            if (selectedItem != null)
+                cb.setSelectedItem(selectedItem);
+
             return CdmlComponentHandler.doDefaultProcessing(meta, cb);
         }
 

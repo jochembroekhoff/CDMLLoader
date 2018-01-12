@@ -21,9 +21,9 @@ public class HandlerLabel implements CdmlComponentHandler {
 
         Label lbl = new Label(meta.getText(), meta.getLeft(), meta.getTop());
 
-        Color textColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "textColour", "text");
-        if (textColour != null)
-            lbl.setTextColour(textColour);
+        Color textColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "textColor", "text");
+        if (textColor != null)
+            lbl.setTextColor(textColor);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, lbl);
     }

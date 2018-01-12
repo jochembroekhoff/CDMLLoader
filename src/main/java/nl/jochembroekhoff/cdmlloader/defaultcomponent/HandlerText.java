@@ -21,9 +21,9 @@ public class HandlerText implements CdmlComponentHandler {
 
         Text txt = new Text(meta.getText(), meta.getLeft(), meta.getTop(), meta.getWidth());
 
-        Color textColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "textColour", "text");
-        if (textColour != null)
-            txt.setTextColour(textColour);
+        Color textColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "textColor", "text");
+        if (textColor != null)
+            txt.setTextColor(textColor);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, txt);
     }

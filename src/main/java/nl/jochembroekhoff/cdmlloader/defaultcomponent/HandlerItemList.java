@@ -35,16 +35,16 @@ public class HandlerItemList implements CdmlComponentHandler {
         if (selectedIndex != null)
             il.setSelectedIndex(Integer.parseInt(selectedIndex));
 
-        /* Colours */
-        Color backgroundColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "backgroundColour", "background");
-        Color borderColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "borderColour");
-        Color textColour = meta.getCdmlHandler().getColourFromColourScheme(meta, "textColour", "text");
-        if (backgroundColour != null)
-            il.setBackgroundColour(backgroundColour);
-        if (borderColour != null)
-            il.setBorderColour(borderColour);
-        if (textColour != null)
-            il.setTextColour(textColour);
+        /* Colors */
+        Color backgroundColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "backgroundColor", "background");
+        Color borderColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "borderColor");
+        Color textColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "textColor", "text");
+        if (backgroundColor != null)
+            il.setBackgroundColor(backgroundColor);
+        if (borderColor != null)
+            il.setBorderColor(borderColor);
+        if (textColor != null)
+            il.setTextColor(textColor);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, il);
     }

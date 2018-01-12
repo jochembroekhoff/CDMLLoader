@@ -1,0 +1,12 @@
+{
+  "name": "CDML Demo",
+  "author": "Jochem Broekhoff",
+  "description": "Example application for CDMLLoader",
+  "version": "1.0",
+  "icon": "cdmlloader:textures/app/icon/cdml_demo.png",
+  "screenshots": [
+    "https://i.imgur.com/7CzbiA7.png",
+    "https://i.imgur.com/4AiXzf8.jpg",
+    "https://i.imgur.com/C7k2UDw.jpg"
+  ]
+}

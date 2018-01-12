@@ -31,7 +31,7 @@ public class CDMLDemoMod {
         proxy.init(event);
 
         //Register demo CDM application
-        ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "demo_app"), DemoApplication.class);
+        ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "cdml_demo"), DemoApplication.class);
     }
 
     public static Logger getLogger() {
