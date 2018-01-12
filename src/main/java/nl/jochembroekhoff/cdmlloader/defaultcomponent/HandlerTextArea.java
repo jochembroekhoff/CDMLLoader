@@ -40,6 +40,10 @@ public class HandlerTextArea implements CdmlComponentHandler {
         if (editable != null)
             txt.setEditable(Boolean.parseBoolean(editable));
 
+        String wrapText = meta.getAttributes().getValue("wrapText");
+        if (wrapText != null)
+            txt.setWrapText(Boolean.parseBoolean(wrapText));
+
         Color textColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "textColor", "text");
         if (textColor != null)
             txt.setTextColor(textColor);

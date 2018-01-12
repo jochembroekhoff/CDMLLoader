@@ -23,7 +23,7 @@
 
         <!-- UI components -->
 
-        <!ELEMENT components (Button | ButtonToggle | CheckBox | ComboBox-List | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
+        <!ELEMENT components (Button | ButtonToggle | CheckBox | ComboBox-List | Image | Inventory | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
 
         <!ELEMENT Button (listeners?)>
         <!ATTLIST Button
@@ -133,6 +133,16 @@
                 imageHeight CDATA   #IMPLIED
                 >
 
+        <!ELEMENT Inventory EMPTY>
+        <!ATTLIST Inventory
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+
+                selectedColor CDATA #IMPLIED
+                hoverColor CDATA    #IMPLIED
+                >
+
         <!ELEMENT ItemList (items?, listeners?)>
         <!ATTLIST ItemList
                 id      ID          #IMPLIED
@@ -237,14 +247,16 @@
                 top     CDATA       #REQUIRED
                 width   CDATA       #REQUIRED
                 height  CDATA       #REQUIRED
+
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
+                editable CDATA      #IMPLIED
+                wrapText CDATA      #IMPLIED
+                focused CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
-                focused CDATA       #IMPLIED
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
-                editable CDATA      #IMPLIED
                 textColor CDATA     #IMPLIED
                 backgroundColor CDATA #IMPLIED
                 borderColor CDATA   #IMPLIED
@@ -256,14 +268,16 @@
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
                 width   CDATA       #REQUIRED
+
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
+                editable CDATA      #IMPLIED
+                wrapText CDATA      #IMPLIED
+                focused CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
-                focused CDATA       #IMPLIED
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
-                editable CDATA      #IMPLIED
                 textColor CDATA     #IMPLIED
                 backgroundColor CDATA #IMPLIED
                 borderColor CDATA   #IMPLIED

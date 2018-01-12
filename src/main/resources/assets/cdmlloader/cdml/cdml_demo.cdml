@@ -33,7 +33,7 @@ TODO: Sort out DTD
 
         <!-- UI components -->
 
-        <!ELEMENT components (Button | ButtonToggle | CheckBox | ComboBox-List | Image | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
+        <!ELEMENT components (Button | ButtonToggle | CheckBox | ComboBox-List | Image | Inventory | ItemList | Label | NumberSelector | ProgressBar | Slider | Spinner | Text | TextArea | TextField)*>
 
         <!ELEMENT Button (listeners?)>
         <!ATTLIST Button
@@ -143,6 +143,16 @@ TODO: Sort out DTD
                 imageHeight CDATA   #IMPLIED
                 >
 
+        <!ELEMENT Inventory EMPTY>
+        <!ATTLIST Inventory
+                id      ID          #IMPLIED
+                left    CDATA       #REQUIRED
+                top     CDATA       #REQUIRED
+
+                selectedColor CDATA #IMPLIED
+                hoverColor CDATA    #IMPLIED
+                >
+
         <!ELEMENT ItemList (items?, listeners?)>
         <!ATTLIST ItemList
                 id      ID          #IMPLIED
@@ -247,14 +257,16 @@ TODO: Sort out DTD
                 top     CDATA       #REQUIRED
                 width   CDATA       #REQUIRED
                 height  CDATA       #REQUIRED
+
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
+                editable CDATA      #IMPLIED
+                wrapText CDATA      #IMPLIED
+                focused CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
-                focused CDATA       #IMPLIED
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
-                editable CDATA      #IMPLIED
                 textColor CDATA     #IMPLIED
                 backgroundColor CDATA #IMPLIED
                 borderColor CDATA   #IMPLIED
@@ -266,14 +278,16 @@ TODO: Sort out DTD
                 left    CDATA       #REQUIRED
                 top     CDATA       #REQUIRED
                 width   CDATA       #REQUIRED
+
                 enabled CDATA       #IMPLIED
                 visible CDATA       #IMPLIED
+                editable CDATA      #IMPLIED
+                wrapText CDATA      #IMPLIED
+                focused CDATA       #IMPLIED
 
                 text    CDATA       #IMPLIED
-                focused CDATA       #IMPLIED
                 placeholder CDATA   #IMPLIED
                 padding CDATA       #IMPLIED
-                editable CDATA      #IMPLIED
                 textColor CDATA     #IMPLIED
                 backgroundColor CDATA #IMPLIED
                 borderColor CDATA   #IMPLIED
@@ -334,23 +348,23 @@ TODO: Sort out DTD
                 <CheckBox left="5" top="122" name=":off" radioGroup="rg1"/>
                 <CheckBox left="42" top="122" name=":on" selected="true" radioGroup="rg1"/>
 
-                <TextField left="88" top="5" width="80" placeholder="Text Field" iconName="USER"/>
+                <TextField left="83" top="5" width="85" placeholder="Text Field" iconName="USER"/>
 
-                <TextArea left="88" top="25" width="80" height="40" placeholder="Text Area">
+                <TextArea left="83" top="25" width="85" height="48" placeholder="Text Area">
                     <listeners>
                         <listener event="key" id="keyPressed"/>
                     </listeners>
                 </TextArea>
 
-                <ProgressBar left="88" top="70" width="80" height="16" progress="75" id="progressBar"/>
+                <ProgressBar left="175" top="5" width="80" height="16" progress="75" id="progressBar"/>
 
-                <Slider left="88" top="91" width="80" percentage="0.75">
+                <Slider left="175" top="26" width="80" percentage="0.75">
                     <listeners>
                         <listener event="slide" id="slideHandler"/>
                     </listeners>
                 </Slider>
 
-                <ComboBox-List id="cblExample" left="88" top="108" selectedIndex="1">
+                <ComboBox-List id="cblExample" left="175" top="43" selectedIndex="1">
                     <items>
                         <item>:first</item>
                         <item>:second</item>
@@ -359,9 +373,11 @@ TODO: Sort out DTD
 
                 <Spinner left="56" top="3"/>
 
-                <Text left="180" top="5" width="90" text=":lorem"/>
+                <Text left="175" top="63" width="80" text=":lorem"/>
 
-                <Image left="180" top="103" width="85" height="29" alpha="0.8" url="https://i.imgur.com/hX7VK8G.png"/>
+                <Image left="125" top="89" width="85" height="29" alpha="0.8" url="https://i.imgur.com/hX7VK8G.png"/>
+
+                <Inventory left="83" top="78"/>
 
                 <!-- Other: ComboBox -->
             </components>

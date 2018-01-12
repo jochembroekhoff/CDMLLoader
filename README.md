@@ -170,7 +170,6 @@ _To do._
 
 ## To Do List
 - Add Component Handlers for...
-    - Inventory
     - ComboBox.Custom
     - (Upcoming color picker)
 - Implement...

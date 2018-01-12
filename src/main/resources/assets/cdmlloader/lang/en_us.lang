@@ -2,7 +2,7 @@ app.cdmlloader.cdml_demo.name=CDML Demo Application
 
 app.cdmlloader.cdml_demo.value.example_title=CDML Components
 
-app.cdmlloader.cdml_demo.value.lorem=Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+app.cdmlloader.cdml_demo.value.lorem=Text component.
 
 app.cdmlloader.cdml_demo.value.tool_tip_title=Tool Tip Title
 app.cdmlloader.cdml_demo.value.tool_tip_text=Tool Tip Text

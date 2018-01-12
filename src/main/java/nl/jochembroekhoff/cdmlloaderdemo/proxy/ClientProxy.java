@@ -30,6 +30,7 @@ public class ClientProxy implements CommonProxy {
         CDMLLoader.registerComponentHandler(new HandlerComboBox.List());
         CDMLLoader.registerComponentHandler(new HandlerItemList());
         CDMLLoader.registerComponentHandler(new HandlerImage());
+        CDMLLoader.registerComponentHandler(new HandlerInventory());
         CDMLLoader.registerComponentHandler(new HandlerLabel());
         CDMLLoader.registerComponentHandler(new HandlerNumberSelector());
         CDMLLoader.registerComponentHandler(new HandlerProgressBar());
