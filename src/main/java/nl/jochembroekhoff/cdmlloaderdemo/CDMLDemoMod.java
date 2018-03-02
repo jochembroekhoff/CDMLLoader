@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import nl.jochembroekhoff.cdmlloader.config.ModConfig;
 import nl.jochembroekhoff.cdmlloaderdemo.app.DemoApplication;
 import nl.jochembroekhoff.cdmlloaderdemo.proxy.CommonProxy;
 import org.apache.logging.log4j.Logger;
@@ -30,8 +31,10 @@ public class CDMLDemoMod {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
 
-        //Register demo CDM application
-        ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "cdml_demo"), DemoApplication.class);
+        //Register demo CDM application (only if not disabled in config)
+        if (ModConfig.demoApplicationEnabled) {
+            ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "cdml_demo"), DemoApplication.class);
+        }
     }
 
     public static Logger getLogger() {

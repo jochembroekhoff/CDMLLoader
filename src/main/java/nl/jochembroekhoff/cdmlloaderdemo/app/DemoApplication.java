@@ -58,6 +58,7 @@ public class DemoApplication extends Application {
     ClickListener clickHandler = (x, y, mousebtn) -> {
         CDMLDemoMod.getLogger().info("Clicked with mouse button {}", mousebtn);
 
+        /*
         try {
             val tmp = new File(System.getProperty("java.io.tmpdir"));
             val img = new File(tmp, "cdmlloader/capture.tga.gz");
@@ -69,6 +70,7 @@ public class DemoApplication extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        */
     };
 
     @Cdml
