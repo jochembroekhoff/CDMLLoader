@@ -5,7 +5,6 @@ import com.mrcrayfish.device.api.app.component.ProgressBar;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
@@ -19,28 +18,13 @@ public class HandlerProgressBar implements CdmlComponentHandler {
 
         ProgressBar pb = new ProgressBar(meta.getLeft(), meta.getTop(), meta.getWidth(), meta.getHeight());
 
-        String max = meta.getAttributes().getValue("max");
-        if (max != null)
+        String max = meta.getElement().getAttribute("max");
+        if (!max.isEmpty())
             pb.setMax(Integer.parseInt(max));
-        String progress = meta.getAttributes().getValue("progress");
-        if (progress != null)
+        String progress = meta.getElement().getAttribute("progress");
+        if (!progress.isEmpty())
             pb.setProgress(Integer.parseInt(progress));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, pb);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
     }
 }

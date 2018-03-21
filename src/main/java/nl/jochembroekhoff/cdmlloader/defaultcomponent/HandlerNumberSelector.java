@@ -16,39 +16,24 @@ import java.text.DecimalFormat;
 public class HandlerNumberSelector implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
-        if (!meta.hasTopAndLeft() || meta.getAttrWidth() == null)
+        if (!meta.hasTopAndLeft() || meta.getAttrWidth().isEmpty())
             return null;
 
         NumberSelector ns = new NumberSelector(meta.getLeft(), meta.getTop(), meta.getWidth());
 
-        String min = meta.getAttributes().getValue("min");
-        if (min != null)
+        String min = meta.getElement().getAttribute("min");
+        if (!min.isEmpty())
             ns.setMin(Integer.parseInt(min));
-        String max = meta.getAttributes().getValue("max");
-        if (max != null)
+        String max = meta.getElement().getAttribute("max");
+        if (!max.isEmpty())
             ns.setMax(Integer.parseInt(max));
-        String number = meta.getAttributes().getValue("number");
-        if (number != null)
+        String number = meta.getElement().getAttribute("number");
+        if (!number.isEmpty())
             ns.setNumber(Integer.parseInt(number));
-        String format = meta.getCdmlHandler().getI18nValue(meta.getAttributes(), "format");
-        if (format != null)
+        String format = meta.getCdmlHandler().getI18nValue(meta.getElement(), "format");
+        if (!format.isEmpty())
             ns.setFormat(new DecimalFormat(format));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, ns);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
     }
 }

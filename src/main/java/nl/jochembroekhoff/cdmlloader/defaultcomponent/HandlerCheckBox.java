@@ -17,31 +17,16 @@ public class HandlerCheckBox implements CdmlComponentHandler {
         if (!meta.hasTopAndLeft())
             return null;
 
-        CheckBox cb = new CheckBox(meta.getCdmlHandler().getI18nValue(meta.getAttributes(), "name"), meta.getLeft(), meta.getTop());
+        CheckBox cb = new CheckBox(meta.getCdmlHandler().getI18nValue(meta.getElement(), "name"), meta.getLeft(), meta.getTop());
 
-        String selected = meta.getAttributes().getValue("selected");
-        if (selected != null)
+        String selected = meta.getElement().getAttribute("selected");
+        if (selected.isEmpty())
             cb.setSelected(Boolean.parseBoolean(selected));
 
-        String radioGroup = meta.getAttributes().getValue("radioGroup");
-        if (radioGroup != null)
+        String radioGroup = meta.getElement().getAttribute("radioGroup");
+        if (!radioGroup.isEmpty())
             cb.setRadioGroup(meta.getCdmlHandler().getRadioGroup(radioGroup));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, cb);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
     }
 }

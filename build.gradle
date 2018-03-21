@@ -9,8 +9,10 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'java'
+apply plugin: 'maven'
 
-version = "0.1.0"
+version = "0.1.1"
 group = "nl.jochembroekhoff.cdmlloader" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "cdmlloader"
 
@@ -58,8 +60,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    compile "com.mrcrayfish:device-api:0.3.0-1.12.2"
-    compile "org.projectlombok:lombok:1.16.18"
+    compile "com.mrcrayfish:device-api:0.3.1-1.12.2"
+    provided "org.projectlombok:lombok:1.16.18"
 }
 
 processResources {

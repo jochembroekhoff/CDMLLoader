@@ -16,13 +16,13 @@ import java.awt.*;
 public class HandlerSlider implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
-        if (!meta.hasTopAndLeft() || meta.getAttrWidth() == null)
+        if (!meta.hasTopAndLeft() || meta.getAttrWidth().isEmpty())
             return null;
 
         Slider sld = new Slider(meta.getLeft(), meta.getTop(), meta.getWidth());
 
-        String percentage = meta.getAttributes().getValue("percentage");
-        if (percentage != null)
+        String percentage = meta.getElement().getAttribute("percentage");
+        if (!percentage.isEmpty())
             sld.setPercentage(Float.parseFloat(percentage));
 
         /* Colors */
@@ -37,20 +37,5 @@ public class HandlerSlider implements CdmlComponentHandler {
             sld.setSliderColor(sliderColor);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, sld);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
     }
 }

@@ -24,25 +24,27 @@ public class HandlerTextArea implements CdmlComponentHandler {
         if (meta.hasText())
             txt.setText(meta.getText());
 
-        String placeholder = meta.getCdmlHandler().getI18nValue(meta.getAttributes(), "placeholder");
-        if (placeholder != null)
+        String placeholder = meta.getCdmlHandler().getI18nValue(meta.getElement(), "placeholder");
+        if (!placeholder.isEmpty())
             txt.setPlaceholder(placeholder);
 
-        String focused = meta.getAttributes().getValue("focused");
-        if (focused != null)
+        String focused = meta.getElement().getAttribute("focused");
+        if (!focused.isEmpty())
             txt.setFocused(Boolean.parseBoolean(focused));
 
-        String padding = meta.getAttributes().getValue("padding");
-        if (padding != null)
+        String padding = meta.getElement().getAttribute("padding");
+        if (!padding.isEmpty())
             txt.setPadding(Integer.parseInt(padding));
 
-        String editable = meta.getAttributes().getValue("editable");
-        if (editable != null)
+        String editable = meta.getElement().getAttribute("editable");
+        if (!editable.isEmpty())
             txt.setEditable(Boolean.parseBoolean(editable));
 
-        String wrapText = meta.getAttributes().getValue("wrapText");
-        if (wrapText != null)
+        String wrapText = meta.getElement().getAttribute("wrapText");
+        if (!wrapText.isEmpty())
             txt.setWrapText(Boolean.parseBoolean(wrapText));
+
+        /* Colors */
 
         Color textColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "textColor", "text");
         if (textColor != null)
@@ -57,20 +59,5 @@ public class HandlerTextArea implements CdmlComponentHandler {
             txt.setBorderColor(borderColor);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, txt);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
     }
 }

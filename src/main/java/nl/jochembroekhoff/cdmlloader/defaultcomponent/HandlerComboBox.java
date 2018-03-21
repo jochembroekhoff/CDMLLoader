@@ -25,25 +25,27 @@ public abstract class HandlerComboBox {
             ComboBox.List cb;
             Object[] items = new Object[]{};
 
-            String listWidth = meta.getAttributes().getValue("listWidth");
-            if (meta.getAttrWidth() != null && listWidth != null)
+            String listWidth = meta.getElement().getAttribute("listWidth");
+            if (!meta.getAttrWidth().isEmpty() && !listWidth.isEmpty())
                 cb = new ComboBox.List<>(meta.getLeft(), meta.getTop(), meta.getWidth(), Integer.parseInt(listWidth), items);
-            else if (meta.getAttrWidth() != null)
+            else if (!meta.getAttrWidth().isEmpty())
                 cb = new ComboBox.List<>(meta.getLeft(), meta.getTop(), meta.getWidth(), items);
             else
                 cb = new ComboBox.List<>(meta.getLeft(), meta.getTop(), items);
 
-            String selectedIndex = meta.getAttributes().getValue("selectedIndex");
-            if (selectedIndex != null)
+            String selectedIndex = meta.getElement().getAttribute("selectedIndex");
+            if (!selectedIndex.isEmpty())
                 cb.setSelectedItem(Integer.parseInt(selectedIndex));
 
-            String selectedItem = meta.getAttributes().getValue("selectedItem");
-            if (selectedItem != null)
+            String selectedItem = meta.getElement().getAttribute("selectedItem");
+            if (!selectedItem.isEmpty())
                 cb.setSelectedItem(selectedItem);
 
             return CdmlComponentHandler.doDefaultProcessing(meta, cb);
         }
 
+        /*
+        //TODO: Process items!
         @Override
         public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
             if (qName.equals("items"))
@@ -75,6 +77,7 @@ public abstract class HandlerComboBox {
                 }
             }
         }
+        */
     }
 
 }

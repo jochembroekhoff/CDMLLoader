@@ -2,9 +2,8 @@ package nl.jochembroekhoff.cdmlloader;
 
 import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.IIcon;
-import com.mrcrayfish.device.api.app.Icons;
 import com.mrcrayfish.device.api.app.component.RadioGroup;
-import com.mrcrayfish.device.programs.ApplicationIcons;
+import lombok.val;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
@@ -12,15 +11,15 @@ import nl.jochembroekhoff.cdmlloader.annotate.CdmlApp;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.exception.ApplicationNotFoundException;
 import nl.jochembroekhoff.cdmlloader.exception.NoCdmlAppException;
-import nl.jochembroekhoff.cdmlloader.handler.CDMLHandler;
+import nl.jochembroekhoff.cdmlloader.handler.CDMLDocumentHandler;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ListenerDefinition;
 import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -64,13 +63,12 @@ public class CDMLLoader {
      * @param loadStart    consumer which is called with the ResourceLocation of the CDML file
      * @param loadComplete consumer which is called wether the loading succeeded or not
      * @throws NoCdmlAppException
-     * @throws ApplicationNotFoundException
      * @throws IOException
      * @throws ParserConfigurationException
      * @throws SAXException
      */
     public static void load(Application app, Runnable loadStart, Consumer<Boolean> loadComplete) throws
-            NoCdmlAppException, ApplicationNotFoundException,
+            NoCdmlAppException,
             IOException, ParserConfigurationException, SAXException {
         if (!app.getClass().isAnnotationPresent(CdmlApp.class))
             throw new NoCdmlAppException();
@@ -124,8 +122,9 @@ public class CDMLLoader {
                     }
                 });
 
-        SAXParserFactory.newInstance().newSAXParser().parse(cdml,
-                new CDMLHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, methodRemapping, radioGroups, loadStart, loadComplete));
+        val doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(cdml);
+        val handler = new CDMLDocumentHandler(LOGGER, modId, app, cdmlFields, fieldRemapping, methodRemapping, radioGroups, loadStart, loadComplete);
+        handler.handle(doc);
     }
 
     /*

@@ -21,29 +21,14 @@ public class HandlerButtonToggle implements CdmlComponentHandler {
 
         HandlerButton.processButton(meta, btnt);
 
-        String selected = meta.getAttributes().getValue("selected");
-        if (selected != null)
+        String selected = meta.getElement().getAttribute("selected");
+        if (!selected.isEmpty())
             btnt.setSelected(Boolean.parseBoolean(selected));
 
-        String radioGroup = meta.getAttributes().getValue("radioGroup");
-        if (radioGroup != null)
+        String radioGroup = meta.getElement().getAttribute("radioGroup");
+        if (!radioGroup.isEmpty())
             btnt.setRadioGroup(meta.getCdmlHandler().getRadioGroup(radioGroup));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, btnt);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
     }
 }

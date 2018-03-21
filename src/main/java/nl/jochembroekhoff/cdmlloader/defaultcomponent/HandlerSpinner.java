@@ -20,19 +20,4 @@ public class HandlerSpinner implements CdmlComponentHandler {
         return CdmlComponentHandler.doDefaultProcessing(meta,
                 new Spinner(meta.getLeft(), meta.getTop()));
     }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
-    }
 }

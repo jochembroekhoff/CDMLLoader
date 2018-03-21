@@ -25,11 +25,11 @@ public class HandlerImage implements CdmlComponentHandler {
 
         Image img = null;
 
-        String imageResource = meta.getAttributes().getValue("imageResource");
-        String imageU = meta.getAttributes().getValue("imageU");
-        String imageV = meta.getAttributes().getValue("imageV");
-        String imageWidth = meta.getAttributes().getValue("imageWidth");
-        String imageHeight = meta.getAttributes().getValue("imageHeight");
+        String imageResource = meta.getElement().getAttribute("imageResource");
+        String imageU = meta.getElement().getAttribute("imageU");
+        String imageV = meta.getElement().getAttribute("imageV");
+        String imageWidth = meta.getElement().getAttribute("imageWidth");
+        String imageHeight = meta.getElement().getAttribute("imageHeight");
         IIcon icon = meta.getCdmlHandler().getIcon(meta);
         if (icon != null) {
             if (meta.hasTopAndLeft() && meta.hasWidthAndHeight()) {
@@ -37,7 +37,7 @@ public class HandlerImage implements CdmlComponentHandler {
             } else if (meta.hasTopAndLeft()) {
                 img = new Image(meta.getLeft(), meta.getTop(), icon);
             }
-        } else if (imageResource != null && imageU != null && imageV != null && imageWidth != null && imageHeight != null) {
+        } else if (!imageResource.isEmpty() && !imageU.isEmpty() && !imageV.isEmpty() && !imageWidth.isEmpty() && !imageHeight.isEmpty()) {
             ResourceLocation res;
             if (!imageResource.contains(":"))
                 res = new ResourceLocation(meta.getModId(), imageResource);
@@ -57,15 +57,15 @@ public class HandlerImage implements CdmlComponentHandler {
             if (!meta.hasWidthAndHeight())
                 return null;
 
-            img = new Image(meta.getLeft(), meta.getTop(), meta.getWidth(), meta.getHeight(), meta.getAttributes().getValue("url"));
+            img = new Image(meta.getLeft(), meta.getTop(), meta.getWidth(), meta.getHeight(), meta.getElement().getAttribute("url"));
         }
 
-        String alpha = meta.getAttributes().getValue("alpha");
-        if (alpha != null)
+        String alpha = meta.getElement().getAttribute("alpha");
+        if (!alpha.isEmpty())
             img.setAlpha(Float.parseFloat(alpha));
 
-        String borderVisible = meta.getAttributes().getValue("borderVisible");
-        if (borderVisible != null)
+        String borderVisible = meta.getElement().getAttribute("borderVisible");
+        if (!borderVisible.isEmpty())
             img.setBorderVisible(Boolean.parseBoolean(borderVisible));
 
         Color borderColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "borderColor", null);
@@ -80,25 +80,10 @@ public class HandlerImage implements CdmlComponentHandler {
             }
 
 
-        String borderThickness = meta.getAttributes().getValue("borderThickness");
-        if (borderThickness != null)
+        String borderThickness = meta.getElement().getAttribute("borderThickness");
+        if (!borderThickness.isEmpty())
             img.setBorderThickness(Integer.parseInt(borderThickness));
 
         return CdmlComponentHandler.doDefaultProcessing(meta, img);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
     }
 }

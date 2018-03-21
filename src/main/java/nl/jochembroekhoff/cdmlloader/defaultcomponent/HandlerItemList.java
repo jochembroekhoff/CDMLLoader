@@ -5,7 +5,9 @@ import com.mrcrayfish.device.api.app.component.ItemList;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
+import nl.jochembroekhoff.cdmlloader.util.XMLUtil;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import java.awt.*;
 
@@ -16,23 +18,23 @@ import java.awt.*;
 public class HandlerItemList implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
-        if (!meta.hasTopAndLeft() || meta.getAttrWidth() == null)
+        if (!meta.hasTopAndLeft() || meta.getAttrWidth().isEmpty())
             return null;
 
-        String visibleItems = meta.getAttributes().getValue("visibleItems");
-        String showAll = meta.getAttributes().getValue("showAll");
+        String visibleItems = meta.getElement().getAttribute("visibleItems");
+        String showAll = meta.getElement().getAttribute("showAll");
 
-        if (visibleItems == null)
+        if (visibleItems.isEmpty())
             return null;
 
         ItemList il;
-        if (showAll != null)
+        if (!showAll.isEmpty())
             il = new ItemList(meta.getLeft(), meta.getTop(), meta.getWidth(), Integer.parseInt(visibleItems), Boolean.parseBoolean(showAll));
         else
             il = new ItemList(meta.getLeft(), meta.getTop(), meta.getWidth(), Integer.parseInt(visibleItems));
 
-        String selectedIndex = meta.getAttributes().getValue("selectedIndex");
-        if (selectedIndex != null)
+        String selectedIndex = meta.getElement().getAttribute("selectedIndex");
+        if (!selectedIndex.isEmpty())
             il.setSelectedIndex(Integer.parseInt(selectedIndex));
 
         /* Colors */
@@ -46,25 +48,17 @@ public class HandlerItemList implements CdmlComponentHandler {
         if (textColor != null)
             il.setTextColor(textColor);
 
+        /* Items */
+        XMLUtil.iterateChildren(meta.getElement(), Node.ELEMENT_NODE, node -> {
+            Element element = (Element) node;
+            if (element.getTagName().equals("items")) {
+                XMLUtil.iterateChildren(element, Node.ELEMENT_NODE, itemNode -> {
+                    Element itemElement = (Element)itemNode;
+                    il.addItem(meta.getCdmlHandler().getI18nValue(itemElement.getTextContent()));
+                });
+            }
+        });
+
         return CdmlComponentHandler.doDefaultProcessing(meta, il);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-        if (qName.equals("items"))
-            meta.getCustomProperties().put("processingItems", true);
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-        if (qName.equals("items"))
-            meta.getCustomProperties().put("processingItems", false);
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-        if ((boolean) meta.getCustomProperties().getOrDefault("processingItems", false)) {
-            ((ItemList) component).addItem(meta.getCdmlHandler().getI18nValue(chars));
-        }
     }
 }

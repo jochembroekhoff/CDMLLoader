@@ -16,7 +16,7 @@ import java.awt.*;
 public class HandlerText implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
-        if (!meta.hasTopAndLeft() || meta.getAttrWidth() == null)
+        if (!meta.hasTopAndLeft() || meta.getAttrWidth().isEmpty())
             return null;
 
         Text txt = new Text(meta.getText(), meta.getLeft(), meta.getTop(), meta.getWidth());
@@ -26,20 +26,5 @@ public class HandlerText implements CdmlComponentHandler {
             txt.setTextColor(textColor);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, txt);
-    }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
     }
 }

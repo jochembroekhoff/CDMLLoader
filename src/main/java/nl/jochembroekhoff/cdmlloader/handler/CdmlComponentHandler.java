@@ -2,7 +2,6 @@ package nl.jochembroekhoff.cdmlloader.handler;
 
 import com.mrcrayfish.device.api.app.Component;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
@@ -10,16 +9,6 @@ import org.xml.sax.Attributes;
 public interface CdmlComponentHandler {
 
     Component createComponent(ComponentMeta meta);
-
-    /*
-     * Custom XML processing
-     */
-
-    void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes);
-
-    void endElement(Component component, ComponentMeta meta, String qName);
-
-    void elementContent(Component component, ComponentMeta meta, String chars);
 
     /**
      * Do common processing tasks:

@@ -7,7 +7,6 @@ import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
@@ -26,28 +25,13 @@ public class HandlerButton implements CdmlComponentHandler {
         return CdmlComponentHandler.doDefaultProcessing(meta, btn);
     }
 
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
-    }
-
     public static void processButton(ComponentMeta meta, Button btn) {
 
         if (meta.hasWidthAndHeight())
             btn.setSize(meta.getWidth(), meta.getHeight());
 
-        String toolTipTitle = meta.getCdmlHandler().getI18nValue(meta.getAttributes(), "toolTipTitle");
-        String toolTipText = meta.getCdmlHandler().getI18nValue(meta.getAttributes(), "toolTipText");
+        String toolTipTitle = meta.getCdmlHandler().getI18nValue(meta.getElement(), "toolTipTitle");
+        String toolTipText = meta.getCdmlHandler().getI18nValue(meta.getElement(), "toolTipText");
         if (toolTipTitle != null && toolTipText != null)
             btn.setToolTip(toolTipTitle, toolTipText);
 
@@ -56,12 +40,12 @@ public class HandlerButton implements CdmlComponentHandler {
             btn.setIcon(icon);
 
         //TODO: Test how this works
-        String iconResource = meta.getAttributes().getValue("iconResource");
-        String iconU = meta.getAttributes().getValue("iconU");
-        String iconV = meta.getAttributes().getValue("iconV");
-        String iconWidth = meta.getAttributes().getValue("iconWidth");
-        String iconHeight = meta.getAttributes().getValue("iconHeight");
-        if (iconResource != null && iconU != null && iconV != null && iconWidth != null && iconHeight != null) {
+        String iconResource = meta.getElement().getAttribute("iconResource");
+        String iconU = meta.getElement().getAttribute("iconU");
+        String iconV = meta.getElement().getAttribute("iconV");
+        String iconWidth = meta.getElement().getAttribute("iconWidth");
+        String iconHeight = meta.getElement().getAttribute("iconHeight");
+        if (!iconResource.isEmpty() && !iconU.isEmpty() && !iconV.isEmpty() && !iconWidth.isEmpty() && !iconHeight.isEmpty()) {
             ResourceLocation res;
             if (!iconResource.contains(":"))
                 res = new ResourceLocation(meta.getModId(), iconResource);
@@ -71,8 +55,8 @@ public class HandlerButton implements CdmlComponentHandler {
         }
 
         //Note that padding only works when the size is non-explicit
-        String padding = meta.getAttributes().getValue("padding");
-        if (padding != null)
+        String padding = meta.getElement().getAttribute("padding");
+        if (!padding.isEmpty())
             btn.setPadding(Integer.parseInt(padding));
     }
 }

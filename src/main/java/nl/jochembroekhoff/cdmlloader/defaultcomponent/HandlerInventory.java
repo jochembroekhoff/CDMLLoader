@@ -31,19 +31,4 @@ public class HandlerInventory implements CdmlComponentHandler {
 
         return CdmlComponentHandler.doDefaultProcessing(meta, inv);
     }
-
-    @Override
-    public void startElement(Component component, ComponentMeta meta, String qName, Attributes attributes) {
-
-    }
-
-    @Override
-    public void endElement(Component component, ComponentMeta meta, String qName) {
-
-    }
-
-    @Override
-    public void elementContent(Component component, ComponentMeta meta, String chars) {
-
-    }
 }

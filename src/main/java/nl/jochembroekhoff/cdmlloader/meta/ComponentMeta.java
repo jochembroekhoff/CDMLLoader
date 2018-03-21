@@ -3,8 +3,8 @@ package nl.jochembroekhoff.cdmlloader.meta;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import nl.jochembroekhoff.cdmlloader.handler.CDMLHandler;
-import org.xml.sax.Attributes;
+import nl.jochembroekhoff.cdmlloader.handler.CDMLDocumentHandler;
+import org.w3c.dom.Element;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,22 +16,21 @@ import java.util.Map;
 public class ComponentMeta {
 
     @Getter
-    CDMLHandler cdmlHandler;
+    CDMLDocumentHandler cdmlHandler;
 
     @Getter
     String modId;
 
-    /* All attributes */
+    /* Component element */
     @Getter
-    Attributes attributes;
+    Element element;
 
     /* ID */
-
     @Getter
     String attrId;
 
     public boolean hasId() {
-        return getAttrId() != null;
+        return !getAttrId().isEmpty();
     }
 
     public String getId() {
@@ -48,18 +47,18 @@ public class ComponentMeta {
     String attrLeft;
 
     public boolean hasTopAndLeft() {
-        return getAttrTop() != null
-                && getAttrLeft() != null;
+        return !getAttrTop().isEmpty()
+                && !getAttrLeft().isEmpty();
     }
 
     public int getTop() {
-        if (getAttrTop() == null)
+        if (getAttrTop().isEmpty())
             return 0;
         return Integer.parseInt(getAttrTop());
     }
 
     public int getLeft() {
-        if (getAttrLeft() == null)
+        if (getAttrLeft().isEmpty())
             return 0;
         return Integer.parseInt(getAttrLeft());
     }
@@ -74,18 +73,18 @@ public class ComponentMeta {
     String attrHeight;
 
     public boolean hasWidthAndHeight() {
-        return getAttrWidth() != null
-                && getAttrHeight() != null;
+        return !getAttrWidth().isEmpty()
+                && !getAttrHeight().isEmpty();
     }
 
     public int getWidth() {
-        if (getAttrWidth() == null)
+        if (getAttrWidth().isEmpty())
             return 0;
         return Integer.parseInt(getAttrWidth());
     }
 
     public int getHeight() {
-        if (getAttrHeight() == null)
+        if (getAttrHeight().isEmpty())
             return 0;
         return Integer.parseInt(getAttrHeight());
     }
@@ -98,13 +97,13 @@ public class ComponentMeta {
     String attrVisible;
 
     public boolean getEnabled() {
-        if (getAttrEnabled() == null)
+        if (getAttrEnabled().isEmpty())
             return true;
         return Boolean.parseBoolean(getAttrEnabled());
     }
 
     public boolean getVisible() {
-        if (getAttrVisible() == null)
+        if (getAttrVisible().isEmpty())
             return true;
         return Boolean.parseBoolean(getAttrVisible());
     }
@@ -115,7 +114,7 @@ public class ComponentMeta {
     String text;
 
     public boolean hasText() {
-        return getText() != null;
+        return !getText().isEmpty();
     }
 
     /* ICON */
