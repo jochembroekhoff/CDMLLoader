@@ -9,7 +9,7 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("ProgressBar")
+@CdmlComponent(type = "ProgressBar")
 public class HandlerProgressBar implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {

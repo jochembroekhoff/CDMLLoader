@@ -5,12 +5,11 @@ import com.mrcrayfish.device.api.app.component.Spinner;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("Spinner")
+@CdmlComponent(type = "Spinner")
 public class HandlerSpinner implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {

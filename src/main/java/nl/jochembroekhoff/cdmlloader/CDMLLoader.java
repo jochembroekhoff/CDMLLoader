@@ -34,7 +34,7 @@ import java.util.function.Consumer;
  */
 public class CDMLLoader {
 
-    final static Map<String, CdmlComponentHandler> componentHandlers = new HashMap<>();
+    final static Map<String, Map<String, CdmlComponentHandler>> componentHandlers = new HashMap<>();
     final static Map<String, ListenerDefinition> listeners = new HashMap<>();
     final static Map<String, Map<String, IIcon>> iconSets = new HashMap<>();
 
@@ -142,24 +142,40 @@ public class CDMLLoader {
         if (!handler.getClass().isAnnotationPresent(CdmlComponent.class))
             throw new IllegalArgumentException("Couldn't find @CdmlComponent in handler class.");
 
-        String componentType = handler.getClass().getAnnotation(CdmlComponent.class).value();
+        String componentType = handler.getClass().getAnnotation(CdmlComponent.class).type();
+        String componentNamespace = handler.getClass().getAnnotation(CdmlComponent.class).namespace();
+
+        if (componentType == null || componentType.isEmpty())
+            throw new IllegalArgumentException("Invalid component type: null or empty.");
+
+        if (componentNamespace == null)
+            componentNamespace = "";
+
         if (!componentType.matches("^[A-Z].*$"))
-            throw new IllegalArgumentException("Component type must start with uppercase letter.");
+            throw new IllegalArgumentException("Invalid component type: component type must start with uppercase letter.");
 
-        if (hasComponentHandler(componentType))
+        if (hasComponentHandler(componentType, componentNamespace))
             throw new IllegalArgumentException("A component handler for component type "
-                    + componentType + " has been registered already.");
+                    + componentNamespace + ":" + componentType + " has been registered already.");
 
-        componentHandlers.put(componentType, handler);
+        if (!componentHandlers.containsKey(componentNamespace))
+            componentHandlers.put(componentNamespace, new HashMap<>());
+
+        componentHandlers.get(componentNamespace).put(componentType, handler);
+
         return true;
     }
 
-    public static boolean hasComponentHandler(String componentType) {
-        return componentHandlers.containsKey(componentType);
+    public static boolean hasComponentHandler(String componentType, String namespace) {
+        return componentHandlers.containsKey(namespace)
+                && componentHandlers.get(namespace).containsKey(componentType);
     }
 
-    public static CdmlComponentHandler getComponentHandler(String componentType) {
-        return componentHandlers.getOrDefault(componentType, null);
+    public static CdmlComponentHandler getComponentHandler(String componentType, String namespace) {
+        if (!componentHandlers.containsKey(namespace))
+            return null;
+
+        return componentHandlers.get(namespace).getOrDefault(componentType, null);
     }
 
     /*

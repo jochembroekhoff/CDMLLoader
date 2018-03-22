@@ -11,7 +11,7 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("Button")
+@CdmlComponent(type = "Button")
 public class HandlerButton implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
@@ -20,15 +20,16 @@ public class HandlerButton implements CdmlComponentHandler {
 
         Button btn = new Button(meta.getLeft(), meta.getTop(), meta.getText());
 
-        if (!meta.hasText())
-            btn.setText(null);
-
         processButton(meta, btn);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, btn);
     }
 
     public static void processButton(ComponentMeta meta, Button btn) {
+
+        //FIXME: This is a temporary solution. Awaits fixing from MrCrayfish/MrCrayfishDeviceMod#94
+        if (!meta.hasText())
+            btn.setText(null);
 
         if (meta.hasWidthAndHeight())
             btn.setSize(meta.getWidth(), meta.getHeight());

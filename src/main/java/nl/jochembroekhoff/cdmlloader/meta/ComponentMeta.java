@@ -127,6 +127,6 @@ public class ComponentMeta {
 
     /* CUSTOM PROPERTIES */
     @Getter
-    Map<String, Object> customProperties = new HashMap<>();
+    Map<String, Object> customProperties;
 
 }

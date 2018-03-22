@@ -6,14 +6,13 @@ import com.mrcrayfish.device.api.app.component.TextField;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
 
 import java.awt.*;
 
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("TextField")
+@CdmlComponent(type = "TextField")
 public class HandlerTextField implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {

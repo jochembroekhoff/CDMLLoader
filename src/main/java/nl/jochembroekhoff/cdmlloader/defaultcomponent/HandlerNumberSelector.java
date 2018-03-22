@@ -5,14 +5,13 @@ import com.mrcrayfish.device.api.app.component.NumberSelector;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
 
 import java.text.DecimalFormat;
 
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("NumberSelector")
+@CdmlComponent(type = "NumberSelector")
 public class HandlerNumberSelector implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {

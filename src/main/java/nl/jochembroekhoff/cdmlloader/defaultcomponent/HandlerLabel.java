@@ -5,14 +5,13 @@ import com.mrcrayfish.device.api.app.component.Label;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
 
 import java.awt.*;
 
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("Label")
+@CdmlComponent(type = "Label")
 public class HandlerLabel implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {

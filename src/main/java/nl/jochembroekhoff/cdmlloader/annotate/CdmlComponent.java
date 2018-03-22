@@ -14,8 +14,18 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CdmlComponent {
     /**
-     * Component type. Usually so
+     * Component type.
+     * This should start with an uppercase letter and may be followed by any valid XML tag character(s).
+     *
      * @return
      */
-    String value();
+    String type();
+
+    /**
+     * Component namespace. No namespace given means global registration.
+     * It is recommended to set the value of the namespace equal to the mod id.
+     *
+     * @return
+     */
+    String namespace() default "";
 }

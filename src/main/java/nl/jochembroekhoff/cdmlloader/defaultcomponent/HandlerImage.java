@@ -8,7 +8,6 @@ import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
-import org.xml.sax.Attributes;
 
 import java.awt.*;
 import java.lang.reflect.Method;
@@ -16,7 +15,7 @@ import java.lang.reflect.Method;
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("Image")
+@CdmlComponent(type = "Image")
 public class HandlerImage implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {

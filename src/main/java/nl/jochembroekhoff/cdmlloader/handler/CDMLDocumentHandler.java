@@ -171,14 +171,24 @@ public class CDMLDocumentHandler {
         /*
         Process component via Component Handler
          */
-        val componentType = elem.getNodeName();
+        val fullComponentType = elem.getNodeName();
+        val splittedComponentType = fullComponentType.split(":");
+        String componentType = splittedComponentType[0];
+        String componentNamespace = "";
 
-        if (!CDMLLoader.hasComponentHandler(componentType)) {
-            LOGGER.warn("==> No component handler found for component type: {}", componentType);
+        if (splittedComponentType.length == 2) {
+            componentNamespace = splittedComponentType[0];
+            componentType = splittedComponentType[1];
+        }
+
+
+        if (!CDMLLoader.hasComponentHandler(componentType, componentNamespace)) {
+            LOGGER.warn("==> No component handler found for component type: {} (in namespace {})",
+                    componentType, componentNamespace);
             return false;
         }
 
-        val componentHandler = CDMLLoader.getComponentHandler(componentType);
+        val componentHandler = CDMLLoader.getComponentHandler(componentType, componentNamespace);
         val componentMeta = new ComponentMeta(
                 this,
                 modId,
@@ -260,7 +270,8 @@ public class CDMLDocumentHandler {
             mappingComponents.put(id, component);
 
         if (!fieldRemapping.containsKey(id)) {
-            LOGGER.warn("==> Couldn't find declared field {} in application. No component has been injected.", id);
+            LOGGER.warn("==> Couldn't find declared field {} in application. No component has been injected.",
+                    id);
             return;
         }
         try {

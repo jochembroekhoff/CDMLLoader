@@ -2,20 +2,16 @@ package nl.jochembroekhoff.cdmlloader.defaultcomponent;
 
 import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.ComboBox;
-import com.mrcrayfish.device.api.app.component.ItemList;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
-
-import java.lang.reflect.Field;
 
 /**
  * @author Jochem Broekhoff
  */
 public abstract class HandlerComboBox {
 
-    @CdmlComponent("ComboBox-List")
+    @CdmlComponent(type = "ComboBox-List")
     public static class List implements CdmlComponentHandler {
         @Override
         public Component createComponent(ComponentMeta meta) {

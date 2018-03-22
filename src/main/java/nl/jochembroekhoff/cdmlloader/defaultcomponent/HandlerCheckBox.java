@@ -5,12 +5,11 @@ import com.mrcrayfish.device.api.app.component.CheckBox;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import org.xml.sax.Attributes;
 
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("CheckBox")
+@CdmlComponent(type = "CheckBox")
 public class HandlerCheckBox implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {

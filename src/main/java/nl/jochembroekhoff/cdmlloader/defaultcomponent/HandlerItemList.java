@@ -14,7 +14,7 @@ import java.awt.*;
 /**
  * @author Jochem Broekhoff
  */
-@CdmlComponent("ItemList")
+@CdmlComponent(type = "ItemList")
 public class HandlerItemList implements CdmlComponentHandler {
     @Override
     public Component createComponent(ComponentMeta meta) {
