@@ -20,6 +20,9 @@ public class HandlerButton implements CdmlComponentHandler {
 
         Button btn = new Button(meta.getLeft(), meta.getTop(), meta.getText());
 
+        if (!meta.hasText())
+            btn.setText(null);
+
         processButton(meta, btn);
 
         return CdmlComponentHandler.doDefaultProcessing(meta, btn);
@@ -32,7 +35,7 @@ public class HandlerButton implements CdmlComponentHandler {
 
         String toolTipTitle = meta.getCdmlHandler().getI18nValue(meta.getElement(), "toolTipTitle");
         String toolTipText = meta.getCdmlHandler().getI18nValue(meta.getElement(), "toolTipText");
-        if (toolTipTitle != null && toolTipText != null)
+        if (!toolTipTitle.isEmpty() && !toolTipText.isEmpty())
             btn.setToolTip(toolTipTitle, toolTipText);
 
         IIcon icon = meta.getCdmlHandler().getIcon(meta);

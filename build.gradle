@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'java'
 apply plugin: 'maven'
 
-version = "0.1.1"
+version = "0.1.2"
 group = "nl.jochembroekhoff.cdmlloader" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "cdmlloader"
 

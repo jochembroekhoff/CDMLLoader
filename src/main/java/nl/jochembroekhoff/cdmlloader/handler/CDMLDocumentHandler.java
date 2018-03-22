@@ -149,6 +149,7 @@ public class CDMLDocumentHandler {
             layout.setTitle(title);
 
         mappingLayouts.put(id, layout);
+        inject(id, layout, false);
 
         XMLUtil.iterateChildren(layoutElem, Node.ELEMENT_NODE, node -> {
             val elem = (Element) node;
@@ -254,8 +255,9 @@ public class CDMLDocumentHandler {
         });
     }
 
-    private void inject(String id, Component component) {
-        mappingComponents.put(id, component);
+    private void inject(String id, Component component, boolean isRootLayout) {
+        if (!isRootLayout && !Layout.class.isAssignableFrom(component.getClass()))
+            mappingComponents.put(id, component);
 
         if (!fieldRemapping.containsKey(id)) {
             LOGGER.warn("==> Couldn't find declared field {} in application. No component has been injected.", id);
@@ -266,6 +268,10 @@ public class CDMLDocumentHandler {
         } catch (IllegalAccessException ex) {
             LOGGER.error("==> Failed to inject component!", ex);
         }
+    }
+
+    private void inject(String id, Component component) {
+        inject(id, component, false);
     }
 
     /**
@@ -385,8 +391,8 @@ public class CDMLDocumentHandler {
     }
 
     public IIcon getIcon(ComponentMeta meta) {
-        if (!meta.getIconName().isEmpty() && !meta.getIconName().isEmpty()) {
-            if (meta.getIconSet().isEmpty() && !meta.getIconSet().isEmpty())
+        if (!meta.getIconName().isEmpty()) {
+            if (meta.getIconSet().isEmpty())
                 meta.setIconSet("Icons");
 
             if (CDMLLoader.hasIconSet(meta.getIconSet()))
