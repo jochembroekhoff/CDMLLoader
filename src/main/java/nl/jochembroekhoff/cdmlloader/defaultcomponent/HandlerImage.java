@@ -4,6 +4,7 @@ import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.component.Image;
 import net.minecraft.util.ResourceLocation;
+import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
@@ -29,7 +30,7 @@ public class HandlerImage implements CdmlComponentHandler {
         String imageV = meta.getElement().getAttribute("imageV");
         String imageWidth = meta.getElement().getAttribute("imageWidth");
         String imageHeight = meta.getElement().getAttribute("imageHeight");
-        IIcon icon = meta.getCdmlHandler().getIcon(meta);
+        IIcon icon = CDMLLoader.getIcon(meta);
         if (icon != null) {
             if (meta.hasTopAndLeft() && meta.hasWidthAndHeight()) {
                 img = new Image(meta.getLeft(), meta.getTop(), meta.getWidth(), meta.getHeight(), icon);

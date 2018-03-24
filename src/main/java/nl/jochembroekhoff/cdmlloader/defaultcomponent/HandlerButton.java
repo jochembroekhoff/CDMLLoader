@@ -4,6 +4,7 @@ import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.component.Button;
 import net.minecraft.util.ResourceLocation;
+import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
@@ -39,7 +40,7 @@ public class HandlerButton implements CdmlComponentHandler {
         if (!toolTipTitle.isEmpty() && !toolTipText.isEmpty())
             btn.setToolTip(toolTipTitle, toolTipText);
 
-        IIcon icon = meta.getCdmlHandler().getIcon(meta);
+        IIcon icon = CDMLLoader.getIcon(meta);
         if (icon != null)
             btn.setIcon(icon);
 

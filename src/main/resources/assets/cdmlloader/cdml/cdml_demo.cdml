@@ -80,4 +80,7 @@ The layout is based on the 'UI Components' system application.
             </listeners>
         </layout>
     </layouts>
+    <notifications>
+        <notitification name="notifyTest1" title="Notification Title" subTitle="Subtitle" iconName="CHEVRON_DOWN"/>
+    </notifications>
 </application>

@@ -39,12 +39,5 @@ public class ClientProxy implements CommonProxy {
         CDMLLoader.registerComponentHandler(new HandlerText());
         CDMLLoader.registerComponentHandler(new HandlerTextArea());
         CDMLLoader.registerComponentHandler(new HandlerTextField());
-
-        //Register default icon sets
-        //Helpful article: https://stackoverflow.com/questions/20363719/java-8-listv-into-mapk-v/20363874#20363874
-        CDMLLoader.registerIconSet("Alphabet", Arrays.stream(Alphabet.values())
-                .collect(Collectors.toMap(Enum::name, Function.identity())));
-        CDMLLoader.registerIconSet("Icons", Arrays.stream(Icons.values())
-                .collect(Collectors.toMap(Enum::name, Function.identity())));
     }
 }

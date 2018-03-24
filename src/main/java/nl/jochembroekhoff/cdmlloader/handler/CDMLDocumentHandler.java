@@ -1,9 +1,7 @@
 package nl.jochembroekhoff.cdmlloader.handler;
 
-import com.mrcrayfish.device.api.app.Application;
+import com.mrcrayfish.device.api.app.*;
 import com.mrcrayfish.device.api.app.Component;
-import com.mrcrayfish.device.api.app.IIcon;
-import com.mrcrayfish.device.api.app.Layout;
 import com.mrcrayfish.device.api.app.component.RadioGroup;
 import com.mrcrayfish.device.core.Laptop;
 import com.mrcrayfish.device.programs.system.object.ColorScheme;
@@ -15,6 +13,7 @@ import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.meta.ApplicationMeta;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import nl.jochembroekhoff.cdmlloader.meta.ListenerDefinition;
+import nl.jochembroekhoff.cdmlloader.meta.NotificationMeta;
 import nl.jochembroekhoff.cdmlloader.util.XMLUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +27,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 public class CDMLDocumentHandler {
@@ -39,8 +37,6 @@ public class CDMLDocumentHandler {
     final Map<String, Field> fieldRemapping;
     final Map<String, Method> methodRemapping;
     final Map<String, RadioGroup> radioGroups;
-    final Runnable loadStart;
-    final Consumer<Boolean> loadComplete;
 
     @Getter
     ApplicationMeta applicationMeta;
@@ -50,6 +46,7 @@ public class CDMLDocumentHandler {
      */
     final Map<String, Layout> mappingLayouts = new HashMap<>();
     final Map<String, Component> mappingComponents = new HashMap<>();
+    final Map<String, NotificationMeta> mappingNotifications = new HashMap<>();
 
     public boolean handle(Document doc) {
         AtomicReference<Element> applicationDoc = new AtomicReference<>(null);
@@ -105,6 +102,11 @@ public class CDMLDocumentHandler {
                     XMLUtil.iterateChildren(elem, Node.ELEMENT_NODE, layout -> {
                         if (!handleLayout((Element) layout))
                             state.set(false);
+                    });
+                    break;
+                case "notifications":
+                    XMLUtil.iterateChildren(elem, Node.ELEMENT_NODE, notification -> {
+                        handleNotification((Element) notification);
                     });
                     break;
             }
@@ -265,6 +267,23 @@ public class CDMLDocumentHandler {
         });
     }
 
+    private void handleNotification(Element elem) {
+        String name = elem.getAttribute("name");
+        String title = elem.getAttribute("title");
+        String subTitle = elem.getAttribute("subTitle");
+        String iconName = elem.getAttribute("iconName");
+        String iconSet = elem.getAttribute("iconSet");
+
+        if (iconSet == null || iconSet.isEmpty())
+            iconSet = "Icons";
+
+        if (mappingNotifications.containsKey(name))
+            LOGGER.warn("==> Duplicate creation of notification with name: {}", name);
+
+        //Register notification
+        mappingNotifications.put(name, new NotificationMeta(name, title, subTitle, iconName, iconSet));
+    }
+
     private void inject(String id, Component component, boolean isRootLayout) {
         if (!isRootLayout && !Layout.class.isAssignableFrom(component.getClass()))
             mappingComponents.put(id, component);
@@ -347,6 +366,18 @@ public class CDMLDocumentHandler {
         }
     }
 
+    public NotificationMeta getNotificationMeta(String cdmlRegisteredName) {
+        return mappingNotifications.getOrDefault(cdmlRegisteredName, null);
+    }
+
+    public Notification getNotification(String cdmlRegisteredName) {
+        val meta = getNotificationMeta(cdmlRegisteredName);
+        if (meta == null)
+            return null;
+
+        return CDMLLoader.createNotification(meta);
+    }
+
     /**
      * @param meta
      * @param key
@@ -399,18 +430,5 @@ public class CDMLDocumentHandler {
                 return null;
             }
         }
-    }
-
-    public IIcon getIcon(ComponentMeta meta) {
-        if (!meta.getIconName().isEmpty()) {
-            if (meta.getIconSet().isEmpty())
-                meta.setIconSet("Icons");
-
-            if (CDMLLoader.hasIconSet(meta.getIconSet()))
-                return CDMLLoader.getIconSet(meta.getIconSet())
-                        .getOrDefault(meta.getIconName(), null);
-        }
-
-        return null;
     }
 }

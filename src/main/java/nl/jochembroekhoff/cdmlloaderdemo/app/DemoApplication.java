@@ -9,22 +9,23 @@ import com.mrcrayfish.device.api.app.component.RadioGroup;
 import com.mrcrayfish.device.api.app.listener.ClickListener;
 import com.mrcrayfish.device.api.app.listener.KeyListener;
 import com.mrcrayfish.device.api.app.listener.SlideListener;
-import lombok.val;
+import com.mrcrayfish.device.api.task.TaskManager;
 import net.minecraft.nbt.NBTTagCompound;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlApp;
-import nl.jochembroekhoff.cdmlloader.designer.capture.FramebufferCapturer;
-import nl.jochembroekhoff.cdmlloader.designer.capture.FramebufferWriter;
+import nl.jochembroekhoff.cdmlloader.handler.CDMLDocumentHandler;
 import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
-
-import java.io.File;
+import nl.jochembroekhoff.cdmlloaderdemo.task.TaskTestCDMLNotification;
 
 /**
  * @author Jochem Broekhoff
  */
 @CdmlApp
 public class DemoApplication extends Application {
+
+    /* CDML Components */
+
     @Cdml
     private ComboBox.List<String> cblExample;
     @Cdml
@@ -37,11 +38,14 @@ public class DemoApplication extends Application {
     @Cdml
     private Layout layout1;
 
+    /* Other things */
+    private CDMLDocumentHandler handler;
+
     @Override
     public void init() {
 
         try {
-            CDMLLoader.load(this,
+            handler = CDMLLoader.init(this,
                     () -> {
                         //started loading CDML file
                     },
@@ -57,6 +61,7 @@ public class DemoApplication extends Application {
     @Cdml
     ClickListener clickHandler = (x, y, mousebtn) -> {
         CDMLDemoMod.getLogger().info("Clicked with mouse button {}", mousebtn);
+        TaskManager.sendTask(new TaskTestCDMLNotification(handler.getNotificationMeta("notifyTest1")));
 
         /*
         try {

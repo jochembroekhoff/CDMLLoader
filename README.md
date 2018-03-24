@@ -4,7 +4,7 @@ CDML Loader is a collection of helper classes and annotations to help you organi
 It separates the layout creation and controller code from each other by using a dedicated file for
 the layout definition, written in a markup language called CDML, an XML document validated against the CDML DTD.
 
-Requires CDM version `0.3.0`.
+Requires CDM version `0.3.1`.
 
 *This documentation is NOT complete and you shouldn't rely on it. This project has not been released as
 any stable release, beta or alpha, so anything might change. The demo application in the source code is a great reference
@@ -29,7 +29,7 @@ Make sure you use the appropriate registering calls to register your application
 
 Add the annotation `@CdmlApp` at the top of the class definition.
 
-Inside the `init()` method, call `CDMLLoader.load(this)`.
+Inside the `init()` method, call `CDMLLoader.init(this)`.
 
 Your code should look something like this:
 ```java
@@ -43,7 +43,7 @@ class MyApplication extends Application {
     
     @Override
     public void init() {
-        CDMLLoader.load(this);
+        CDMLLoader.init(this);
     }
     
     //...
@@ -78,6 +78,9 @@ Every CDML document begins with this basic layout:
         </layout>
         ...
     </layouts>
+    <notifications> <!-- Notifications are not required -->
+        ...
+    </notifications>
 </application>
 ```
 
@@ -101,13 +104,16 @@ At this moment, the following components are supported out of the box:
 
 To find out which attributes you can set on each component, checkout the DTD (in src/main/resources/assets/cdmlloader).
 
-> **Using i18n**: All the core components support i18n (internationalisation) on all text attributes.
+> **Using i18n**: All the core components support i18n (Internationalization) on all text attributes.
 > You can mark a text value as i18n by prefixing it with a colon (:).
 > ```xml
 > <Label left="5" top="5" text=":labelText"/>
 > ``` 
 > The key in the lang files is composed like this: `app.MOD_ID.APP_ID.value.RAWVALUE`.
 > So in this case CDMLLoader tries to load the i18n value of `app.mymod.myapp.value.labelText`.
+>
+> Please note that Notifications the only _unsupported_ part is. In the future, you will be able
+> to use the i18n notation there too.
 
 _To be continued._
 
@@ -132,6 +138,9 @@ Your .cdml and controller would look something like this:
         </layout>
         ...
     </layouts>
+    <notifications>
+        <notification name="testNotify" title="Henlo!" subTitle="Just testing." iconName="EMAIL"/>
+    </notifications>
 </application>
 ``` 
 ```java
@@ -147,7 +156,7 @@ class MyApplication extends Application {
     
     @Override
     public void init() {
-        CDMLLoader.load(this);
+        CDMLLoader.init(this);
     }
     
     //...
@@ -162,11 +171,9 @@ _To be continued._
 ## Writing custom components
 _To do._
 
-### Step 1 - Creating the component itself
-
-### Step 2 - Creating the component handler
-
-### Step 3 - Registering components and additional listeners
+1. Creating the component itself
+2. Creating the component handler
+3. Registering components and additional listeners
 
 ## To Do List
 - Add Component Handlers for...
@@ -175,12 +182,10 @@ _To do._
 - Implement...
     - Renderers
     - Nested layouts
-- Better solution for icon sets
+    - Internationalized notifications (now only hard-coded title and subTitle)
 - Per-layout controllers
-- Sort out DTD
 - UI Designer
 
 ## Thanks / Credits
 
-* to [MrCrayfish](https://github.com/MrCrayfish) for CDM ([MrCrayfishDeviceMod](https://github.com/MrCrayfish/MrCrayfishDeviceMod)).
-* to Java for reflection.
+* to [MrCrayfish](https://github.com/MrCrayfish) for the [Device Mod](https://github.com/MrCrayfish/MrCrayfishDeviceMod).
