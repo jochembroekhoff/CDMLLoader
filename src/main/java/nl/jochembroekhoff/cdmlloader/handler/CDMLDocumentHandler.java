@@ -256,7 +256,7 @@ public class CDMLDocumentHandler {
             ListenerDefinition ld = CDMLLoader.getListener(event);
 
             try {
-                Method m = component.getClass().getDeclaredMethod(ld.getMethodName(), ld.getParameters());
+                Method m = component.getClass().getMethod(ld.getMethodName(), ld.getParameters());
                 m.setAccessible(true);
                 m.invoke(component, listenerInstance.get(app));
                 LOGGER.info("--> Attached listener {} to event {}", id, event);
