@@ -178,7 +178,6 @@ _To do._
 ## To Do List
 - Add Component Handlers for...
     - ComboBox.Custom
-    - (Upcoming color picker)
 - Implement...
     - Renderers
     - Nested layouts
