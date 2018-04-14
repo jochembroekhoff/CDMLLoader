@@ -2,11 +2,9 @@ package nl.jochembroekhoff.cdmlloaderdemo.app;
 
 import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Layout;
-import com.mrcrayfish.device.api.app.component.ComboBox;
-import com.mrcrayfish.device.api.app.component.ItemList;
-import com.mrcrayfish.device.api.app.component.ProgressBar;
-import com.mrcrayfish.device.api.app.component.RadioGroup;
+import com.mrcrayfish.device.api.app.component.*;
 import com.mrcrayfish.device.api.app.listener.ClickListener;
+import com.mrcrayfish.device.api.app.listener.InitListener;
 import com.mrcrayfish.device.api.app.listener.KeyListener;
 import com.mrcrayfish.device.api.app.listener.SlideListener;
 import com.mrcrayfish.device.api.task.TaskManager;
@@ -57,6 +55,9 @@ public class DemoApplication extends Application {
             e.printStackTrace();
         }
     }
+
+    @Cdml
+    InitListener layout1init = () -> CDMLDemoMod.getLogger().info("Layout one has been initialized.");
 
     @Cdml
     ClickListener clickHandler = (x, y, mousebtn) -> {

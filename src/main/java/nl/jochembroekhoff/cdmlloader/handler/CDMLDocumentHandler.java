@@ -1,7 +1,9 @@
 package nl.jochembroekhoff.cdmlloader.handler;
 
-import com.mrcrayfish.device.api.app.*;
+import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Component;
+import com.mrcrayfish.device.api.app.Layout;
+import com.mrcrayfish.device.api.app.Notification;
 import com.mrcrayfish.device.api.app.component.RadioGroup;
 import com.mrcrayfish.device.core.Laptop;
 import com.mrcrayfish.device.programs.system.object.ColorScheme;
@@ -100,7 +102,7 @@ public class CDMLDocumentHandler {
             switch (elem.getNodeName()) {
                 case "layouts":
                     XMLUtil.iterateChildren(elem, Node.ELEMENT_NODE, layout -> {
-                        if (!handleLayout((Element) layout))
+                        if (handleLayout((Element) layout) == null)
                             state.set(false);
                     });
                     break;
@@ -115,8 +117,7 @@ public class CDMLDocumentHandler {
         return state.get();
     }
 
-    private boolean handleLayout(Element layoutElem) {
-        AtomicReference<Boolean> state = new AtomicReference<>(true);
+    private Layout handleLayout(Element layoutElem) {
 
         /*
         Create layout
@@ -150,23 +151,33 @@ public class CDMLDocumentHandler {
         if (title != null)
             layout.setTitle(title);
 
-        mappingLayouts.put(id, layout);
-        inject(id, layout, false);
+        if (!id.isEmpty()) {
+            mappingLayouts.put(id, layout);
+            inject(id, layout, false);
+        }
 
         XMLUtil.iterateChildren(layoutElem, Node.ELEMENT_NODE, node -> {
             val elem = (Element) node;
             switch (elem.getNodeName()) {
                 case "components":
                     XMLUtil.iterateChildren(elem, Node.ELEMENT_NODE, component -> {
-                        handleComponent((Element) component, layout);
-                        //if (!handleComponent((Element) component, layout))
-                        //    state.set(false);
+                        switch (component.getNodeName()) {
+                            case "layout":
+                                layout.addComponent(handleLayout((Element) component));
+                                break;
+                            default:
+                                handleComponent((Element) component, layout);
+                                break;
+                        }
                     });
+                    break;
+                case "listeners":
+                    handleListeners(elem, layout);
                     break;
             }
         });
 
-        return state.get();
+        return layout;
     }
 
     private boolean handleComponent(Element elem, Layout layout) {

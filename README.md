@@ -180,7 +180,6 @@ _To do._
     - ComboBox.Custom
 - Implement...
     - Renderers
-    - Nested layouts
     - Internationalized notifications (now only hard-coded title and subTitle)
 - Per-layout controllers
 - UI Designer

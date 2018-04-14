@@ -72,7 +72,11 @@ The layout is based on the 'UI Components' system application.
 
                 <Image left="125" top="89" width="85" height="29" alpha="0.8" url="https://i.imgur.com/hX7VK8G.png"/>
 
-                <Inventory left="83" top="78"/>
+                <layout id="layout1sub" left="83" top="78" width="200" height="70">
+                    <components>
+                        <Inventory left="0" top="0"/>
+                    </components>
+                </layout>
             </components>
 
             <listeners>
