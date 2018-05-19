@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.component.Button;
 import net.minecraft.util.ResourceLocation;
@@ -13,9 +12,9 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "Button")
-public class HandlerButton implements CdmlComponentHandler {
+public class HandlerButton extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public Button createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft())
             return null;
 
@@ -23,14 +22,11 @@ public class HandlerButton implements CdmlComponentHandler {
 
         processButton(meta, btn);
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, btn);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, btn);
     }
 
     public static void processButton(ComponentMeta meta, Button btn) {
-
-        //FIXME: This is a temporary solution. Awaits fixing from MrCrayfish/MrCrayfishDeviceMod#94
-        if (!meta.hasText())
-            btn.setText(null);
+        btn.setText(meta.getText());
 
         if (meta.hasWidthAndHeight())
             btn.setSize(meta.getWidth(), meta.getHeight());

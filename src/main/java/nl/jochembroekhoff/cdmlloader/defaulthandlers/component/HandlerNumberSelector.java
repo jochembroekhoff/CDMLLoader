@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.NumberSelector;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -12,9 +11,9 @@ import java.text.DecimalFormat;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "NumberSelector")
-public class HandlerNumberSelector implements CdmlComponentHandler {
+public class HandlerNumberSelector extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public NumberSelector createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft() || meta.getAttrWidth().isEmpty())
             return null;
 
@@ -33,6 +32,6 @@ public class HandlerNumberSelector implements CdmlComponentHandler {
         if (!format.isEmpty())
             ns.setFormat(new DecimalFormat(format));
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, ns);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, ns);
     }
 }

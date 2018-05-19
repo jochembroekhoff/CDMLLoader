@@ -4,7 +4,7 @@ CDML Loader is a collection of helper classes and annotations to help you organi
 It separates the layout creation and controller code from each other by using a dedicated file for
 the layout definition, written in a markup language called CDML, an XML document validated against the CDML DTD.
 
-Requires CDM version `0.3.1`.
+Requires CDM version `0.4.0`.
 
 *This documentation is NOT complete and you shouldn't rely on it. This project has not been released as
 any stable release, beta or alpha, so anything might change. The demo application in the source code is a great reference
@@ -169,7 +169,9 @@ All fields should be instantiated after `CDMLLoader.load(this)` has returned.
 _To be continued._
 
 ## Writing custom components
-_To do._
+_To do._ If you are interested, please check out the default component handlers.
+They are located at `nl.jochembroekhoff.cdmlloader.defaulthandlers.component.*` and
+`nl.jochembroekhoff.cdmlloader.defaulthandlers.layout.*`.
 
 1. Creating the component itself
 2. Creating the component handler
@@ -183,6 +185,8 @@ _To do._
     - Internationalized notifications (now only hard-coded title and subTitle)
 - Per-layout controllers
 - UI Designer
+- Element child items processing
+- Update the XSD
 
 ## Thanks / Credits
 

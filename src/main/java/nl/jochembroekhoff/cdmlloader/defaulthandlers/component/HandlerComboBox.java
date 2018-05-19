@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.ComboBox;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -12,9 +11,9 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 public abstract class HandlerComboBox {
 
     @CdmlComponent(type = "ComboBox-List")
-    public static class List implements CdmlComponentHandler {
+    public static class List extends CdmlComponentHandler {
         @Override
-        public Component createComponent(ComponentMeta meta) {
+        public ComboBox.List createComponent(ComponentMeta meta) {
             if (!meta.hasTopAndLeft())
                 return null;
 
@@ -37,7 +36,7 @@ public abstract class HandlerComboBox {
             if (!selectedItem.isEmpty())
                 cb.setSelectedItem(selectedItem);
 
-            return CdmlComponentHandler.doDefaultProcessing(meta, cb);
+            return CdmlComponentHandler.doDefaultComponentProcessing(meta, cb);
         }
 
         /*

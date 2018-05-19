@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.Spinner;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -10,13 +9,13 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "Spinner")
-public class HandlerSpinner implements CdmlComponentHandler {
+public class HandlerSpinner extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public Spinner createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft())
             return null;
 
-        return CdmlComponentHandler.doDefaultProcessing(meta,
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta,
                 new Spinner(meta.getLeft(), meta.getTop()));
     }
 }

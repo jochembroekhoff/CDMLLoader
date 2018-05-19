@@ -2,19 +2,27 @@ package nl.jochembroekhoff.cdmlloaderdemo.app;
 
 import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Layout;
-import com.mrcrayfish.device.api.app.component.*;
+import com.mrcrayfish.device.api.app.component.ComboBox;
+import com.mrcrayfish.device.api.app.component.ItemList;
+import com.mrcrayfish.device.api.app.component.ProgressBar;
+import com.mrcrayfish.device.api.app.component.RadioGroup;
 import com.mrcrayfish.device.api.app.listener.ClickListener;
 import com.mrcrayfish.device.api.app.listener.InitListener;
 import com.mrcrayfish.device.api.app.listener.KeyListener;
 import com.mrcrayfish.device.api.app.listener.SlideListener;
 import com.mrcrayfish.device.api.task.TaskManager;
+import com.mrcrayfish.device.core.Laptop;
+import com.mrcrayfish.device.object.AppInfo;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlApp;
 import nl.jochembroekhoff.cdmlloader.handler.CDMLDocumentHandler;
 import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
 import nl.jochembroekhoff.cdmlloaderdemo.task.TaskTestCDMLNotification;
+
+import javax.annotation.Nullable;
 
 /**
  * @author Jochem Broekhoff
@@ -40,7 +48,7 @@ public class DemoApplication extends Application {
     private CDMLDocumentHandler handler;
 
     @Override
-    public void init() {
+    public void init(@Nullable NBTTagCompound intent) {
 
         try {
             handler = CDMLLoader.init(this,
@@ -63,6 +71,8 @@ public class DemoApplication extends Application {
     ClickListener clickHandler = (x, y, mousebtn) -> {
         CDMLDemoMod.getLogger().info("Clicked with mouse button {}", mousebtn);
         TaskManager.sendTask(new TaskTestCDMLNotification(handler.getNotificationMeta("notifyTest1")));
+
+        Laptop.getSystem().openApplication(new AppInfo(new ResourceLocation("cdm", "note_stash"), true));
 
         /*
         try {

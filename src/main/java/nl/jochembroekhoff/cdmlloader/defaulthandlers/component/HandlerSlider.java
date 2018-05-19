@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.Slider;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -12,9 +11,9 @@ import java.awt.*;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "Slider")
-public class HandlerSlider implements CdmlComponentHandler {
+public class HandlerSlider extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public Slider createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft() || meta.getAttrWidth().isEmpty())
             return null;
 
@@ -35,6 +34,6 @@ public class HandlerSlider implements CdmlComponentHandler {
         if (sliderColor != null)
             sld.setSliderColor(sliderColor);
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, sld);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, sld);
     }
 }

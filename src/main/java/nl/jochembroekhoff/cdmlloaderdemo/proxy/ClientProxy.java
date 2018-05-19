@@ -1,15 +1,11 @@
 package nl.jochembroekhoff.cdmlloaderdemo.proxy;
 
-import com.mrcrayfish.device.api.app.Alphabet;
-import com.mrcrayfish.device.api.app.Icons;
 import com.mrcrayfish.device.api.app.listener.*;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
-import nl.jochembroekhoff.cdmlloader.defaultcomponent.*;
-
-import java.util.Arrays;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import nl.jochembroekhoff.cdmlloader.defaulthandlers.component.*;
+import nl.jochembroekhoff.cdmlloader.defaulthandlers.layout.HandlerLayout;
+import nl.jochembroekhoff.cdmlloader.defaulthandlers.layout.HandlerScrollableLayout;
 
 public class ClientProxy implements CommonProxy {
     @Override
@@ -22,6 +18,10 @@ public class ClientProxy implements CommonProxy {
         CDMLLoader.registerListener("key", "setKeyListener", KeyListener.class);
         CDMLLoader.registerListener("release", "setReleaseListener", ReleaseListener.class);
         CDMLLoader.registerListener("slide", "setSlideListener", SlideListener.class);
+
+        //Register default CDML Layout handlers
+        CDMLLoader.registerComponentHandler(new HandlerLayout());
+        CDMLLoader.registerComponentHandler(new HandlerScrollableLayout());
 
         //Register default CDML Component Handlers
         CDMLLoader.registerComponentHandler(new HandlerButton());

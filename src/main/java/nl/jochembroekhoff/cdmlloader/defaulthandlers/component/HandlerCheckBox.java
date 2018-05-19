@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.CheckBox;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -10,9 +9,9 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "CheckBox")
-public class HandlerCheckBox implements CdmlComponentHandler {
+public class HandlerCheckBox extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public CheckBox createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft())
             return null;
 
@@ -26,6 +25,6 @@ public class HandlerCheckBox implements CdmlComponentHandler {
         if (!radioGroup.isEmpty())
             cb.setRadioGroup(meta.getCdmlHandler().getRadioGroup(radioGroup));
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, cb);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, cb);
     }
 }

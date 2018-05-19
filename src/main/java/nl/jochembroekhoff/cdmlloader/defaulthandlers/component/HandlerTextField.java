@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.component.TextField;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
@@ -14,9 +13,9 @@ import java.awt.*;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "TextField")
-public class HandlerTextField implements CdmlComponentHandler {
+public class HandlerTextField extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public TextField createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft() || meta.getAttrWidth().isEmpty())
             return null;
 
@@ -63,6 +62,6 @@ public class HandlerTextField implements CdmlComponentHandler {
         if (icon != null)
             txt.setIcon(icon);
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, txt);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, txt);
     }
 }

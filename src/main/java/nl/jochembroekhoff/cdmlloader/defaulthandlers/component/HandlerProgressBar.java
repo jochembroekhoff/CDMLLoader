@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.ProgressBar;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -10,9 +9,9 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "ProgressBar")
-public class HandlerProgressBar implements CdmlComponentHandler {
+public class HandlerProgressBar extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public ProgressBar createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft() || !meta.hasWidthAndHeight())
             return null;
 
@@ -25,6 +24,6 @@ public class HandlerProgressBar implements CdmlComponentHandler {
         if (!progress.isEmpty())
             pb.setProgress(Integer.parseInt(progress));
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, pb);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, pb);
     }
 }

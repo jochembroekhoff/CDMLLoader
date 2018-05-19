@@ -102,7 +102,7 @@ public class CDMLDocumentHandler {
             switch (elem.getNodeName()) {
                 case "layouts":
                     XMLUtil.iterateChildren(elem, Node.ELEMENT_NODE, layout -> {
-                        if (handleLayout((Element) layout) == null)
+                        if (!handleComponent((Element) layout, null))
                             state.set(false);
                     });
                     break;
@@ -117,73 +117,11 @@ public class CDMLDocumentHandler {
         return state.get();
     }
 
-    private Layout handleLayout(Element layoutElem) {
-
-        /*
-        Create layout
-         */
-        val id = layoutElem.getAttribute("id");
-        val title = getI18nValue(layoutElem, "title");
-        val width = layoutElem.getAttribute("width");
-        val height = layoutElem.getAttribute("height");
-        val left = layoutElem.getAttribute("left");
-        val top = layoutElem.getAttribute("top");
-        boolean hasWH = !width.isEmpty() && !height.isEmpty();
-        boolean hasLT = !left.isEmpty() && !top.isEmpty();
-
-        Layout layout;
-        if (hasWH && hasLT) {
-            layout = new Layout(
-                    Integer.parseInt(left),
-                    Integer.parseInt(top),
-                    Integer.parseInt(width),
-                    Integer.parseInt(height)
-            );
-        } else if (hasWH) {
-            layout = new Layout(
-                    Integer.parseInt(width),
-                    Integer.parseInt(height)
-            );
-        } else {
-            layout = new Layout();
-        }
-
-        if (title != null)
-            layout.setTitle(title);
-
-        if (!id.isEmpty()) {
-            mappingLayouts.put(id, layout);
-            inject(id, layout, false);
-        }
-
-        XMLUtil.iterateChildren(layoutElem, Node.ELEMENT_NODE, node -> {
-            val elem = (Element) node;
-            switch (elem.getNodeName()) {
-                case "components":
-                    XMLUtil.iterateChildren(elem, Node.ELEMENT_NODE, component -> {
-                        switch (component.getNodeName()) {
-                            case "layout":
-                                layout.addComponent(handleLayout((Element) component));
-                                break;
-                            default:
-                                handleComponent((Element) component, layout);
-                                break;
-                        }
-                    });
-                    break;
-                case "listeners":
-                    handleListeners(elem, layout);
-                    break;
-            }
-        });
-
-        return layout;
-    }
-
-    private boolean handleComponent(Element elem, Layout layout) {
+    public boolean handleComponent(Element elem, Layout layout) {
         /*
         Process component via Component Handler
          */
+
         val fullComponentType = elem.getNodeName();
         val splittedComponentType = fullComponentType.split(":");
         String componentType = splittedComponentType[0];
@@ -231,6 +169,7 @@ public class CDMLDocumentHandler {
         /*
         Process listeners
          */
+
         XMLUtil.iterateChildren(elem, Node.ELEMENT_NODE, childNode -> {
             val childElem = (Element) childNode;
             switch (childElem.getNodeName()) {
@@ -241,9 +180,19 @@ public class CDMLDocumentHandler {
         });
 
         /*
-        Add to layout
+        Process (sub)layout if the component is a layout
          */
-        layout.addComponent(component);
+
+        if (Layout.class.isAssignableFrom(component.getClass())) {
+            componentHandler.handleChildElements(elem, (Layout) component, this);
+        }
+
+        /*
+        Add to containing layout
+         */
+
+        if (layout != null)
+            layout.addComponent(component);
 
         return true;
     }
@@ -298,6 +247,8 @@ public class CDMLDocumentHandler {
     private void inject(String id, Component component, boolean isRootLayout) {
         if (!isRootLayout && !Layout.class.isAssignableFrom(component.getClass()))
             mappingComponents.put(id, component);
+        else if (Layout.class.isAssignableFrom(component.getClass()))
+            mappingLayouts.put(id, (Layout) component);
 
         if (!fieldRemapping.containsKey(id)) {
             LOGGER.warn("==> Couldn't find declared field {} in application. No component has been injected.",

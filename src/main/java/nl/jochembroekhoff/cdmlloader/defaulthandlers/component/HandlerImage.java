@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.IIcon;
 import com.mrcrayfish.device.api.app.component.Image;
 import net.minecraft.util.ResourceLocation;
@@ -17,9 +16,9 @@ import java.lang.reflect.Method;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "Image")
-public class HandlerImage implements CdmlComponentHandler {
+public class HandlerImage extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public Image createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft())
             return null;
 
@@ -71,7 +70,7 @@ public class HandlerImage implements CdmlComponentHandler {
         Color borderColor = meta.getCdmlHandler().getColorFromColorScheme(meta, "borderColor", null);
         if (borderColor != null)
             try {
-                //FIXME: Do not use reflection. Awaits fixing from MrCrayfish/MrCrayfishDeviceMod#24
+                //FIXME: Do not use reflection. Awaits Image#setBorderColor getting the public access level.
                 Method m = img.getClass().getDeclaredMethod("setBorderColor", Color.class);
                 m.setAccessible(true);
                 m.invoke(img, borderColor);
@@ -84,6 +83,6 @@ public class HandlerImage implements CdmlComponentHandler {
         if (!borderThickness.isEmpty())
             img.setBorderThickness(Integer.parseInt(borderThickness));
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, img);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, img);
     }
 }

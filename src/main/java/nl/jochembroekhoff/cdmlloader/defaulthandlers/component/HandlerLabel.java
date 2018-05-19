@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.Label;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -12,9 +11,9 @@ import java.awt.*;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "Label")
-public class HandlerLabel implements CdmlComponentHandler {
+public class HandlerLabel extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public Label createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft())
             return null;
 
@@ -24,6 +23,6 @@ public class HandlerLabel implements CdmlComponentHandler {
         if (textColor != null)
             lbl.setTextColor(textColor);
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, lbl);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, lbl);
     }
 }

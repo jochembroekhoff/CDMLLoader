@@ -164,8 +164,8 @@ public class CDMLLoader {
         if (componentNamespace == null)
             componentNamespace = "";
 
-        if (!componentType.matches("^[A-Z].*$"))
-            throw new IllegalArgumentException("Invalid component type: component type must start with uppercase letter.");
+        if (!componentType.matches("^[A-Za-z].*$"))
+            throw new IllegalArgumentException("Invalid component type: component name must be alphabetic.");
 
         if (hasComponentHandler(componentType, componentNamespace))
             throw new IllegalArgumentException("A component handler for component type "
@@ -287,9 +287,7 @@ public class CDMLLoader {
      * @return a new {@link Notification} with the contents of the meta
      */
     public static Notification createNotification(NotificationMeta meta) {
-        //FIXME: Awaits fixing from MrCrayfish/MrCrayfishDeviceMod#96. A pull request is opened, see MrCrayfish/MrCrayfishDeviceMod#97.
-        //IIcon icon = getIcon(meta.getIconName(), meta.getIconSet());
-        Icons icon = (Icons) getIcon(meta.getIconName(), "Icons");
+        IIcon icon = getIcon(meta.getIconName(), meta.getIconSet());
 
         return meta.getSubTitle().isEmpty()
                 ? new Notification(icon, meta.getTitle())

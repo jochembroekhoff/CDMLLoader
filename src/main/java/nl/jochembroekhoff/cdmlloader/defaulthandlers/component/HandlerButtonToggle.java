@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.ButtonToggle;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -10,9 +9,9 @@ import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "ButtonToggle")
-public class HandlerButtonToggle implements CdmlComponentHandler {
+public class HandlerButtonToggle extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public ButtonToggle createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft())
             return null;
 
@@ -28,6 +27,6 @@ public class HandlerButtonToggle implements CdmlComponentHandler {
         if (!radioGroup.isEmpty())
             btnt.setRadioGroup(meta.getCdmlHandler().getRadioGroup(radioGroup));
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, btnt);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, btnt);
     }
 }

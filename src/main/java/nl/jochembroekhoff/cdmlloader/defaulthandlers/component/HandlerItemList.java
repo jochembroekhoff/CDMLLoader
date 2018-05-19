@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.ItemList;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -15,9 +14,9 @@ import java.awt.*;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "ItemList")
-public class HandlerItemList implements CdmlComponentHandler {
+public class HandlerItemList extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public ItemList createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft() || meta.getAttrWidth().isEmpty())
             return null;
 
@@ -53,12 +52,12 @@ public class HandlerItemList implements CdmlComponentHandler {
             Element element = (Element) node;
             if (element.getTagName().equals("items")) {
                 XMLUtil.iterateChildren(element, Node.ELEMENT_NODE, itemNode -> {
-                    Element itemElement = (Element)itemNode;
+                    Element itemElement = (Element) itemNode;
                     il.addItem(meta.getCdmlHandler().getI18nValue(itemElement.getTextContent()));
                 });
             }
         });
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, il);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, il);
     }
 }

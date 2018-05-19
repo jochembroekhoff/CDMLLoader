@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.TextArea;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -12,9 +11,9 @@ import java.awt.*;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "TextArea")
-public class HandlerTextArea implements CdmlComponentHandler {
+public class HandlerTextArea extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public TextArea createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft() || !meta.hasWidthAndHeight())
             return null;
 
@@ -57,6 +56,6 @@ public class HandlerTextArea implements CdmlComponentHandler {
         if (borderColor != null)
             txt.setBorderColor(borderColor);
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, txt);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, txt);
     }
 }

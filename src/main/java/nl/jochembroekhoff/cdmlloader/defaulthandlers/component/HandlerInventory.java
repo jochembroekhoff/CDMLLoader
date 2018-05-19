@@ -1,6 +1,5 @@
-package nl.jochembroekhoff.cdmlloader.defaultcomponent;
+package nl.jochembroekhoff.cdmlloader.defaulthandlers.component;
 
-import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.component.Inventory;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
@@ -12,9 +11,9 @@ import java.awt.*;
  * @author Jochem Broekhoff
  */
 @CdmlComponent(type = "Inventory")
-public class HandlerInventory implements CdmlComponentHandler {
+public class HandlerInventory extends CdmlComponentHandler {
     @Override
-    public Component createComponent(ComponentMeta meta) {
+    public Inventory createComponent(ComponentMeta meta) {
         if (!meta.hasTopAndLeft())
             return null;
 
@@ -28,6 +27,6 @@ public class HandlerInventory implements CdmlComponentHandler {
         if (hoverColor != null)
             inv.setHoverColor(hoverColor.getRGB());
 
-        return CdmlComponentHandler.doDefaultProcessing(meta, inv);
+        return CdmlComponentHandler.doDefaultComponentProcessing(meta, inv);
     }
 }
