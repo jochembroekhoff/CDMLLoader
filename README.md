@@ -102,6 +102,10 @@ At this moment, the following components are supported out of the box:
 - TextArea
 - TextField
 
+And the following layouts:
+- Layout (default)
+- ScrollableLayout
+
 To find out which attributes you can set on each component, checkout the DTD (in src/main/resources/assets/cdmlloader).
 
 > **Using i18n**: All the core components support i18n (Internationalization) on all text attributes.
@@ -112,8 +116,9 @@ To find out which attributes you can set on each component, checkout the DTD (in
 > The key in the lang files is composed like this: `app.MOD_ID.APP_ID.value.RAWVALUE`.
 > So in this case CDMLLoader tries to load the i18n value of `app.mymod.myapp.value.labelText`.
 >
-> Please note that Notifications the only _unsupported_ part is. In the future, you will be able
-> to use the i18n notation there too.
+> Note: Notifications are translated on the client which opens the application, this means that when you send a
+> notification to another player whose client is set to a different language, the text is displayed in the language of
+> the client that instantiated the notification.
 
 _To be continued._
 
@@ -186,7 +191,6 @@ They are located at `nl.jochembroekhoff.cdmlloader.defaulthandlers.component.*` 
 - Per-layout controllers
 - UI Designer
 - Element child items processing
-- Update the XSD
 
 ## Thanks / Credits
 

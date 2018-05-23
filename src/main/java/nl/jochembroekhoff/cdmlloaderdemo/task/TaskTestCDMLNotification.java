@@ -1,5 +1,6 @@
 package nl.jochembroekhoff.cdmlloaderdemo.task;
 
+import com.mrcrayfish.device.api.app.Notification;
 import com.mrcrayfish.device.api.task.Task;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -7,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.meta.NotificationMeta;
-import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
+import nl.jochembroekhoff.cdmlloaderdemo.CDMLLoaderMod;
 
 public class TaskTestCDMLNotification extends Task {
 
@@ -41,9 +42,10 @@ public class TaskTestCDMLNotification extends Task {
                 nbt.getString("iconSet")
         );
 
-        CDMLDemoMod.getLogger().info(nbt);
+        CDMLLoaderMod.getLogger().info(nbt);
 
-        CDMLLoader.createNotification(meta).pushTo((EntityPlayerMP) player);
+        Notification notification = CDMLLoader.createNotification(meta);
+        notification.pushTo((EntityPlayerMP) player);
     }
 
     @Override

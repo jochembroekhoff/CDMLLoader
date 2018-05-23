@@ -8,7 +8,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import nl.jochembroekhoff.cdmlloader.util.ReflectionUtil;
-import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
+import nl.jochembroekhoff.cdmlloaderdemo.CDMLLoaderMod;
 import nl.jochembroekhoff.cdmlloaderdemo.Reference;
 
 import java.io.File;
@@ -60,7 +60,7 @@ public class ModConfig {
                         configuration = entryOptional.get().getValue();
                     }
                 } catch (Throwable throwable) {
-                    CDMLDemoMod.getLogger().error("Failed to get Configuration instance", throwable);
+                    CDMLLoaderMod.getLogger().error("Failed to get Configuration instance", throwable);
                 }
             }
 

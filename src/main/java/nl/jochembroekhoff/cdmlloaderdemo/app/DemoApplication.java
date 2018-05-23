@@ -11,15 +11,12 @@ import com.mrcrayfish.device.api.app.listener.InitListener;
 import com.mrcrayfish.device.api.app.listener.KeyListener;
 import com.mrcrayfish.device.api.app.listener.SlideListener;
 import com.mrcrayfish.device.api.task.TaskManager;
-import com.mrcrayfish.device.core.Laptop;
-import com.mrcrayfish.device.object.AppInfo;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.Cdml;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlApp;
 import nl.jochembroekhoff.cdmlloader.handler.CDMLDocumentHandler;
-import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
+import nl.jochembroekhoff.cdmlloaderdemo.CDMLLoaderMod;
 import nl.jochembroekhoff.cdmlloaderdemo.task.TaskTestCDMLNotification;
 
 import javax.annotation.Nullable;
@@ -65,14 +62,12 @@ public class DemoApplication extends Application {
     }
 
     @Cdml
-    InitListener layout1init = () -> CDMLDemoMod.getLogger().info("Layout one has been initialized.");
+    InitListener layout1init = () -> CDMLLoaderMod.getLogger().info("Layout one has been initialized.");
 
     @Cdml
     ClickListener clickHandler = (x, y, mousebtn) -> {
-        CDMLDemoMod.getLogger().info("Clicked with mouse button {}", mousebtn);
+        CDMLLoaderMod.getLogger().info("Clicked with mouse button {}", mousebtn);
         TaskManager.sendTask(new TaskTestCDMLNotification(handler.getNotificationMeta("notifyTest1")));
-
-        Laptop.getSystem().openApplication(new AppInfo(new ResourceLocation("cdm", "note_stash"), true));
 
         /*
         try {
@@ -81,8 +76,8 @@ public class DemoApplication extends Application {
             val capt = new FramebufferCapturer();
             val fbw = new FramebufferWriter(img, capt);
             fbw.write();
-            CDMLDemoMod.getLogger().info("[Capture] Captured Minecraft. Saved at: {}", img);
-            CDMLDemoMod.getLogger().info("[Capture] Laptop screen rectangle: {}", fbw.getFramebufferCapturer().getScreenRectangle());
+            CDMLLoaderMod.getLogger().info("[Capture] Captured Minecraft. Saved at: {}", img);
+            CDMLLoaderMod.getLogger().info("[Capture] Laptop screen rectangle: {}", fbw.getFramebufferCapturer().getScreenRectangle());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,7 +89,7 @@ public class DemoApplication extends Application {
 
     @Cdml
     KeyListener keyPressed = (key) -> {
-        CDMLDemoMod.getLogger().info("Pressed key: {}", key);
+        CDMLLoaderMod.getLogger().info("Pressed key: {}", key);
         return true;
     };
 

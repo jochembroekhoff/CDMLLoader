@@ -2,7 +2,6 @@ package nl.jochembroekhoff.cdmlloader;
 
 import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.IIcon;
-import com.mrcrayfish.device.api.app.Icons;
 import com.mrcrayfish.device.api.app.Notification;
 import com.mrcrayfish.device.api.app.component.RadioGroup;
 import lombok.val;
@@ -17,7 +16,7 @@ import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
 import nl.jochembroekhoff.cdmlloader.meta.ListenerDefinition;
 import nl.jochembroekhoff.cdmlloader.meta.NotificationMeta;
-import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
+import nl.jochembroekhoff.cdmlloaderdemo.CDMLLoaderMod;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
@@ -44,7 +43,7 @@ public class CDMLLoader {
     private final static Map<String, Class<? extends IIcon>> iconSets = new HashMap<>();
     private final static Map<String, List<String>> iconNames = new HashMap<>();
 
-    public static final Logger LOGGER = CDMLDemoMod.getLogger();
+    public static final Logger LOGGER = CDMLLoaderMod.getLogger();
 
     /**
      * Load a CDML document and inject the constructed values in this class (controller class).
@@ -261,11 +260,15 @@ public class CDMLLoader {
         if (iconSet == null || iconSet.isEmpty())
             iconSet = "Icons";
 
-        if (!hasIconSet(iconSet))
-            return null;
+        if (!hasIconSet(iconSet)) {
+            LOGGER.warn("==> No icon set found for {}. Falling back to the icon set 'Icons'.", iconSet);
+            iconSet = "Icons";
+        }
 
-        if (!getIconNames(iconSet).contains(iconName))
+        if (!getIconNames(iconSet).contains(iconName)) {
+            LOGGER.error("==> The icon set {} does not define the icon {}", iconSet, iconName);
             return null;
+        }
 
         return getIconSet(iconSet)
                 .getEnumConstants()

@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  * @author Jochem Broekhoff
  */
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions = Reference.MC_VERSION, dependencies = Reference.DEPENDS)
-public class CDMLDemoMod {
+public class CDMLLoaderMod {
     private static Logger logger;
 
     @SidedProxy(clientSide = Reference.Proxy.CLIENT_SIDE, serverSide = Reference.Proxy.SERVER_SIDE)
@@ -44,7 +44,6 @@ public class CDMLDemoMod {
         /* Register default icon sets */
         CDMLLoader.registerIconSet("Icons", Icons.class);
         CDMLLoader.registerIconSet("Alphabet", Alphabet.class);
-
 
         /* Register tasks */
         TaskManager.registerTask(TaskTestCDMLNotification.class);

@@ -7,7 +7,7 @@ import nl.jochembroekhoff.cdmlloader.CDMLLoader;
 import nl.jochembroekhoff.cdmlloader.annotate.CdmlComponent;
 import nl.jochembroekhoff.cdmlloader.handler.CdmlComponentHandler;
 import nl.jochembroekhoff.cdmlloader.meta.ComponentMeta;
-import nl.jochembroekhoff.cdmlloaderdemo.CDMLDemoMod;
+import nl.jochembroekhoff.cdmlloaderdemo.CDMLLoaderMod;
 
 import java.awt.*;
 import java.lang.reflect.Method;
@@ -75,7 +75,7 @@ public class HandlerImage extends CdmlComponentHandler {
                 m.setAccessible(true);
                 m.invoke(img, borderColor);
             } catch (Exception e) {
-                CDMLDemoMod.getLogger().error("==> Couldn't set border color: {}", e.getMessage());
+                CDMLLoaderMod.getLogger().error("==> Couldn't set border color: {}", e.getMessage());
             }
 
 

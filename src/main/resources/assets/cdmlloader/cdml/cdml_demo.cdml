@@ -85,6 +85,8 @@ The layout is based on the 'UI Components' system application.
         </layout>
     </layouts>
     <notifications>
-        <notification name="notifyTest1" title="Notification Title" subTitle="Subtitle" iconName="CHEVRON_DOWN"/>
+        <notification name="notifyTest1"
+                      title=":notification_title" subTitle=":notification_subtitle"
+                      iconName="DOLLAR_SIGN" iconSet="Alphabet"/>
     </notifications>
 </application>

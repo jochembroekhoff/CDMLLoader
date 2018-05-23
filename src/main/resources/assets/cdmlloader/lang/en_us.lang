@@ -16,3 +16,6 @@ app.cdmlloader.cdml_demo.value.item3=Item #3
 
 app.cdmlloader.cdml_demo.value.first=First
 app.cdmlloader.cdml_demo.value.second=Second
+
+app.cdmlloader.cdml_demo.value.notification_title=Notification Title
+app.cdmlloader.cdml_demo.value.notification_subtitle=Subtitle

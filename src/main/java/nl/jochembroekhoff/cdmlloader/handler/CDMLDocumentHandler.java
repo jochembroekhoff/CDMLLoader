@@ -229,8 +229,8 @@ public class CDMLDocumentHandler {
 
     private void handleNotification(Element elem) {
         String name = elem.getAttribute("name");
-        String title = elem.getAttribute("title");
-        String subTitle = elem.getAttribute("subTitle");
+        String title = getI18nValue(elem, "title");
+        String subTitle = getI18nValue(elem, "subTitle");
         String iconName = elem.getAttribute("iconName");
         String iconSet = elem.getAttribute("iconSet");
 
@@ -238,7 +238,7 @@ public class CDMLDocumentHandler {
             iconSet = "Icons";
 
         if (mappingNotifications.containsKey(name))
-            LOGGER.warn("==> Duplicate creation of notification with name: {}", name);
+            LOGGER.warn("==> Duplicate creation of notification with name: {}. Overwriting previously registered notification.", name);
 
         //Register notification
         mappingNotifications.put(name, new NotificationMeta(name, title, subTitle, iconName, iconSet));
