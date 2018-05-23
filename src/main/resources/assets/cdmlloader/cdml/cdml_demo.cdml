@@ -5,12 +5,12 @@ This is the CDML notation for the demo application.
 The layout is based on the 'UI Components' system application.
 -->
 
-<application xmlns="http://jochembroekhoff.nl/xsd/cdml/1.1"
+<application xmlns="http://jochembroekhoff.nl/xsd/cdml/1.2"
              xmlns:cdmblocks="http://jochembroekhoff.nl/xsd/cdmblocks/1.0"
 
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="
-             http://jochembroekhoff.nl/xsd/cdml/1.1 http://jochembroekhoff.nl/xsd/cdml/1.1/cdml.xsd
+             http://jochembroekhoff.nl/xsd/cdml/1.2 http://jochembroekhoff.nl/xsd/cdml/1.2/cdml.xsd
              http://jochembroekhoff.nl/xsd/cdmblocks/1.0 http://jochembroekhoff.nl/xsd/cdmblocks/1.0/cdmblocks.xsd"
 
              main="layout1"
